@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Base...</title>
+    <style>
+        #recursos {
+            display: none;
+        }
+
+        #tela {
+            display: block;
+            /*
+            width: 100vw;
+            height: 100vh;
+            */
+        }
+    </style>
+    <script src="Ludoteca.js"></script>
+    <script>
+        var tela;
+        var contexto;
+        var continua;
+        var contador;
+        var fundo;
+
+        var racioX;
+        var racioY;
+
+        var ratoX;
+        var ratoY;
+        //...
+
+        function inicia() {
+            tela = new Tela(document.getElementById("tela"));
+            contexto = tela.contexto;
+            continua = true;
+            contador = 0;
+            
+            fundo = new Rectangulo(0, 0, tela.largura, tela.altura, "lightblue");
+            //...
+            ratoX = 0;
+            ratoY = 0;
+
+            racioX = tela.largura / tela.larguraFinal;
+            racioY = tela.altura / tela.alturaFinal;
+            //...
+            tela.elemento.onmousedown = processaBotaoPremido;
+            tela.elemento.onmouseup = processaBotaoLibertado;
+            tela.elemento.onmousemove = processaMovimento;
+        }
+
+        function desenha() {
+            contexto.clearRect(0, 0, tela.largura, tela.altura);
+            fundo.desenha(tela);
+            //...
+
+            if (continua) {
+                contador++;
+                window.requestAnimationFrame(desenha);
+            }
+        }
+
+        function processaBotaoPremido(rato) {
+            ratoX = Math.floor(rato.offsetX * racioX);
+            ratoY = Math.floor(rato.offsetY * racioY);
+            //...
+        }
+
+        function processaMovimento(rato) {
+            ratoX = Math.floor(rato.offsetX * racioX);
+            ratoY = Math.floor(rato.offsetY * racioY);
+        }
+
+        function processaBotaoLibertado(rato) {
+            ratoX = Math.floor(rato.offsetX * racioX);
+            ratoY = Math.floor(rato.offsetY * racioY);
+            //...
+        }
+
+        function processaTeclaPremida(tecla) {
+            if (tecla.code == "Space") {        // barra de espaços
+                //...
+            }
+            if (tecla.code == "ArrowLeft") {    // esquerda
+                //...
+            }
+            if (tecla.code == "ArrowUp") {      // cima
+                //...
+            }
+            if (tecla.code == "ArrowRight") {   // direita
+                //...
+            }
+            if (tecla.code == "ArrowDown") {    // baixo
+                //...
+            }
+        }
+
+        function processaTeclaLibertada(tecla) {
+            if (tecla.code == "Space") {
+                //...
+            }
+            if ((tecla.code == "ArrowLeft") || (tecla.code == "ArrowRight")) {
+                //...
+            }
+            if ((tecla.code == "ArrowUp") || (tecla.code == "ArrowDown")) {
+                //...
+            }
+        }
+
+        window.onload = function () {
+            inicia();
+            desenha();
+        }
+        window.onkeydown = processaTeclaPremida;
+        window.onkeyup = processaTeclaLibertada;
+    </script>
+</head>
+
+<body>
+    <canvas id="tela" width="800" height="600">O seu <em>browser</em> não suporta o elemento
+        <code>canvas</code>!</canvas>
+    <div id="recursos">
+        <!-- ... -->
+    </div>
+</body>
+
+</html>

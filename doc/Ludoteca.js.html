@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Ludoteca.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Ludoteca.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Biblioteca de classes que representam vários tipos de &lt;em>gráficos&lt;/em> a desenhar num &lt;em>canvas&lt;/em>, bem como o próprio &lt;em>canvas&lt;/em>, e também os elementos &lt;em>audio&lt;/em> e &lt;em>video&lt;/em>, cujo propósito é facilitar o desenvolvimento de jogos e outras aplicações multimédia num contexto académico. Procura-se que esta biblioteca aborde apenas os casos mais comuns, evitando complexidade desnecessária, se bem que algumas classes contenham algumas propriedades para facilitar a caracterização dos objectos criados.
+ * @version 0.9
+ * @author Ricardo Rodrigues
+ * @date 2021-06-07
+ * @copyright Ricardo Rodrigues (2021)
+ */
+
+/**
+ * @class
+ * @classdesc A classe &lt;code>Grafico&lt;/code> é, na prática, uma classe &lt;em>abstracta&lt;/em>, servindo apenas de base para as subclasses de &lt;code>Grafico&lt;/code>.
+ * @property {number} x Abscissa para posicionar o &lt;em>gráfico&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} y Ordenada para posicionar o &lt;em>gráfico&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>gráfico&lt;/em>
+ * @property {number} deltaY=0 Variação vertical da posição do &lt;em>gráfico&lt;/em>
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} rotacao=0 Ângulo de rotação do &lt;em>gráfico&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>gráfico&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>gráfico&lt;/em> deve testar colisões
+ * @property {boolean} visivel=true Indicação de que o &lt;em>gráfico&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
+ * @property {boolean} seleccionado=false Indicação de que o &lt;em>polígono&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ */
+class Grafico {
+  /**
+   * Construtor da classe &lt;code>Grafico&lt;/code>. &lt;em>Este construtor não deve ser usado directamente. Se tal acontecer, é gerada uma excepção (&lt;code>TypeError&lt;/code>).&lt;/em>
+   * @param {number} x Abscissa para posicionar o &lt;em>gráfico&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} y Ordenada para posicionar o &lt;em>gráfico&lt;/em> no &lt;em>canvas&lt;/em>
+   */
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.deltaX = 0;
+    this.deltaY = 0;
+    this.distX = 0;
+    this.distY = 0;
+    this.rotacao = 0;
+    this.activo = true;
+    this.visivel = true;
+    this.seleccionado = false;
+    if (this.constructor.name == "Grafico") {
+      throw new TypeError("A classe abstracta 'Grafico' não pode ser instanciada directamente, devendo ser implementada através de subclasses (que poderão depois ser instanciadas).");
+    }
+  }
+
+  /**
+   * Este método encontra-se implementado na superclasse &lt;code>Grafico&lt;/code>, assumindo que todas as formas definidas nas suas subclasses são limitadas, de um modo genérico, por um rectângulo imaginário que engloba a totalidade do &lt;em>gráfico&lt;/em>. &lt;em>Se este método, tal como se encontra definido, não for o mais apropriado para uma dada subclasse, pode ser sempre redefinido (&lt;em>overrided&lt;/em>) nessa mesma subclasse.&lt;/em>
+   * @param {Grafico} outro Outro &lt;em>gráfico&lt;/em> para verificar se existe alguma colisão entre esse e este
+   * @returns {boolean} Se houver colisão, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   */
+  colide(outro) {
+    if (this.activo &amp;&amp; outro.activo &amp;&amp; (this.contemPonto(outro.x, outro.y) || this.contemPonto(outro.x + outro.largura, outro.y) || this.contemPonto(outro.x, outro.y + outro.altura) || this.contemPonto(outro.x + outro.largura, outro.y + outro.altura) || outro.contemPonto(this.x, this.y) || outro.contemPonto(this.x + this.largura, this.y) || outro.contemPonto(this.x, this.y + this.altura) || outro.contemPonto(this.x + this.largura, this.y + this.altura))) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  /**
+   * &lt;em>Este método deve ser implementado nas subclasses de &lt;code>Grafico&lt;/code>, respeitando as especifidades de cada forma representada nelas. Se tal não acontecer, é gerada uma excepção (&lt;code>Error&lt;/code>).&lt;/em>
+   * @param {number} x Abscissa do ponto a testar se está contido no &lt;em>gráfico&lt;/em>
+   * @param {number} y Ordenada do ponto a testar se está contido no &lt;em>gráfico&lt;/em>
+   * @returns {boolean} Se o ponto estiver contido neste &lt;em>grafico&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   */
+  contemPonto(x, y) {
+    throw new Error("O método 'contemPonto(x, y)' tem de ser implementado nas subclasses da classe 'Grafico'.");
+  }
+
+  /**
+   * Este método mais não faz que chamar o método &lt;code>contemPonto(x, y)&lt;/code> para cada um dos pontos do &lt;em>array&lt;/em>, verificando se algum deles se encontra dentro do &lt;em>gráfico&lt;/em>.
+   * @param {array} pontos Conjunto de pontos a verificar se estão contidos no &lt;em>gráfico&lt;/em>
+   * @returns {boolean} Se algum um dos pontos constantes no &lt;em>array&lt;/em> estiver contido neste &lt;em>grafico&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   */
+  contemPontos(pontos) {
+    for (var i = 0; i &lt; pontos.length; i++) {
+      if (this.contemPonto(pontos[i].x, pontos[i].y)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * &lt;em>Este método deve ser implementado nas subclasses de &lt;code>Grafico&lt;/code>, respeitando as especifidades de cada forma representada nelas. Se tal não acontecer, é gerada uma excepção (&lt;code>Error&lt;/code>).&lt;/em>
+   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhado o &lt;em>gráfico&lt;/em>
+   */
+  desenha(tela) {
+    throw new Error("O método 'desenha(tela)' tem de ser implementado nas subclasses da classe 'Grafico'.");
+  }
+}
+
+//
+
+/**
+ * @class
+ * @extends Grafico
+ * @classdesc A classe &lt;code>Circulo&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>círculos&lt;/em>. Num nível básico, um &lt;em>círculo&lt;/em> é definido por um &lt;em>ponto&lt;/em> central e por um &lt;em>raio&lt;/em>. Contudo, para que exista uniformidade no posicionamento das formas representadas pelas várias subclasses de &lt;code>Grafico&lt;/code>, os círculos são também posicionados usando o canto superior esquerdo (de um &lt;em>quadrado&lt;/em> imaginário que o contenha), em vez do seu centro &amp;mdash; daí, o &lt;em>raio&lt;/em> é somado ao &lt;em>x&lt;/em> e ao &lt;em>y&lt;/em> para fazer as devidas compensações de posicionamento para determinar o centro.
+ * @property {number} x Abscissa para posicionar o &lt;em>círculo&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} y Ordenada para posicionar o &lt;em>círculo&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} raio Raio do &lt;em>círculo&lt;/em>
+ * @property {string} preenchimento Cor do preenchimento &lt;em>círculo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o &lt;em>círculo&lt;/em> não é preenchido
+ * @property {string} contorno Cor do contorno do &lt;em>círculo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o contorno não é desenhado
+ * @property {number} espessura Espessura do contorno do &lt;em>círculo&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
+ * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>círculo&lt;/em>
+ * @property {number} deltaY=0 Variação vertical da posição do &lt;em>círculo&lt;/em>
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} rotacao=0 Ângulo de rotação do &lt;em>círculo&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; dadas as características do &lt;em>círculo&lt;/em>, esta propriedade é ignorada no seu desenho no &lt;em>canvas&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>círculo&lt;/em> deve testar colisões
+ * @property {boolean} visivel=true Indicação de que o &lt;em>círculo&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
+ * @property {boolean} seleccionado=false Indicação de que o &lt;em>círculo&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ */
+class Circulo extends Grafico {
+  /**
+   * Construtor para criação de novos objectos do tipo &lt;code>Círculo&lt;/code>
+   * @param {number} x Abscissa para posicionar o &lt;em>círculo&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} y Ordenada para posicionar o &lt;em>círculo&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} raio Raio do &lt;em>círculo&lt;/em>
+   * @param {string} preenchimento="black" Cor do preenchimento &lt;em>círculo&lt;/em>
+   * @param {string} contorno="black" Cor do contorno do &lt;em>círculo&lt;/em>
+   * @param {number} espessura=0 Espessura do contorno do &lt;em>círculo&lt;/em>
+   */
+  constructor(x, y, raio, preenchimento = "black", contorno = "black", espessura = 0) {
+    super(x, y);
+    this.raio = raio;
+    this.preenchimento = preenchimento;
+    this.contorno = contorno;
+    this.espessura = espessura;
+  }
+
+  /**
+   * Largura de um &lt;em>quadrado&lt;/em> imaginário que envolva este &lt;em>círculo&lt;/em> &amp;mdash; na prática, corresponde ao diâmetro
+   * @type {number}
+   */
+  get largura() {
+    return this.raio * 2;
+  }
+
+  /**
+   * Altura de um &lt;em>quadrado&lt;/em> imaginário que envolva este &lt;em>círculo&lt;/em> &amp;mdash; na prática, corresponde ao diâmetro
+   * @type {number}
+   */
+  get altura() {
+    return this.raio * 2;
+  }
+
+  /**
+   * Este método verifica se um dado &lt;em>ponto&lt;/em> está contido na área deste &lt;em>círculo&lt;/em>. Tal acontece quando a distância desse &lt;em>ponto&lt;/em> ao centro do &lt;em>círculo&lt;/em> é inferior ao &lt;em>raio&lt;/em> do &lt;em>círculo&lt;/em>.
+   * @param {number} x Abscissa do ponto a testar se está contido neste &lt;em>círculo&lt;/em>
+   * @param {number} y Ordenada do ponto a testar se está contido neste &lt;em>círculo&lt;/em>
+   * @returns {boolean} Se o ponto estiver contido neste &lt;em>círculo&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   */
+  contemPonto(x, y) {
+    if (Math.hypot((this.x + this.raio) - x, (this.y + this.raio) - y) &lt; this.raio) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Este método desenha um &lt;em>círculo&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo de um &lt;em>quadrado&lt;/em> imaginário que envolva o &lt;em>círculo&lt;/em>.
+   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhado o &lt;em>círculo&lt;/em>
+   */
+  desenha(tela) {
+    if (this.visivel) {
+      // no caso do círculo, definir um ângulo de rotação é irrelevante, pelo que não se implementa, até para evitar processamento desnecessário
+      var contexto = tela.contexto;
+      contexto.save();
+      contexto.beginPath();
+      contexto.arc(Math.floor(this.x + this.raio), Math.floor(this.y + this.raio), this.raio, 0, Math.PI * 2);
+      contexto.closePath();
+      contexto.fillStyle = this.preenchimento;
+      contexto.strokeStyle = this.contorno;
+      contexto.lineWidth = this.espessura;
+      if (this.preenchimento.toLowerCase() != "empty") {
+        contexto.fill();
+      }
+      if ((this.contorno.toLowerCase() != "empty") &amp;&amp; (this.espessura > 0)) {
+        contexto.stroke();
+      }
+      contexto.restore();
+    }
+    this.x += this.deltaX;
+    this.y += this.deltaY;
+  }
+}
+
+//
+
+/**
+ * @class
+ * @extends Grafico
+ * @classdesc A classe &lt;code>Rectangulo&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>rectângulos&lt;/em>. Num nível básico, um &lt;em>rectângulo&lt;/em> é definido por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo e por uma &lt;em>largura&lt;/em> e por uma &lt;em>altura&lt;/em>.
+ * @property {number} x Abscissa para posicionar o &lt;em>rectângulo&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} y Ordenada para posicionar o &lt;em>rectângulo&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} largura Largura do &lt;em>rectângulo&lt;/em>
+ * @property {number} altura Altura do &lt;em>rectângulo&lt;/em>
+ * @property {string} preenchimento Cor do preenchimento &lt;em>rectângulo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o &lt;em>rectângulo&lt;/em> não é preenchido
+ * @property {string} contorno Cor do contorno do &lt;em>rectângulo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o contorno não é desenhado
+ * @property {number} espessura Espessura do contorno do &lt;em>rectângulo&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
+ * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>rectângulo&lt;/em>
+ * @property {number} deltaY=0 Variação vertical da posição do &lt;em>rectângulo&lt;/em>
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} rotacao=0 Ângulo de rotação do &lt;em>rectângulo&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>rectângulo&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>rectângulo&lt;/em> deve testar colisões
+ * @property {boolean} visivel=true Indicação de que o &lt;em>rectângulo&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
+ * @property {boolean} seleccionado=false Indicação de que o &lt;em>rectângulo&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+  */
+class Rectangulo extends Grafico {
+  /**
+   * Construtor para criação de novos objectos do tipo &lt;code>Rectangulo&lt;/code>
+   * @param {number} x Abscissa para posicionar o &lt;em>rectângulo&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} y Ordenada para posicionar o &lt;em>rectângulo&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} largura Largura do &lt;em>rectângulo&lt;/em>
+   * @param {number} altura Altura do &lt;em>rectângulo&lt;/em>
+   * @param {string} preenchimento="black" Cor do preenchimento &lt;em>rectângulo&lt;/em>
+   * @param {string} contorno="black" Cor do contorno do &lt;em>rectângulo&lt;/em>
+   * @param {number} espessura=0 Espessura do contorno do &lt;em>rectângulo&lt;/em>
+   */
+  constructor(x, y, largura, altura, preenchimento = "black", contorno = "black", espessura = 0) {
+    super(x, y);
+    this.largura = largura;
+    this.altura = altura;
+    this.preenchimento = preenchimento;
+    this.contorno = contorno;
+    this.espessura = espessura;
+  }
+
+  /**
+   * Este método verifica se um dado &lt;em>ponto&lt;/em> está contido na área deste &lt;em>rectângulo&lt;/em>. Tal acontece quando o &lt;em>x&lt;/em> do ponto se encontra compreendido entre o &lt;em>x&lt;/em> do &lt;em>rectângulo&lt;/em> e &lt;em>x&lt;/em> mais a &lt;em>largura&lt;/em> do &lt;em>rectângulo&lt;/em>, e o &lt;em>y&lt;/em> do ponto se encontra compreendido entre o &lt;em>y&lt;/em> do &lt;em>rectângulo&lt;/em> e &lt;em>y&lt;/em> mais a &lt;em>altura&lt;/em> do &lt;em>rectângulo&lt;/em>.
+   * @param {number} x Abscissa do ponto a testar se está contido neste &lt;em>rectângulo&lt;/em>
+   * @param {number} y Ordenada do ponto a testar se está contido neste &lt;em>rectângulo&lt;/em>
+   * @returns {boolean} Se o ponto estiver contido neste &lt;em>rectângulo&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   */
+  contemPonto(x, y) {
+    if ((this.x &lt;= x) &amp;&amp; (this.x + this.largura >= x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura >= y)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  /**
+   * Este método desenha um &lt;em>rectângulo&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo desse &lt;em>rectângulo&lt;/em>.
+   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhado o &lt;em>rectângulo&lt;/em>
+   */
+  desenha(tela) {
+    if (this.visivel) {
+      var contexto = tela.contexto;
+      contexto.save();
+      contexto.beginPath();
+      // para evitar processamento desnecessário, só se faz a translação e a rotação do canvas quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer translação e rotação
+      if (this.rotacao != 0) {
+        contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
+        contexto.rotate(this.rotacao * Math.PI / 180);
+        contexto.rect(Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5), this.largura, this.altura);
+      }
+      else {
+        contexto.rect(Math.floor(this.x), Math.floor(this.y), this.largura, this.altura);
+      }
+      contexto.closePath();
+      contexto.fillStyle = this.preenchimento;
+      contexto.strokeStyle = this.contorno;
+      contexto.lineWidth = this.espessura;
+      if (this.preenchimento.toLowerCase() != "empty") {
+        contexto.fill();
+      }
+      if ((this.contorno.toLowerCase() != "empty") &amp;&amp; (this.espessura > 0)) {
+        contexto.stroke();
+      }
+      contexto.restore();
+    }
+    this.x += this.deltaX;
+    this.y += this.deltaY;
+  }
+}
+
+//
+
+/**
+ * @class
+ * @extends Grafico
+ * @classdesc A classe &lt;code>Poligono&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>polígonos&lt;/em>. Num nível básico, um &lt;em>polígono&lt;/em> é definido por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo de um &lt;em>rectângulo&lt;/em> imaginário que contenha o &lt;em>polígono&lt;/em>. Assim, este será o &lt;em>ponto&lt;/em> relativamente ao qual todos os pontos do &lt;em>polígono&lt;/em> serão posicionados. Aconselha-se que todos os pontos do polígono se encontrem à direita e abaixo desta origem e tão próximos dela quanto possível; caso contrário, aspectos como a rotação do polígono poderão ter resultados diferentes do esperado, o mesmo acontecendo com as colisões baseadas nesse rectângulo imaginário. Deste modo, há a possibilidade, activada por omissão através do atributo &lt;code>ajuste&lt;/code>, de &lt;em>encostar&lt;/em> o polígono à origem &amp;mdash; contudo, tal implica a alteração (o referido ajuste) de todos os pontos.
+ * @property {number} x Abscissa para posicionar o &lt;em>polígono&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} y Ordenada para posicionar o &lt;em>polígono&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {array} pontos Conjunto de pontos com os vários vértices do &lt;em>polígono&lt;/em>
+ * @property {string} preenchimento Cor do preenchimento &lt;em>polígono&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o &lt;em>polígono&lt;/em> não é preenchido
+ * @property {string} contorno Cor do contorno do &lt;em>polígono&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o contorno não é desenhado
+ * @property {number} espessura Espessura do contorno do &lt;em>polígono&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
+ * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>polígono&lt;/em>
+ * @property {number} deltaY=0 Variação vertical da posição do &lt;em>polígono&lt;/em>
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} deslocX=0 Deslocamento horizontal do ponto mais à esquerda do polígono até ponto usado para posicionar o &lt;em>polígono&lt;/em>, quando se fez o ajuste posicional do polígono &amp;mdash; se o seu valor for zero (&lt;code>0&lt;/code>), não foi feito qualquer ajuste
+ * @property {number} deslocY=0 Deslocamento vertical do ponto mais à esquerda do polígono até ponto usado para posicionar o &lt;em>polígono&lt;/em>, quando se fez o ajuste posicional do polígono &amp;mdash; se o seu valor for zero (&lt;code>0&lt;/code>), não foi feito qualquer ajuste
+ * @property {number} rotacao=0 Ângulo de rotação do &lt;em>polígono&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>polígono&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>polígono&lt;/em> deve testar colisões
+ * @property {boolean} visivel=true Indicação de que o &lt;em>polígono&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
+ * @property {boolean} seleccionado=false Indicação de que o &lt;em>polígono&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ */
+class Poligono extends Grafico {
+  /**
+   * Construtor para criação de novos objectos do tipo &lt;code>Rectangulo&lt;/code>
+   * @param {number} x Abscissa para posicionar o &lt;em>polígono&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} y Ordenada para posicionar o &lt;em>polígono&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {array} pontos Conjunto de pontos com os vários vértices do &lt;em>polígono&lt;/em>
+   * @param {string} preenchimento="black" Cor do preenchimento &lt;em>polígono&lt;/em>
+   * @param {string} contorno="black" Cor do contorno do &lt;em>polígono&lt;/em>
+   * @param {number} espessura=0 Espessura do contorno do &lt;em>polígono&lt;/em>
+   * @param {boolean} ajuste=true Indicação de que o &lt;em>polígono&lt;/em> deve ser reposicionado de forma a ficar &lt;em>encostado&lt;/em> ao ponto usado para definir o seu posicionamento no &lt;em>canvas&lt;/em>
+   */
+  constructor(x, y, pontos, preenchimento = "black", contorno = "black", espessura = 0, ajuste = true) {
+    super(x, y);
+    this.pontos = pontos;
+    this.preenchimento = preenchimento;
+    this.contorno = contorno;
+    this.espessura = espessura;
+    //se ajuste for verdadeiro (true), todo os pontos são alterados de forma a que o polígono seja "encostado" à origem -- o ponto (x, y) do polígono; se for necessário recuperar os pontos originais, tal pode ser feito com auxílio das propriedades deslocX e deslocY; se ajuste for verdadeiro, desaconselha-se a alteração do atributo pontos depois de criada a instância da classe -- ou, se tal acontecer, a chamar explicitamente o método ajusta()
+    this.deslocX = 0;
+    this.deslocY = 0;
+    if (ajuste) {
+      this.ajusta();
+    }
+  }
+
+  /**
+  * Este método ajusta o &lt;em>polígono&lt;/em> de forma a ficar &lt;em>encostado&lt;/em> ao ponto usado para definir o seu posicionamento no &lt;em>canvas&lt;/em>. Se os pontos do &lt;em>polígono&lt;/em> forem alterados após a criação do objecto, deve ser ponderada a chamada a este método.
+  */
+  ajusta() {
+    this.deslocX = Number.MAX_VALUE;
+    for (var i = 0, j = this.pontos.length - 1; i &lt; this.pontos.length; j = i++) {
+      this.deslocX = Math.min(this.deslocX, this.pontos[i].x);
+    }
+    this.deslocY = Number.MAX_VALUE;
+    for (var i = 0, j = this.pontos.length - 1; i &lt; this.pontos.length; j = i++) {
+      this.deslocY = Math.min(this.deslocY, this.pontos[i].y);
+    }
+    for (var i = 0; i &lt; this.pontos.length; i++) {
+      this.pontos[i].x -= this.deslocX;
+      this.pontos[i].y -= this.deslocY;
+    }
+  }
+
+  /**
+   * Largura de um &lt;em>rectângulo&lt;/em> imaginário que envolva este &lt;em>polígono&lt;/em> &amp;mdash; sendo definida pela distância entre o &lt;em>x&lt;/em> do ponto mais à esquerda e o &lt;em>x&lt;/em> do ponto mais à direita do &lt;em>polígono&lt;/em>
+   * @type {number}
+   */
+  get largura() {
+    var minX = Number.MAX_VALUE;
+    var maxX = Number.MIN_VALUE;
+    for (var i = 0, j = this.pontos.length - 1; i &lt; this.pontos.length; j = i++) {
+      minX = Math.min(minX, this.pontos[i].x);
+      maxX = Math.max(maxX, this.pontos[j].x);
+    }
+    return maxX - minX;
+  }
+
+  /**
+   * Altura de um &lt;em>rectângulo&lt;/em> imaginário que envolva este &lt;em>polígono&lt;/em> &amp;mdash; sendo definida pela distância entre o &lt;em>y&lt;/em> do ponto mais acima e o &lt;em>y&lt;/em> do ponto mais abaixo do &lt;em>polígono&lt;/em>
+   * @type {number}
+   */
+  get altura() {
+    var minY = Number.MAX_VALUE;
+    var maxY = Number.MIN_VALUE;
+    for (var i = 0, j = this.pontos.length - 1; i &lt; this.pontos.length; j = i++) {
+      minY = Math.min(minY, this.pontos[i].y);
+      maxY = Math.max(maxY, this.pontos[j].y);
+    }
+    return maxY - minY;
+  }
+
+  /**
+    * Este método verifica se um dado &lt;em>ponto&lt;/em> está contido na área deste &lt;em>polígono&lt;/em>. Tal acontece quando um segmento de recta com início no ponto especificado intersecta um número ímpar de arestas do &lt;em>polígono&lt;/em>.
+    * @param {number} x Abscissa do ponto a testar se está contido neste &lt;em>polígono&lt;/em>
+    * @param {number} y Ordenada do ponto a testar se está contido neste &lt;em>polígono&lt;/em>
+    * @returns {boolean} Se o ponto estiver contido neste &lt;em>polígono&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+    */
+  contemPonto(x, y) {
+    var contido = false;
+    for (var i = 0, j = this.pontos.length - 1; i &lt; this.pontos.length; j = i++) {
+      var pontoI = { x: this.pontos[i].x + this.x, y: this.pontos[i].y + this.y };
+      var pontoJ = { x: this.pontos[j].x + this.x, y: this.pontos[j].y + this.y };
+      if (((pontoI.y > y) != (pontoJ.y > y)) &amp;&amp; (x &lt; (pontoJ.x - pontoI.x) * (y - pontoI.y) / (pontoJ.y - pontoI.y) + pontoI.x)) {
+        contido = !contido;
+      }
+    }
+    return contido;
+  }
+
+  /**
+   * Este método desenha um &lt;em>polígono&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo de um &lt;em>rectângulo&lt;/em> imaginário que contenha o &lt;em>polígono&lt;/em>.
+   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhado o &lt;em>polígono&lt;/em>
+   */
+  desenha(tela) {
+    if (this.visivel) {
+      var contexto = tela.contexto;
+      contexto.save();
+      contexto.beginPath()
+      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o angulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
+      if (this.rotacao != 0) {
+        contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
+        contexto.rotate(this.rotacao * Math.PI / 180);
+        for (var i = 0; i &lt; this.pontos.length; i++) {
+          if (i == 0) {
+            contexto.moveTo(Math.floor(this.pontos[i].x - this.largura * 0.5), Math.floor(this.pontos[i].y - this.altura * 0.5));
+          }
+          else {
+            contexto.lineTo(Math.floor(this.pontos[i].x - this.largura * 0.5), Math.floor(this.pontos[i].y - this.altura * 0.5));
+          }
+        }
+      }
+      else {
+        for (var i = 0; i &lt; this.pontos.length; i++) {
+          if (i == 0) {
+            contexto.moveTo(Math.floor(this.pontos[i].x + this.x), Math.floor(this.pontos[i].y + this.y));
+          }
+          else {
+            contexto.lineTo(Math.floor(this.pontos[i].x + this.x), Math.floor(this.pontos[i].y + this.y));
+          }
+        }
+      }
+      contexto.closePath();
+      contexto.fillStyle = this.preenchimento;
+      contexto.strokeStyle = this.contorno;
+      contexto.lineWidth = this.espessura;
+      if (this.preenchimento.toLowerCase() != "empty") {
+        contexto.fill();
+      }
+      if ((this.contorno.toLowerCase() != "empty") &amp;&amp; (this.espessura > 0)) {
+        contexto.stroke();
+      }
+      contexto.restore();
+    }
+    this.x += this.deltaX;
+    this.y += this.deltaY;
+  }
+}
+
+//
+
+/**
+ * @class
+ * @extends Grafico
+ * @classdesc A classe &lt;code>Texto&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar uma &lt;em>(linha de) texto&lt;/em>.
+ * @property {number} x Abscissa para posicionar o &lt;em>texto&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} y Ordenada para posicionar o &lt;em>texto&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {string} preenchimento Cor do preenchimento do &lt;em>texto&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o &lt;em>texto&lt;/em> não é preenchido
+ * @property {string} contorno Cor do contorno do &lt;em>texto&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o contorno não é desenhado
+ * @property {number} espessura Espessura do contorno do &lt;em>texto&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
+ * @property {number} tamanho=16 Tamanho do &lt;em>texto&lt;/em>
+ * @property {number} fonte="sans-serif" Fonte do &lt;em>texto&lt;/em>
+ * @property {number} alinhamento="left" Alinhamento horizontal do &lt;em>texto&lt;/em>
+ * @property {number} base="top" Alinhamento vertical do &lt;em>texto&lt;/em>
+ * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>texto&lt;/em>
+ * @property {number} deltaY=0 Variação vertical da posição do &lt;em>texto&lt;/em>
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} rotacao=0 Ângulo de rotação do &lt;em>texto&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>texto&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>texto&lt;/em> deve testar colisões
+ * @property {boolean} visivel=true Indicação de que o &lt;em>texto&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
+ * @property {boolean} seleccionado=false Indicação de que o &lt;em>texto&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ */
+class Texto extends Grafico {
+  /**
+   * Construtor para criação de novos objectos do tipo &lt;code>texto&lt;/code>
+   * @param {number} x Abscissa para posicionar o &lt;em>texto&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} y Ordenada para posicionar o &lt;em>texto&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {string} preenchimento="black" Cor do preenchimento do &lt;em>texto&lt;/em>
+   * @param {string} contorno="black" Cor do contorno do &lt;em>texto&lt;/em>
+   * @param {number} espessura=0 Espessura do contorno do &lt;em>texto&lt;/em>
+   */
+  constructor(x, y, texto, preenchimento = "black", contorno = "black", espessura = 0) {
+    super(x, y);
+    this.texto = texto;
+    this.preenchimento = preenchimento;
+    this.contorno = contorno;
+    this.espessura = espessura;
+    this.tamanho = 16;
+    this.fonte = "sans-serif";
+    this.alinhamento = "left";
+    this.base = "top";
+  }
+
+  /**
+   * Largura do &lt;em>texto&lt;/em> &amp;mdash; sendo definida pelos píxeis ocupados pelo texto horizontalmente
+   * @type {number}
+   */
+  get largura() {
+    var tela = document.createElement("canvas");
+    var contexto = tela.getContext("2d");
+    contexto.font = this.altura + "px " + this.fonte;
+    return Math.floor(contexto.measureText(this.texto).width);
+  }
+
+  /**
+   * Altura do &lt;em>texto&lt;/em> &amp;mdash; sendo definida pelo tamanho da fonte
+   * @type {number}
+   */
+  get altura() {
+    return this.tamanho;
+  }
+
+  /**
+   * Este método verifica se um dado &lt;em>ponto&lt;/em> está contido na área de &lt;em>rectângulo&lt;/em> que envolva o &lt;em>texto&lt;/em>, definito pelo &lt;em>ponto&lt;/em> que posiciona o texto e pela largura e pela altura do texto. Tal acontece quando o &lt;em>x&lt;/em> do ponto se encontra compreendido entre o &lt;em>x&lt;/em> do &lt;em>rectângulo&lt;/em> e &lt;em>x&lt;/em> mais a &lt;em>largura&lt;/em> do &lt;em>rectângulo&lt;/em>, e o &lt;em>y&lt;/em> do ponto se encontra compreendido entre o &lt;em>y&lt;/em> do &lt;em>rectângulo&lt;/em> e &lt;em>y&lt;/em> mais a &lt;em>altura&lt;/em> do &lt;em>rectângulo&lt;/em>.
+   * @param {number} x Abscissa do ponto a testar se está contido neste &lt;em>texto&lt;/em>
+   * @param {number} y Ordenada do ponto a testar se está contido neste &lt;em>texto&lt;/em>
+   * @returns {boolean} Se o ponto estiver contido neste &lt;em>texto&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   */
+  contemPonto(x, y) {
+    if ((this.x &lt;= x) &amp;&amp; (this.x + this.largura >= x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura >= y)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  /**
+   * Este método desenha uma linha de &lt;em>texto&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo de um &lt;em>rectângulo&lt;/em> imaginário que contenha o &lt;em>texto&lt;/em>, assumindo um alinhamento horizontal à esquerda e verticalmente ao topo. Alterações no alinhamento implicarão uma outra referência no posicionamento.
+   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhado o &lt;em>texto&lt;/em>
+   */
+  desenha(tela) {
+    if (this.visivel) {
+      var contexto = tela.contexto;
+      contexto.save();
+      contexto.fillStyle = this.preenchimento;
+      contexto.strokeStyle = this.contorno;
+      contexto.lineWidth = this.espessura;
+      contexto.textAlign = this.alinhamento;
+      contexto.textBaseline = this.base;
+      contexto.font = this.tamanho + "px " + this.fonte;
+      contexto.fillStyle = this.preenchimento;
+      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o angulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
+      if (this.rotacao != 0) {
+        contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
+        contexto.rotate(this.rotacao * Math.PI / 180);
+        if (this.preenchimento.toLowerCase() != "empty") {
+          contexto.fillText(this.texto, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
+        }
+        if ((this.contorno.toLowerCase() != "empty") &amp;&amp; (this.espessura > 0)) {
+          contexto.strokeText(this.texto, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
+        }
+      }
+      else {
+        if (this.preenchimento.toLowerCase() != "empty") {
+          contexto.fillText(this.texto, Math.floor(this.x), Math.floor(this.y));
+        }
+        if ((this.contorno.toLowerCase() != "empty") &amp;&amp; (this.espessura > 0)) {
+          contexto.strokeText(this.texto, Math.floor(this.x), Math.floor(this.y));
+        }
+      }
+      contexto.restore();
+    }
+    this.x += this.deltaX;
+    this.y += this.deltaY;
+  }
+}
+
+//
+
+/**
+ * @class
+ * @extends Grafico
+ * @classdesc A classe &lt;code>Imagem&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>imagens&lt;/em>. Num nível básico, uma &lt;em>imagem&lt;/em> é definida por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem.
+ * @property {number} x Abscissa para posicionar a &lt;em>imagem&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} y Ordenada para posicionar a &lt;em>imagem&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} largura Largura da &lt;em>imagem&lt;/em>
+ * @property {number} altura Altura da &lt;em>imagem&lt;/em>
+ * @property {number} deltaX=0 Variação horizontal da posição da &lt;em>imagem&lt;/em>
+ * @property {number} deltaY=0 Variação vertical da posição da &lt;em>imagem&lt;/em>
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} rotacao=0 Ângulo de rotação da &lt;em>imagem&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro da &lt;em>imagem&lt;/em>
+ * @property {boolean} activo=true Indicação de que a &lt;em>imagem&lt;/em> deve testar colisões
+ * @property {boolean} visivel=true Indicação de que a &lt;em>imagem&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
+ * @property {boolean} seleccionado=false Indicação de que a &lt;em>imagem&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+  */
+class Imagem extends Grafico {
+  /**
+   * Construtor para criação de novos objectos do tipo &lt;code>Imagem&lt;/code>
+   * @param {number} x Abscissa para posicionar a &lt;em>imagem&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} y Ordenada para posicionar a &lt;em>imagem&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {HTMLElement} imagem O elemento HTML que contém a &lt;em>imagem&lt;/em>
+   */
+  constructor(x, y, imagem) {
+    super(x, y);
+    this.imagem = imagem;
+  }
+
+  /**
+   * Largura da &lt;em>imagem&lt;/em>
+   * @type {number}
+   */
+  get largura() {
+    return this.imagem.width;
+  }
+
+  /**
+   * Altura da &lt;em>imagem&lt;/em>
+   * @type {number}
+   */
+  get altura() {
+    return this.imagem.height;
+  }
+
+  /**
+   * Este método verifica se um dado &lt;em>ponto&lt;/em> está contido na área ocupada por esta &lt;em>imagem&lt;/em>. Tal acontece quando o &lt;em>x&lt;/em> do ponto se encontra compreendido entre o &lt;em>x&lt;/em> da &lt;em>imagem&lt;/em> e &lt;em>x&lt;/em> mais a &lt;em>largura&lt;/em> da &lt;em>imagem&lt;/em>, e o &lt;em>y&lt;/em> do ponto se encontra compreendido entre o &lt;em>y&lt;/em> da &lt;em>imagem&lt;/em> e &lt;em>y&lt;/em> mais a &lt;em>altura&lt;/em> da &lt;em>imagem&lt;/em>.
+   * @param {number} x Abscissa do ponto a testar se está contido nesta &lt;em>imagem&lt;/em>
+   * @param {number} y Ordenada do ponto a testar se está contido nesta &lt;em>imagem&lt;/em>
+   * @returns {boolean} Se o ponto estiver contido nesta &lt;em>imagem&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   */
+  contemPonto(x, y) {
+    if ((this.x &lt;= x) &amp;&amp; (this.x + this.largura >= x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura >= y)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  /**
+   * Este método desenha uma &lt;em>imagem&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo dessa &lt;em>imagem&lt;/em>.
+   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhada a &lt;em>imagem&lt;/em>
+   */
+  desenha(tela) {
+    if (this.visivel) {
+      var contexto = tela.contexto;
+      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o angulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
+      if (this.rotacao != 0) {
+        contexto.save();
+        contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
+        contexto.rotate(this.rotacao * Math.PI / 180);
+        contexto.drawImage(this.imagem, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
+        contexto.restore();
+      }
+      else {
+        contexto.drawImage(this.imagem, Math.floor(this.x), Math.floor(this.y));
+      }
+    }
+    this.x += this.deltaX;
+    this.y += this.deltaY;
+  }
+}
+
+//
+
+/**
+ * @class
+ * @extends Imagem
+ * @classdesc A classe &lt;code>ImagemAnimada&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>imagens animadas&lt;/em> (ou &lt;em>sprites&lt;/em>). Num nível básico, uma &lt;em>imagem&lt;/em> é definida por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem. Os &lt;em>sprites&lt;/em> utilizados podem ter uma sequência horizontal (tira) ou várias, desde que os fotogramas sejam de dimensões idênticas.
+ * @property {number} x Abscissa para posicionar o &lt;em>sprite&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} y Ordenada para posicionar o &lt;em>sprite&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} largura Largura do &lt;em>sprite&lt;/em>
+ * @property {number} altura Altura do &lt;em>sprite&lt;/em>
+ * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>sprite&lt;/em>
+ * @property {number} deltaY=0 Variação vertical da posição do &lt;em>sprite&lt;/em>
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} rotacao=0 Ângulo de rotação do &lt;em>sprite&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>sprite&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>sprite&lt;/em> deve testar colisões
+ * @property {boolean} visivel=true Indicação de que o &lt;em>sprite&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
+ * @property {boolean} seleccionado=false Indicação de que o &lt;em>sprite&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+  */class ImagemAnimada extends Imagem {
+  /**
+   * Construtor para criação de novos objectos do tipo &lt;code>Imagem Anima&lt;/code>
+   * @param {number} x Abscissa para posicionar o &lt;em>sprite&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} y Ordenada para posicionar o &lt;em>sprite&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {HTMLElement} imagem O elemento HTML que contém o &lt;em>sprite&lt;/em>
+   * @param {number} fotogramas Número de fotogramas (&lt;em>frames&lt;/em>) do &lt;em>sprite&lt;/em> 
+   * @param {number} iteracoes Número de iterações &amp;mdash; na prática, o número de &lt;em>frames&lt;/em> a serem gerados por via do método &lt;code>window.requestAnimationFrame()&lt;/code> &amp;mdash; antes de se passar ao fotograma seguinte do &lt;em>sprite&lt;/em> 
+   * @param {number} tiras Número de tiras existentes no &lt;em>sprite&lt;/em>
+   */
+  constructor(x, y, imagem, fotogramas, iteracoes, tiras = 1) {
+    super(x, y, imagem);
+    this.fotogramas = fotogramas;
+    this.iteracoes = iteracoes;
+    this.contador = 0;
+    this.animada = true;
+    this.indiceFotograma = 0;
+    this.indiceTira = 0;
+    this.tiras = tiras;
+  }
+
+  /**
+   * Altura da &lt;em>imagem animada&lt;/em>, considerando o número de tiras presentes e assumindo dimensões idênticas dos mesmos
+   * @type {number}
+   */
+   get largura() {
+    return this.imagem.width / this.tiras;
+  }
+
+  /**
+   * Largura da &lt;em>imagem animada&lt;/em>, considerando o número de fotogramas presentes e assumindo dimensões idênticas dos mesmos
+   * @type {number}
+   */
+   get largura() {
+    return this.imagem.width / this.fotogramas;
+  }
+
+  /**
+   * Este método desenha uma &lt;em>imagem animada&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo dessa &lt;em>imagem animada&lt;/em>, no caso de uma única tira. Havendo mais que uma tira, usará o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo dessa tira.
+   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhada a &lt;em>imagem animada&lt;/em>
+   */
+  desenha(tela) {
+    if (this.visivel) {
+      var contexto = tela.contexto;
+      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o angulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
+      if (this.rotacao != 0) {
+        contexto.save();
+        contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
+        contexto.rotate(this.rotacao * Math.PI / 180);
+        contexto.drawImage(this.imagem, this.indiceFotograma * this.largura, this.indiceTira * this.altura, this.largura, this.altura, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5), this.largura, this.altura);
+        contexto.restore();
+      }
+      else {
+        contexto.drawImage(this.imagem, this.indiceFotograma * this.largura, this.indiceTira * this.altura, this.largura, this.altura, Math.floor(this.x), Math.floor(this.y), this.largura, this.altura);
+      }
+      if ((this.animada) || (this.indiceFotograma > 0)) {
+        if (this.contador % this.iteracoes == 0) {
+          this.indiceFotograma++;
+          if (this.indiceFotograma >= this.fotogramas) {
+            this.indiceFotograma = 0;
+          }
+        }
+        this.contador++;
+      }
+    }
+    this.x += this.deltaX;
+    this.y += this.deltaY;
+  }
+}
+
+//
+
+/**
+ * Esta função desenha um &lt;em>gráfico&lt;/em> ou percorre um &lt;em>array&lt;/em> de &lt;em>gráficos&lt;/em> (instâncias ou objectos de subclasses da classe &lt;code>Grafico&lt;/code>) e desenha-os no &lt;em>canvas&lt;/em> especificado. A função funciona de forma recursiva, pelo que o &lt;em>array&lt;/em> pode conter, ele próprio, também &lt;em>arrays&lt;/em> em qualquer das suas posições.
+ * @param {Grafico} graficos Um &lt;em>array&lt;/em> de &lt;em>gráficos&lt;/em> ou mesmo apenas um único &lt;em>gráfico&lt;/em> 
+ * @param {Tela} tela O &lt;em>canvas&lt;/em> onde vão ser desenhados os &lt;em>gráficos&lt;/em>
+ */
+function desenhaGraficos(graficos, tela) {
+  for (var i = 0; i &lt; graficos.length; i++) {
+    if (Array.isArray(graficos[i])) {
+      desenhaGraficos(graficos[i], tela);
+    } else {
+      graficos[i].desenha(tela);
+    }
+  }
+}
+
+//
+
+/**
+ * @class
+ * @classdesc A classe &lt;code>Tela&lt;/code> serve essencialmente como um envelope (&lt;em>wrapper&lt;/em>) para elementos de &lt;em>canvas&lt;/em>.
+ * @property {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>canvas&lt;/code> a ser representado
+ */
+class Tela {
+  /**
+   * Construtor da classe &lt;code>Tela&lt;/code>.
+   * @param {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>canvas&lt;/code> a ser representado
+   */
+  constructor(elemento) {
+    this.elemento = elemento;
+  }
+
+  /**
+   * Contexto &lt;strong>2D&lt;/strong> do &lt;em>canvas&lt;/em>, para acesso aos métodos por ele nativamente disponibilizados
+   * @type {number}
+   */
+  get contexto() {
+    return this.elemento.getContext("2d");
+  }
+
+  /**
+   * Largura do &lt;em>canvas&lt;/em> (número de colunas)
+   * @type {number}
+   */
+  get largura() {
+    return this.elemento.width;
+  }
+
+  /**
+   * Altura do &lt;em>canvas&lt;/em> (número de linhas)
+   * @type {number}
+   */
+  get altura() {
+    return this.elemento.height;
+  }
+
+  /**
+   * Largura final do &lt;em>canvas&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
+   * @type {number}
+   */
+  get larguraFinal() {
+    return this.elemento.offsetWidth;
+  }
+
+  /**
+   * Altura final do &lt;em>canvas&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
+   * @type {number}
+   */
+  get alturaFinal() {
+    return this.elemento.offsetHeight;
+  }
+}
+
+//
+
+/**
+ * @class
+ * @classdesc A classe &lt;code>Media&lt;/code> é, na prática, uma classe &lt;em>abstracta&lt;/em>, servindo apenas de base para as subclasses de &lt;code>Media&lt;/code>. Para além disso, funcionará essencialmente como um envelope (&lt;em>wrapper&lt;/em>) para elementos de &lt;em>áudio&lt;/em> e de &lt;em>vídeo&lt;/em> em eventuais subclasses.
+ * @property {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML a ser representado
+ */
+class Media {
+  /**
+   * Construtor da classe &lt;code>Media&lt;/code>. &lt;em>Este construtor não deve ser usado directamente. Se tal acontecer, é gerada uma excepção (&lt;code>TypeError&lt;/code>).&lt;/em>
+   * @param {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML a ser representado
+   */
+  constructor(elemento) {
+    this.elemento = elemento;
+    if (this.constructor.name == "Media") {
+      throw new TypeError("A classe abstracta 'Media' não pode ser instanciada directamente, devendo ser implementada através de subclasses (que poderão depois ser instanciadas).");
+    }
+  }
+
+  /**
+   * Fonte (origem) do elemento multimédia (definição)
+   * @type {string}
+   */
+  set fonte(ficheiro) {
+    this.elemento.src = ficheiro;
+  }
+
+  /**
+   * Fonte (origem) do elemento multimédia (obtenção)
+   * @type {string}
+   */
+  get fonte() {
+    return this.elemento.src;
+  }
+
+  /**
+   * Duração da reprodução do elemento multimédia (obtenção)
+   * @type {number}
+   */
+  get duracao() {
+    return this.elemento.duration;
+  }
+
+  /**
+   * Posição de reprodução do elemento multimédia (definição) &amp;mdash; variando entre zero (&lt;code>0&lt;/code>) e um (&lt;code>1&lt;/code>)
+   * @type {number}
+   */
+  set volume(volume) {
+    this.elemento.volume = volume;
+  }
+
+  /**
+    * Posição de reprodução do elemento multimédia (obtenção) &amp;mdash; variando entre zero (&lt;code>0&lt;/code>) e um (&lt;code>1&lt;/code>)
+    * @type {number}
+    */
+  get volume() {
+    return this.elemento.volume;
+  }
+
+  /**
+   * Posição de reprodução do elemento multimédia (definição)
+   * @type {number}
+   */
+  set posicao(tempo) {
+    this.elemento.currentTime = tempo;
+  }
+
+  /**
+   * Posição de reprodução do elemento multimédia (obtenção)
+   * @type {number}
+   */
+  get posicao() {
+    return this.elemento.currentTime;
+  }
+
+  /**
+   * Este método inicia ou retoma a reprodução do elemento multimédia
+   * @param {boolean} inicio Indicação de que o elemento deve ser reproduzido do início; caso contrário, é reproduzido a partir do momento em que foi interrompida a sua reprodução anterior (ou do momento indicado pelo tempo de reprodução)
+   */
+  reproduz(inicio = false) {
+    if (inicio) {
+      this.elemento.currentTime = 0;
+    }
+    this.elemento.play();
+  }
+
+  /**
+   * Este método pára a reprodução do elemento multimédia.
+   */
+  pausa() {
+    this.elemento.pause();
+  }
+
+  /**
+   * Este método pára a reprodução do elemento multimédia, voltando também ao seu início.
+   */
+  para() {
+    this.pausa();
+    this.elemento.currentTime = 0;
+  }
+}
+
+/**
+ * @class
+ * @extends Media
+ * @classdesc A classe &lt;code>Som&lt;/code> funciona essencialmente como um envelope (&lt;em>wrapper&lt;/em>) para elementos &lt;code>audio&lt;/code>, facilitando a sua criação e também uso de métodos mais comuns para, por exemplo, o controlo da sua reprodução.
+ * @property {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>audio&lt;/code> a ser representado
+ */
+class Som extends Media {
+  /**
+   * Construtor da classe &lt;code>Som&lt;/code>
+   * @param {HTMLElement} elemento  O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>audio&lt;/code> a ser representado
+   */
+  constructor(elemento) {
+    super(elemento);
+  }
+}
+
+//
+
+/**
+ * @class
+ * @extends Media
+ * @classdesc A classe &lt;code>Filme&lt;/code> funciona essencialmente como um envelope (&lt;em>wrapper&lt;/em>) para elementos &lt;code>video&lt;/code>, facilitando a sua criação e também uso de métodos mais comuns para, por exemplo, o controlo da sua reprodução.
+ * @property {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>video&lt;/code> a ser representado
+ */
+class Filme extends Media {
+  /**
+   * Construtor da classe &lt;code>Filme&lt;/code>
+   * @param {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>video&lt;/code> a ser representado
+   */
+  constructor(elemento) {
+    super(elemento);
+  }
+
+  /**
+   * Largura do &lt;em>vídeo&lt;/em> (número de colunas)
+   * @type {number}
+   */
+  get largura() {
+    return this.elemento.videoWidth;
+  }
+
+  /**
+   * Altura do &lt;em>vídeo&lt;/em> (número de linhas)
+   * @type {number}
+   */
+  get altura() {
+    return this.elemento.videoHeight;
+  }
+
+  /**
+  * Largura final do &lt;em>vídeo&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
+  * @type {number}
+  */
+  get larguraFinal() {
+    return this.elemento.offsetWidth;
+  }
+
+  /**
+   * Altura final do &lt;em>vídeo&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
+   * @type {number}
+   */
+  get alturaFinal() {
+    return this.elemento.offsetHeight;
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="Media.html">Media</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li></ul><h3>Global</h3><ul><li><a href="global.html#desenhaGraficos">desenhaGraficos</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jun 07 2021 23:32:25 GMT+0100 (Western European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
