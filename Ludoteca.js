@@ -484,6 +484,7 @@ class Texto extends Grafico {
    * Construtor para criação de novos objectos do tipo <code>texto</code>
    * @param {number} x Abscissa para posicionar o <em>texto</em> no <em>canvas</em>
    * @param {number} y Ordenada para posicionar o <em>texto</em> no <em>canvas</em>
+   * @param {string} texto Conteúdo de <em>texto</em> a desenhar no <em>canvas</em>
    * @param {string} preenchimento="black" Cor do preenchimento do <em>texto</em>
    * @param {string} contorno="black" Cor do contorno do <em>texto</em>
    * @param {number} espessura=0 Espessura do contorno do <em>texto</em>
@@ -583,6 +584,7 @@ class Texto extends Grafico {
  * @classdesc A classe <code>Imagem</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>imagens</em>. Num nível básico, uma <em>imagem</em> é definida por um <em>ponto</em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem.
  * @property {number} x Abscissa para posicionar a <em>imagem</em> no <em>canvas</em>
  * @property {number} y Ordenada para posicionar a <em>imagem</em> no <em>canvas</em>
+ * @property {HTMLElement} imagem Elemento HTML que contém a <em>imagem</em>
  * @property {number} largura Largura da <em>imagem</em>
  * @property {number} altura Altura da <em>imagem</em>
  * @property {number} deltaX=0 Variação horizontal da posição da <em>imagem</em>
@@ -599,7 +601,7 @@ class Imagem extends Grafico {
    * Construtor para criação de novos objectos do tipo <code>Imagem</code>
    * @param {number} x Abscissa para posicionar a <em>imagem</em> no <em>canvas</em>
    * @param {number} y Ordenada para posicionar a <em>imagem</em> no <em>canvas</em>
-   * @param {HTMLElement} imagem O elemento HTML que contém a <em>imagem</em>
+   * @param {HTMLElement} imagem Elemento HTML que contém a <em>imagem</em>
    */
   constructor(x, y, imagem) {
     super(x, y);
@@ -669,6 +671,10 @@ class Imagem extends Grafico {
  * @classdesc A classe <code>ImagemAnimada</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>imagens animadas</em> (ou <em>sprites</em>). Num nível básico, uma <em>imagem animada</em> é definida por um <em>ponto</em>, correspondente, regra geral, ao seu canto superior esquerdo, com os vários fotogramas a serem desenhados nessa posição, assumindo-se dimensões idênticas para cada um deles. Assim, os <em>sprites</em> utilizados podem ter uma sequência horizontal (tira) ou várias, desde que os fotogramas tenham as mesmas dimensões.
  * @property {number} x Abscissa para posicionar o <em>sprite</em> no <em>canvas</em>
  * @property {number} y Ordenada para posicionar o <em>sprite</em> no <em>canvas</em>
+ * @property {HTMLElement} imagem Elemento HTML que contém o <em>sprite</em>
+ * @property {number} fotogramas Número de fotogramas (<em>frames</em>) do <em>sprite</em> 
+ * @property {number} iteracoes Número de iterações &mdash; na prática, o número de <em>frames</em> a serem gerados por via do método <code>window.requestAnimationFrame()</code> &mdash; antes de se passar ao fotograma seguinte do <em>sprite</em> 
+ * @property {number} tiras=1 Número de tiras existentes no <em>sprite</em>
  * @property {number} largura Largura de um <em>fotograma</em> do <em>sprite</em>
  * @property {number} altura Altura de um <em>fotograma</em> do <em>sprite</em>
  * @property {number} deltaX=0 Variação horizontal da posição do <em>sprite</em>
@@ -684,10 +690,10 @@ class Imagem extends Grafico {
    * Construtor para criação de novos objectos do tipo <code>ImagemAnimada</code>
    * @param {number} x Abscissa para posicionar o <em>sprite</em> no <em>canvas</em>
    * @param {number} y Ordenada para posicionar o <em>sprite</em> no <em>canvas</em>
-   * @param {HTMLElement} imagem O elemento HTML que contém o <em>sprite</em>
+   * @param {HTMLElement} imagem Elemento HTML que contém o <em>sprite</em>
    * @param {number} fotogramas Número de fotogramas (<em>frames</em>) do <em>sprite</em> 
    * @param {number} iteracoes Número de iterações &mdash; na prática, o número de <em>frames</em> a serem gerados por via do método <code>window.requestAnimationFrame()</code> &mdash; antes de se passar ao fotograma seguinte do <em>sprite</em> 
-   * @param {number} tiras Número de tiras existentes no <em>sprite</em>
+   * @param {number} tiras=1 Número de tiras existentes no <em>sprite</em>
    */
   constructor(x, y, imagem, fotogramas, iteracoes, tiras = 1) {
     super(x, y, imagem);
@@ -754,114 +760,50 @@ class Imagem extends Grafico {
 /**
  * @class
  * @extends Imagem
- * @classdesc A classe <code>ImagemVideo</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>videos</em> de forma embutida no <em>canvas</em>. Num nível básico, uma <em>imagem de vídeo</em> é definida por um <em>ponto</em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem &mdash; isto é, o vídeo.
- * @property {number} x Abscissa para posicionar o <em>vídeo</em> no <em>canvas</em>
- * @property {number} y Ordenada para posicionar o <em>vídeo</em> no <em>canvas</em>
- * @property {number} largura Largura do <em>vídeo</em>
- * @property {number} altura Altura do <em>vídeo</em>
- * @property {number} deltaX=0 Variação horizontal da posição do <em>vídeo</em>
- * @property {number} deltaY=0 Variação vertical da posição do <em>vídeo</em>
+ * @classdesc A classe <code>ImagemFilme</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>filmes</em> (<em>videos</em>) de forma embutida no <em>canvas</em>. Num nível básico, uma <em>imagem de filme</em> é definida por um <em>ponto</em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem &mdash; isto é, o filme.
+ * @property {number} x Abscissa para posicionar o <em>filme</em> no <em>canvas</em>
+ * @property {number} y Ordenada para posicionar o <em>filme</em> no <em>canvas</em>
+ * @property {Filme} filme Objecto de <em>vídeo</em> a ser desenhado no <em>canvas</em>
+ * @property {number} y Ordenada para posicionar o <em>filme</em> no <em>canvas</em>
+ * @property {number} altura Altura do <em>filme</em> (<em>vídeo</em>)
+ * @property {number} deltaX=0 Variação horizontal da posição do <em>filme</em>
+ * @property {number} deltaY=0 Variação vertical da posição do <em>filme</em>
  * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> até à posição <em>x</em> do cursor do rato
  * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> até à posição <em>y</em> do cursor do rato
- * @property {number} rotacao=0 Ângulo de rotação do <em>vídeo</em> quando desenhado no <em>canvas</em> &mdash; a rotação é feita tendo como referência o centro do <em>vídeo</em>
- * @property {boolean} activo=true Indicação de que o <em>vídeo</em> deve testar colisões
- * @property {boolean} visivel=true Indicação de que o <em>vídeo</em> deve ser desenhado no <em>canvas</em>
- * @property {boolean} seleccionado=false Indicação de que o <em>vídeo</em> se encontra seleccionado &mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
-  */class ImagemVideo extends Imagem {
+ * @property {number} rotacao=0 Ângulo de rotação do <em>filme</em> quando desenhado no <em>canvas</em> &mdash; a rotação é feita tendo como referência o centro do <em>filme</em>
+ * @property {boolean} activo=true Indicação de que o <em>filme</em> deve testar colisões
+ * @property {boolean} visivel=true Indicação de que o <em>filme</em> deve ser desenhado no <em>canvas</em>
+ * @property {boolean} seleccionado=false Indicação de que o <em>filme</em> se encontra seleccionado &mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+  */class ImagemFilme extends Imagem {
   /**
-   * Construtor para criação de novos objectos do tipo <code>ImagemVideo</code>
-   * @param {number} x Abscissa para posicionar o <em>vídeo</em> no <em>canvas</em>
-   * @param {number} y Ordenada para posicionar o <em>vídeo</em> no <em>canvas</em>
-   * @param {HTMLElement} video O elemento HTML que contém o <em>vídeo</em>
+   * Construtor para criação de novos objectos do tipo <code>ImagemFilme</code>
+   * @param {number} x Abscissa para posicionar o <em>filme</em> no <em>canvas</em>
+   * @param {number} y Ordenada para posicionar o <em>filme</em> no <em>canvas</em>
+   * @param {Filme} filme Objecto que representa o elemento <em>canvas</em> onde será desenhada o <em>filme</em>
    */
-  constructor(x, y, video) {
-    super(x, y, video);
-    this.video = video;
+  constructor(x, y, filme) {
+    super(x, y, filme);
+    this.filme = filme;
   }
 
   /**
-   * Altura do <em>vídeo</em>
+   * Altura do <em>filme</em> (<em>vídeo</em>)
    * @type {number}
    */
   get largura() {
-    return this.video.videoWidth;
+    return this.filme.largura;
   }
 
   /**
-   * Largura do <em>vídeo</em>
+   * Largura do <em>filme</em> (<em>vídeo</em>)
    * @type {number}
    */
   get altura() {
-    return this.video.videoHeight;
+    return this.filme.altura;
   }
 
   /**
-   * Duração da reprodução do <em>vídeo</em> (obtenção)
-   * @type {number}
-   */
-  get duracao() {
-    return this.elemento.duration;
-  }
-
-  /**
-   * Posição de reprodução do <em>vídeo</em> (definição) &mdash; variando entre zero (<code>0</code>) e um (<code>1</code>)
-   * @type {number}
-   */
-  set volume(volume) {
-    this.video.volume = volume;
-  }
-
-  /**
-    * Posição de reprodução do <em>vídeo</em> (obtenção) &mdash; variando entre zero (<code>0</code>) e um (<code>1</code>)
-    * @type {number}
-    */
-  get volume() {
-    return this.video.volume;
-  }
-
-  /**
-   * Posição de reprodução do <em>vídeo</em> (definição)
-   * @type {number}
-   */
-  set posicao(tempo) {
-    this.video.currentTime = tempo;
-  }
-
-  /**
-   * Posição de reprodução do <em>vídeo</em> (obtenção)
-   * @type {number}
-   */
-  get posicao() {
-    return this.video.currentTime;
-  }
-
-  /**
-   * Este método inicia ou retoma a reprodução do <em>vídeo</em>.
-   * @param {boolean} inicio Indicação de que o <em>vídeo</em> deve ser reproduzido do início; caso contrário, é reproduzido a partir do momento em que foi interrompida a sua reprodução anterior (ou do momento indicado pelo tempo de reprodução)
-   */
-  reproduz(inicio = false) {
-    if (inicio) {
-      this.video.currentTime = 0;
-    }
-    this.video.play();
-  }
-
-  /**
-   * Este método pára a reprodução do <em>vídeo</em>.
-   */
-  pausa() {
-    this.video.pause();
-  }
-
-  /**
-   * Este método pára a reprodução do <em>vídeo</em>, voltando também ao seu início.
-   */
-  para() {
-    this.pausa();
-    this.video.currentTime = 0;
-  }
-  /**
-   * Este método desenha um <em>video</em> no <em>canvas</em>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo desse <em>vídeo</em>. Note-se que o <em>vídeo</em> só é efetivamente reproduzido no <em>canvas</em> se o elemento <code>video</code> estiver também a ser reproduzido.
+   * Este método desenha um <em>video</em> no <em>canvas</em>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo desse <em>vídeo</em>. Note-se que o <em>vídeo</em> só é efetivamente reproduzido no <em>canvas</em> se o elemento <code>video</code> associado por via da propriedade <code>filme</code> estiver também a ser reproduzido.
    * @param {Tela} tela Objecto que representa o elemento <em>canvas</em> onde será desenhada o <em>vídeo</em>
    */
   desenha(tela) {
@@ -872,11 +814,11 @@ class Imagem extends Grafico {
         contexto.save();
         contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
         contexto.rotate(this.rotacao * Math.PI / 180);
-        contexto.drawImage(this.video, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
+        contexto.drawImage(this.filme.elemento, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
         contexto.restore();
       }
       else {
-        contexto.drawImage(this.video, Math.floor(this.x), Math.floor(this.y));
+        contexto.drawImage(this.filme.elemento, Math.floor(this.x), Math.floor(this.y));
       }
     }
     this.x += this.deltaX;

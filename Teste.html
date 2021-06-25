@@ -32,7 +32,7 @@
         var ratoY;
 
         var imagemAnimada;
-        var imagemVideo;
+        var imagemFilme;
         var coordenadas;
         var pentagono;
         var quadrado;
@@ -40,6 +40,7 @@
         var imagem;
         var teclas;
         var texto;
+        var filme;
 
         var som;
         //...
@@ -54,7 +55,8 @@
 
             imagemAnimada = new ImagemAnimada(500, 200, document.getElementById("imagemAnimada"), 6, 10);
 
-            imagemVideo = new ImagemVideo(50, 50, document.getElementById("video"));
+            filme = new Filme(document.getElementById("video"));
+            imagemFilme = new ImagemFilme(50, 50, filme);
 
             coordenadas = new Texto(5, 5, "(x, y)");
             var verticesPentagono = new Array();
@@ -93,7 +95,7 @@
             fundo.desenha(tela);
 
             imagemAnimada.desenha(tela);
-            imagemVideo.desenha(tela);
+            imagemFilme.desenha(tela);
             coordenadas.texto = "(" + ratoX + ", " + ratoY + ")";
             coordenadas.desenha(tela);
             pentagono.rotacao = contador % 360;
@@ -120,8 +122,8 @@
                 tela.elemento.style.cursor = "grabbing";
             }
 
-            if (imagemVideo.contemPonto(ratoX, ratoY)) {
-                imagemVideo.reproduz();
+            if (imagemFilme.contemPonto(ratoX, ratoY)) {
+                filme.reproduz();
                 tela.elemento.style.cursor = "grabbing";
             }
             //...
@@ -130,7 +132,7 @@
         function processaMovimento(rato) {
             ratoX = Math.floor(rato.offsetX * racioX);
             ratoY = Math.floor(rato.offsetY * racioY);
-            if (imagem.contemPonto(ratoX, ratoY) || imagemVideo.contemPonto(ratoX, ratoY)) {
+            if (imagem.contemPonto(ratoX, ratoY) || imagemFilme.contemPonto(ratoX, ratoY)) {
                 tela.elemento.style.cursor = "grab";
             }
             else {

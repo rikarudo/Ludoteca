@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Imagem</title>
+    <title>JSDoc: Class: ImagemFilme</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Imagem</h1>
+    <h1 class="page-title">Class: ImagemFilme</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Imagem<span class="signature">(x, y, imagem)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>ImagemFilme<span class="signature">(x, y, filme)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">A classe <code>Imagem</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>imagens</em>. Num nível básico, uma <em>imagem</em> é definida por um <em>ponto</em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem.</div>
+            <div class="class-description">A classe <code>ImagemFilme</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>filmes</em> (<em>videos</em>) de forma embutida no <em>canvas</em>. Num nível básico, uma <em>imagem de filme</em> é definida por um <em>ponto</em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem &mdash; isto é, o filme.</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="Imagem"><span class="type-signature"></span>new Imagem<span class="signature">(x, y, imagem)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ImagemFilme"><span class="type-signature"></span>new ImagemFilme<span class="signature">(x, y, filme)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Construtor para criação de novos objectos do tipo <code>Imagem</code>
+    Construtor para criação de novos objectos do tipo <code>ImagemFilme</code>
 </div>
 
 
@@ -105,7 +105,7 @@
 
             
 
-            <td class="description last">Abscissa para posicionar a <em>imagem</em> no <em>canvas</em></td>
+            <td class="description last">Abscissa para posicionar o <em>filme</em> no <em>canvas</em></td>
         </tr>
 
     
@@ -128,20 +128,20 @@
 
             
 
-            <td class="description last">Ordenada para posicionar a <em>imagem</em> no <em>canvas</em></td>
+            <td class="description last">Ordenada para posicionar o <em>filme</em> no <em>canvas</em></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>imagem</code></td>
+                <td class="name"><code>filme</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">HTMLElement</span>
+<span class="param-type"><a href="Filme.html">Filme</a></span>
 
 
             
@@ -151,7 +151,7 @@
 
             
 
-            <td class="description last">Elemento HTML que contém a <em>imagem</em></td>
+            <td class="description last">Objecto que representa o elemento <em>canvas</em> onde será desenhada o <em>filme</em></td>
         </tr>
 
     
@@ -211,7 +211,7 @@
                 </td>
             
 
-            <td class="description last">Abscissa para posicionar a <em>imagem</em> no <em>canvas</em></td>
+            <td class="description last">Abscissa para posicionar o <em>filme</em> no <em>canvas</em></td>
         </tr>
 
     
@@ -238,20 +238,20 @@
                 </td>
             
 
-            <td class="description last">Ordenada para posicionar a <em>imagem</em> no <em>canvas</em></td>
+            <td class="description last">Ordenada para posicionar o <em>filme</em> no <em>canvas</em></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>imagem</code></td>
+                <td class="name"><code>filme</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">HTMLElement</span>
+<span class="param-type"><a href="Filme.html">Filme</a></span>
 
 
             
@@ -265,14 +265,14 @@
                 </td>
             
 
-            <td class="description last">Elemento HTML que contém a <em>imagem</em></td>
+            <td class="description last">Objecto de <em>vídeo</em> a ser desenhado no <em>canvas</em></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>largura</code></td>
+                <td class="name"><code>y</code></td>
             
 
             <td class="type">
@@ -292,7 +292,7 @@
                 </td>
             
 
-            <td class="description last">Largura da <em>imagem</em></td>
+            <td class="description last">Ordenada para posicionar o <em>filme</em> no <em>canvas</em></td>
         </tr>
 
     
@@ -319,7 +319,7 @@
                 </td>
             
 
-            <td class="description last">Altura da <em>imagem</em></td>
+            <td class="description last">Altura do <em>filme</em> (<em>vídeo</em>)</td>
         </tr>
 
     
@@ -348,7 +348,7 @@
                 </td>
             
 
-            <td class="description last">Variação horizontal da posição da <em>imagem</em></td>
+            <td class="description last">Variação horizontal da posição do <em>filme</em></td>
         </tr>
 
     
@@ -377,7 +377,7 @@
                 </td>
             
 
-            <td class="description last">Variação vertical da posição da <em>imagem</em></td>
+            <td class="description last">Variação vertical da posição do <em>filme</em></td>
         </tr>
 
     
@@ -464,7 +464,7 @@
                 </td>
             
 
-            <td class="description last">Ângulo de rotação da <em>imagem</em> quando desenhado no <em>canvas</em> &mdash; a rotação é feita tendo como referência o centro da <em>imagem</em></td>
+            <td class="description last">Ângulo de rotação do <em>filme</em> quando desenhado no <em>canvas</em> &mdash; a rotação é feita tendo como referência o centro do <em>filme</em></td>
         </tr>
 
     
@@ -493,7 +493,7 @@
                 </td>
             
 
-            <td class="description last">Indicação de que a <em>imagem</em> deve testar colisões</td>
+            <td class="description last">Indicação de que o <em>filme</em> deve testar colisões</td>
         </tr>
 
     
@@ -522,7 +522,7 @@
                 </td>
             
 
-            <td class="description last">Indicação de que a <em>imagem</em> deve ser desenhado no <em>canvas</em></td>
+            <td class="description last">Indicação de que o <em>filme</em> deve ser desenhado no <em>canvas</em></td>
         </tr>
 
     
@@ -551,7 +551,7 @@
                 </td>
             
 
-            <td class="description last">Indicação de que a <em>imagem</em> se encontra seleccionado &mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato</td>
+            <td class="description last">Indicação de que o <em>filme</em> se encontra seleccionado &mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato</td>
         </tr>
 
     
@@ -590,7 +590,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line599">line 599</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line777">line 777</a>
     </li></ul></dd>
     
 
@@ -630,7 +630,7 @@
 
 
     <ul>
-        <li><a href="Grafico.html">Grafico</a></li>
+        <li><a href="Imagem.html">Imagem</a></li>
     </ul>
 
 
@@ -657,7 +657,7 @@
 
 
 <div class="description">
-    Altura da <em>imagem</em>
+    Largura do <em>filme</em> (<em>vídeo</em>)
 </div>
 
 
@@ -685,6 +685,11 @@
     
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Imagem.html#altura">Imagem#altura</a>
+    </li></ul></dd>
+    
 
     
 
@@ -705,7 +710,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line623">line 623</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line801">line 801</a>
     </li></ul></dd>
     
 
@@ -729,7 +734,7 @@
 
 
 <div class="description">
-    Largura da <em>imagem</em>
+    Altura do <em>filme</em> (<em>vídeo</em>)
 </div>
 
 
@@ -757,6 +762,11 @@
     
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Imagem.html#largura">Imagem#largura</a>
+    </li></ul></dd>
+    
 
     
 
@@ -777,7 +787,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line615">line 615</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line793">line 793</a>
     </li></ul></dd>
     
 
@@ -888,7 +898,7 @@
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Grafico.html#colide">Grafico#colide</a>
+        <a href="Imagem.html#colide">Imagem#colide</a>
     </li></ul></dd>
     
 
@@ -1075,7 +1085,7 @@
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Grafico.html#contemPonto">Grafico#contemPonto</a>
+        <a href="Imagem.html#contemPonto">Imagem#contemPonto</a>
     </li></ul></dd>
     
 
@@ -1239,7 +1249,7 @@
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Grafico.html#contemPontos">Grafico#contemPontos</a>
+        <a href="Imagem.html#contemPontos">Imagem#contemPontos</a>
     </li></ul></dd>
     
 
@@ -1328,7 +1338,7 @@
 
 
 <div class="description">
-    Este método desenha uma <em>imagem</em> no <em>canvas</em>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo dessa <em>imagem</em>.
+    Este método desenha um <em>video</em> no <em>canvas</em>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo desse <em>vídeo</em>. Note-se que o <em>vídeo</em> só é efetivamente reproduzido no <em>canvas</em> se o elemento <code>video</code> associado por via da propriedade <code>filme</code> estiver também a ser reproduzido.
 </div>
 
 
@@ -1380,7 +1390,7 @@
 
             
 
-            <td class="description last">Objecto que representa o elemento <em>canvas</em> onde será desenhada a <em>imagem</em></td>
+            <td class="description last">Objecto que representa o elemento <em>canvas</em> onde será desenhada o <em>vídeo</em></td>
         </tr>
 
     
@@ -1403,7 +1413,7 @@
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Grafico.html#desenha">Grafico#desenha</a>
+        <a href="Imagem.html#desenha">Imagem#desenha</a>
     </li></ul></dd>
     
 
@@ -1426,7 +1436,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line646">line 646</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line809">line 809</a>
     </li></ul></dd>
     
 
