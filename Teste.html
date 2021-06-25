@@ -32,6 +32,7 @@
         var ratoY;
 
         var imagemAnimada;
+        var imagemVideo;
         var coordenadas;
         var pentagono;
         var quadrado;
@@ -52,17 +53,25 @@
             fundo = new Rectangulo(0, 0, tela.largura, tela.altura, "lightblue");
 
             imagemAnimada = new ImagemAnimada(500, 200, document.getElementById("imagemAnimada"), 6, 10);
+
+            imagemVideo = new ImagemVideo(50, 50, document.getElementById("video"));
+
             coordenadas = new Texto(5, 5, "(x, y)");
             var verticesPentagono = new Array();
             for (var i = 0; i < 5; i++) {
                 verticesPentagono.push({ x: 100 * Math.cos(2 * Math.PI * i / 5 + Math.PI), y: 100 * Math.sin(2 * Math.PI * i / 5 + Math.PI) });
             }
-            pentagono = new Poligono(200, 200, verticesPentagono);
+            pentagono = new Poligono(200, 300, verticesPentagono);
+
             quadrado = new Rectangulo(400, 400, 100, 100, "green");
+
             circulo = new Circulo(500, 100, 50, "orange");
+
             imagem = new Imagem(100, 500, document.getElementById("imagem"));
+
             teclas = new Texto(650, 550, "Teclas...");
-            texto = new Texto(100, 50, "Isto é um teste com vários gráficos e alguns eventos do rato e do teclado...", "navy");
+
+            texto = new Texto(50, 25, "Isto é um teste com vários gráficos e alguns eventos do rato e do teclado...", "navy");
 
             som = new Som(document.getElementById("som"));
             //...
@@ -84,6 +93,7 @@
             fundo.desenha(tela);
 
             imagemAnimada.desenha(tela);
+            imagemVideo.desenha(tela);
             coordenadas.texto = "(" + ratoX + ", " + ratoY + ")";
             coordenadas.desenha(tela);
             pentagono.rotacao = contador % 360;
@@ -107,6 +117,12 @@
 
             if (imagem.contemPonto(ratoX, ratoY)) {
                 som.reproduz(true);
+                tela.elemento.style.cursor = "grabbing";
+            }
+
+            if (imagemVideo.contemPonto(ratoX, ratoY)) {
+                imagemVideo.reproduz();
+                tela.elemento.style.cursor = "grabbing";
             }
             //...
         }
@@ -114,6 +130,14 @@
         function processaMovimento(rato) {
             ratoX = Math.floor(rato.offsetX * racioX);
             ratoY = Math.floor(rato.offsetY * racioY);
+            if (imagem.contemPonto(ratoX, ratoY) || imagemVideo.contemPonto(ratoX, ratoY)) {
+                tela.elemento.style.cursor = "grab";
+            }
+            else {
+                tela.elemento.style.cursor = "default";
+            }
+            //...
+
         }
 
         function processaBotaoLibertado(rato) {
@@ -177,6 +201,8 @@
         <img id="imagemAnimada" src="recursos/spritestrip.png">
         <audio id="som" src="recursos/horn.wav">O seu <em>browser</em> não suporta o elemento
             <code>audio</code>!</audio>
+        <video id="video" src="recursos/buck.mp4">O seu <em>browser</em> não suporta o elemento
+            <code>video</code>!</video>
         <!-- ... -->
     </div>
 </body>

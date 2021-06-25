@@ -1,8 +1,8 @@
 /**
- * @file Biblioteca de classes que representam vários tipos de <em>gráficos</em> a desenhar num <em>canvas</em>, bem como o próprio <em>canvas</em>, e também os elementos <em>audio</em> e <em>video</em>, cujo propósito é facilitar o desenvolvimento de jogos e outras aplicações multimédia num contexto académico. Procura-se que esta biblioteca aborde apenas os casos mais comuns, evitando complexidade desnecessária, se bem que algumas classes contenham algumas propriedades para facilitar a caracterização dos objectos criados.
+ * @file Biblioteca de classes que representam vários tipos de <em>gráficos</em> a desenhar num <em>canvas</em>, bem como o próprio <em>canvas</em>, e também os elementos <em>audio</em> e <em>video</em>, cujo propósito é facilitar o desenvolvimento de jogos e outras aplicações multimédia num contexto académico. Procura-se que esta biblioteca aborde apenas os casos mais comuns, evitando complexidade desnecessária, se bem que algumas classes contenham algumas propriedades para facilitar a caracterização dos objectos criados para casos habituais e fora do estritamente necessário.
  * @version 0.9
  * @author Ricardo Rodrigues
- * @date 2021-06-07
+ * @date 2021-06-25
  * @copyright Ricardo Rodrigues (2021)
  */
 
@@ -38,7 +38,7 @@ class Grafico {
     this.visivel = true;
     this.seleccionado = false;
     if (this.constructor.name == "Grafico") {
-      throw new TypeError("A classe abstracta 'Grafico' não pode ser instanciada directamente, devendo ser implementada através de subclasses (que poderão depois ser instanciadas).");
+      throw new TypeError("A classe abstracta 'Grafico' não pode ser instanciada directamente, devendo ser implementada através de subclasses (que poderão então ser instanciadas).");
     }
   }
 
@@ -391,6 +391,22 @@ class Poligono extends Grafico {
   }
 
   /**
+   * Centróide (<em>x</em> e <em>y</em>) deste <em>polígono</em>, tendo em conta apenas os pontos dos seus vértices &mdash; útil para o seu desenho com rotação
+   * @type {{x: number, y: number}}
+   */
+  get centroide() {
+    var somaX = 0;
+    var somaY = 0;
+    for (var i = 0; i < this.pontos.length; i++) {
+      somaX += this.pontos[i].x;
+      somaY += this.pontos[i].y;
+    }
+    var centroideX = Math.floor(somaX / this.pontos.length);
+    var centroideY = Math.floor(somaY / this.pontos.length);
+    return { x: centroideX, y: centroideY };
+  }
+
+  /**
    * Este método desenha um <em>polígono</em> no <em>canvas</em>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo de um <em>rectângulo</em> imaginário que contenha o <em>polígono</em>.
    * @param {Tela} tela Objecto que representa o elemento <em>canvas</em> onde será desenhado o <em>polígono</em>
    */
@@ -401,14 +417,14 @@ class Poligono extends Grafico {
       contexto.beginPath()
       // para evitar processamento desnecessário, só se faz a translação e a rotação quando o angulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
       if (this.rotacao != 0) {
-        contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
+        contexto.translate(Math.floor(this.x + this.centroide.x), Math.floor(this.y + this.centroide.y));
         contexto.rotate(this.rotacao * Math.PI / 180);
         for (var i = 0; i < this.pontos.length; i++) {
           if (i == 0) {
-            contexto.moveTo(Math.floor(this.pontos[i].x - this.largura * 0.5), Math.floor(this.pontos[i].y - this.altura * 0.5));
+            contexto.moveTo(Math.floor(this.pontos[i].x - this.centroide.x), Math.floor(this.pontos[i].y - this.centroide.y));
           }
           else {
-            contexto.lineTo(Math.floor(this.pontos[i].x - this.largura * 0.5), Math.floor(this.pontos[i].y - this.altura * 0.5));
+            contexto.lineTo(Math.floor(this.pontos[i].x - this.centroide.x), Math.floor(this.pontos[i].y - this.centroide.y));
           }
         }
       }
@@ -650,11 +666,11 @@ class Imagem extends Grafico {
 /**
  * @class
  * @extends Imagem
- * @classdesc A classe <code>ImagemAnimada</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>imagens animadas</em> (ou <em>sprites</em>). Num nível básico, uma <em>imagem</em> é definida por um <em>ponto</em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem. Os <em>sprites</em> utilizados podem ter uma sequência horizontal (tira) ou várias, desde que os fotogramas sejam de dimensões idênticas.
+ * @classdesc A classe <code>ImagemAnimada</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>imagens animadas</em> (ou <em>sprites</em>). Num nível básico, uma <em>imagem animada</em> é definida por um <em>ponto</em>, correspondente, regra geral, ao seu canto superior esquerdo, com os vários fotogramas a serem desenhados nessa posição, assumindo-se dimensões idênticas para cada um deles. Assim, os <em>sprites</em> utilizados podem ter uma sequência horizontal (tira) ou várias, desde que os fotogramas tenham as mesmas dimensões.
  * @property {number} x Abscissa para posicionar o <em>sprite</em> no <em>canvas</em>
  * @property {number} y Ordenada para posicionar o <em>sprite</em> no <em>canvas</em>
- * @property {number} largura Largura do <em>sprite</em>
- * @property {number} altura Altura do <em>sprite</em>
+ * @property {number} largura Largura de um <em>fotograma</em> do <em>sprite</em>
+ * @property {number} altura Altura de um <em>fotograma</em> do <em>sprite</em>
  * @property {number} deltaX=0 Variação horizontal da posição do <em>sprite</em>
  * @property {number} deltaY=0 Variação vertical da posição do <em>sprite</em>
  * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> até à posição <em>x</em> do cursor do rato
@@ -665,7 +681,7 @@ class Imagem extends Grafico {
  * @property {boolean} seleccionado=false Indicação de que o <em>sprite</em> se encontra seleccionado &mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
   */class ImagemAnimada extends Imagem {
   /**
-   * Construtor para criação de novos objectos do tipo <code>Imagem Anima</code>
+   * Construtor para criação de novos objectos do tipo <code>ImagemAnimada</code>
    * @param {number} x Abscissa para posicionar o <em>sprite</em> no <em>canvas</em>
    * @param {number} y Ordenada para posicionar o <em>sprite</em> no <em>canvas</em>
    * @param {HTMLElement} imagem O elemento HTML que contém o <em>sprite</em>
@@ -688,16 +704,16 @@ class Imagem extends Grafico {
    * Altura da <em>imagem animada</em>, considerando o número de tiras presentes e assumindo dimensões idênticas dos mesmos
    * @type {number}
    */
-   get largura() {
-    return this.imagem.width / this.tiras;
+  get largura() {
+    return this.imagem.width / this.fotogramas;
   }
 
   /**
    * Largura da <em>imagem animada</em>, considerando o número de fotogramas presentes e assumindo dimensões idênticas dos mesmos
    * @type {number}
    */
-   get largura() {
-    return this.imagem.width / this.fotogramas;
+  get altura() {
+    return this.imagem.height / this.tiras;
   }
 
   /**
@@ -726,6 +742,141 @@ class Imagem extends Grafico {
           }
         }
         this.contador++;
+      }
+    }
+    this.x += this.deltaX;
+    this.y += this.deltaY;
+  }
+}
+
+//
+
+/**
+ * @class
+ * @extends Imagem
+ * @classdesc A classe <code>ImagemVideo</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>videos</em> de forma embutida no <em>canvas</em>. Num nível básico, uma <em>imagem de vídeo</em> é definida por um <em>ponto</em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem &mdash; isto é, o vídeo.
+ * @property {number} x Abscissa para posicionar o <em>vídeo</em> no <em>canvas</em>
+ * @property {number} y Ordenada para posicionar o <em>vídeo</em> no <em>canvas</em>
+ * @property {number} largura Largura do <em>vídeo</em>
+ * @property {number} altura Altura do <em>vídeo</em>
+ * @property {number} deltaX=0 Variação horizontal da posição do <em>vídeo</em>
+ * @property {number} deltaY=0 Variação vertical da posição do <em>vídeo</em>
+ * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> até à posição <em>x</em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> até à posição <em>y</em> do cursor do rato
+ * @property {number} rotacao=0 Ângulo de rotação do <em>vídeo</em> quando desenhado no <em>canvas</em> &mdash; a rotação é feita tendo como referência o centro do <em>vídeo</em>
+ * @property {boolean} activo=true Indicação de que o <em>vídeo</em> deve testar colisões
+ * @property {boolean} visivel=true Indicação de que o <em>vídeo</em> deve ser desenhado no <em>canvas</em>
+ * @property {boolean} seleccionado=false Indicação de que o <em>vídeo</em> se encontra seleccionado &mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+  */class ImagemVideo extends Imagem {
+  /**
+   * Construtor para criação de novos objectos do tipo <code>ImagemVideo</code>
+   * @param {number} x Abscissa para posicionar o <em>vídeo</em> no <em>canvas</em>
+   * @param {number} y Ordenada para posicionar o <em>vídeo</em> no <em>canvas</em>
+   * @param {HTMLElement} video O elemento HTML que contém o <em>vídeo</em>
+   */
+  constructor(x, y, video) {
+    super(x, y, video);
+    this.video = video;
+  }
+
+  /**
+   * Altura do <em>vídeo</em>
+   * @type {number}
+   */
+  get largura() {
+    return this.video.videoWidth;
+  }
+
+  /**
+   * Largura do <em>vídeo</em>
+   * @type {number}
+   */
+  get altura() {
+    return this.video.videoHeight;
+  }
+
+  /**
+   * Duração da reprodução do <em>vídeo</em> (obtenção)
+   * @type {number}
+   */
+  get duracao() {
+    return this.elemento.duration;
+  }
+
+  /**
+   * Posição de reprodução do <em>vídeo</em> (definição) &mdash; variando entre zero (<code>0</code>) e um (<code>1</code>)
+   * @type {number}
+   */
+  set volume(volume) {
+    this.video.volume = volume;
+  }
+
+  /**
+    * Posição de reprodução do <em>vídeo</em> (obtenção) &mdash; variando entre zero (<code>0</code>) e um (<code>1</code>)
+    * @type {number}
+    */
+  get volume() {
+    return this.video.volume;
+  }
+
+  /**
+   * Posição de reprodução do <em>vídeo</em> (definição)
+   * @type {number}
+   */
+  set posicao(tempo) {
+    this.video.currentTime = tempo;
+  }
+
+  /**
+   * Posição de reprodução do <em>vídeo</em> (obtenção)
+   * @type {number}
+   */
+  get posicao() {
+    return this.video.currentTime;
+  }
+
+  /**
+   * Este método inicia ou retoma a reprodução do <em>vídeo</em>.
+   * @param {boolean} inicio Indicação de que o <em>vídeo</em> deve ser reproduzido do início; caso contrário, é reproduzido a partir do momento em que foi interrompida a sua reprodução anterior (ou do momento indicado pelo tempo de reprodução)
+   */
+  reproduz(inicio = false) {
+    if (inicio) {
+      this.video.currentTime = 0;
+    }
+    this.video.play();
+  }
+
+  /**
+   * Este método pára a reprodução do <em>vídeo</em>.
+   */
+  pausa() {
+    this.video.pause();
+  }
+
+  /**
+   * Este método pára a reprodução do <em>vídeo</em>, voltando também ao seu início.
+   */
+  para() {
+    this.pausa();
+    this.video.currentTime = 0;
+  }
+  /**
+   * Este método desenha um <em>video</em> no <em>canvas</em>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo desse <em>vídeo</em>. Note-se que o <em>vídeo</em> só é efetivamente reproduzido no <em>canvas</em> se o elemento <code>video</code> estiver também a ser reproduzido.
+   * @param {Tela} tela Objecto que representa o elemento <em>canvas</em> onde será desenhada o <em>vídeo</em>
+   */
+  desenha(tela) {
+    if (this.visivel) {
+      var contexto = tela.contexto;
+      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o angulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
+      if (this.rotacao != 0) {
+        contexto.save();
+        contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
+        contexto.rotate(this.rotacao * Math.PI / 180);
+        contexto.drawImage(this.video, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
+        contexto.restore();
+      }
+      else {
+        contexto.drawImage(this.video, Math.floor(this.x), Math.floor(this.y));
       }
     }
     this.x += this.deltaX;
