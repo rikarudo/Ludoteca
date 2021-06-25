@@ -121,7 +121,6 @@
                 som.reproduz(true);
                 tela.elemento.style.cursor = "grabbing";
             }
-
             if (imagemFilme.contemPonto(ratoX, ratoY)) {
                 filme.reproduz();
                 tela.elemento.style.cursor = "grabbing";
@@ -132,6 +131,7 @@
         function processaMovimento(rato) {
             ratoX = Math.floor(rato.offsetX * racioX);
             ratoY = Math.floor(rato.offsetY * racioY);
+
             if (imagem.contemPonto(ratoX, ratoY) || imagemFilme.contemPonto(ratoX, ratoY)) {
                 tela.elemento.style.cursor = "grab";
             }
@@ -139,12 +139,18 @@
                 tela.elemento.style.cursor = "default";
             }
             //...
-
         }
 
         function processaBotaoLibertado(rato) {
             ratoX = Math.floor(rato.offsetX * racioX);
             ratoY = Math.floor(rato.offsetY * racioY);
+
+            if (imagem.contemPonto(ratoX, ratoY) || imagemFilme.contemPonto(ratoX, ratoY)) {
+                tela.elemento.style.cursor = "grab";
+            }
+            else {
+                tela.elemento.style.cursor = "default";
+            }
             //...
         }
 
