@@ -30,7 +30,7 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>Circulo<span class="signature">(x, y, raio, preenchimento, contorno, espessura)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">A classe <code>Circulo</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>círculos</em>. Num nível básico, um <em>círculo</em> é definido por um <em>ponto</em> central e por um <em>raio</em>. Contudo, para que exista uniformidade no posicionamento das formas representadas pelas várias subclasses de <code>Grafico</code>, os círculos são também posicionados usando o canto superior esquerdo (de um <em>quadrado</em> imaginário que o contenha), em vez do seu centro &mdash; daí, o <em>raio</em> é somado ao <em>x</em> e ao <em>y</em> para fazer as devidas compensações de posicionamento para determinar o centro.</div>
+            <div class="class-description">A classe <code>Circulo</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>círculos</em>. Num nível básico, um <em>círculo</em> é definido por um <em>ponto</em> central e por um <em>raio</em>. Contudo, para que exista uniformidade no posicionamento das formas representadas pelas várias subclasses de <code>Grafico</code>, os círculos são também posicionados usando o canto superior esquerdo (de um <em>quadrado</em> imaginário que o contenha), em vez do seu centro &mdash; assim, o <em>raio</em> é somado ao <em>x</em> e ao <em>y</em> para fazer as devidas compensações de posicionamento, determinando o <em>centro</em>.</div>
         
     
 </header>
@@ -111,7 +111,7 @@
                 </td>
             
 
-            <td class="description last">Abscissa para posicionar o <em>círculo</em> no <em>canvas</em></td>
+            <td class="description last">Abscissa para posicionar o <em>círculo</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -138,7 +138,7 @@
                 </td>
             
 
-            <td class="description last">Ordenada para posicionar o <em>círculo</em> no <em>canvas</em></td>
+            <td class="description last">Ordenada para posicionar o <em>círculo</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -312,7 +312,7 @@
                 </td>
             
 
-            <td class="description last">Abscissa para posicionar o <em>círculo</em> no <em>canvas</em></td>
+            <td class="description last">Abscissa para posicionar o <em>círculo</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -339,7 +339,7 @@
                 </td>
             
 
-            <td class="description last">Ordenada para posicionar o <em>círculo</em> no <em>canvas</em></td>
+            <td class="description last">Ordenada para posicionar o <em>círculo</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -393,7 +393,7 @@
                 </td>
             
 
-            <td class="description last">Cor do preenchimento <em>círculo</em> &mdash; se a cor for especificada como <code>empty</code>, o <em>círculo</em> não é preenchido</td>
+            <td class="description last">Cor do preenchimento <em>círculo</em> &mdash; se a cor for especificada como <code>null</code>, o <em>círculo</em> não é preenchido</td>
         </tr>
 
     
@@ -420,7 +420,7 @@
                 </td>
             
 
-            <td class="description last">Cor do contorno do <em>círculo</em> &mdash; se a cor for especificada como <code>empty</code>, o contorno não é desenhado</td>
+            <td class="description last">Cor do contorno do <em>círculo</em> &mdash; se a cor for especificada como <code>null</code>, o contorno não é desenhado</td>
         </tr>
 
     
@@ -534,7 +534,7 @@
                 </td>
             
 
-            <td class="description last">Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> até à posição <em>x</em> do cursor do rato</td>
+            <td class="description last">Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato</td>
         </tr>
 
     
@@ -563,14 +563,14 @@
                 </td>
             
 
-            <td class="description last">Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> até à posição <em>y</em> do cursor do rato</td>
+            <td class="description last">Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>rotacao</code></td>
+                <td class="name"><code>angulo</code></td>
             
 
             <td class="type">
@@ -592,7 +592,65 @@
                 </td>
             
 
-            <td class="description last">Ângulo de rotação do <em>círculo</em> quando desenhado no <em>canvas</em> &mdash; dadas as características do <em>círculo</em>, esta propriedade é ignorada no seu desenho no <em>canvas</em></td>
+            <td class="description last">Ângulo de rotação do <em>círculo</em> quando desenhado no <code>canvas</code> &mdash; dadas as características do <em>círculo</em>, esta propriedade é ignorada no seu desenho no <code>canvas</code></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gravidade</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Força que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação vertical do <em>cículo</em>, actuando como a <em>gravidade</em></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>velocidade</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Velocidade que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação horizontal e vertical do <em>círculo</em></td>
         </tr>
 
     
@@ -621,7 +679,36 @@
                 </td>
             
 
-            <td class="description last">Indicação de que o <em>círculo</em> deve testar colisões</td>
+            <td class="description last">Indicação de que o <em>círculo</em> deve testar colisões, quando chamado o método <code>colide(outro)</code></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rotacao</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Indicação de que o <em>círculo</em> deve rodar, reflectindo o  seu <em>ângulo</em> &mdash; dadas as características do <em>círculo</em>, esta propriedade é ignorada no seu desenho no <code>canvas</code></td>
         </tr>
 
     
@@ -650,36 +737,7 @@
                 </td>
             
 
-            <td class="description last">Indicação de que o <em>círculo</em> deve ser desenhado no <em>canvas</em></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>seleccionado</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
-
-            <td class="description last">Indicação de que o <em>círculo</em> se encontra seleccionado &mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato</td>
+            <td class="description last">Indicação de que o <em>círculo</em> deve ser desenhado no <code>canvas</code>, quando chamado o método <code>desenha(tela)</code></td>
         </tr>
 
     
@@ -718,7 +776,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line113">line 113</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -833,7 +891,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line143">line 143</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line144">line 144</a>
     </li></ul></dd>
     
 
@@ -905,7 +963,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line135">line 135</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line136">line 136</a>
     </li></ul></dd>
     
 
@@ -1039,7 +1097,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line50">line 50</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line54">line 54</a>
     </li></ul></dd>
     
 
@@ -1226,7 +1284,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line153">line 153</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line154">line 154</a>
     </li></ul></dd>
     
 
@@ -1390,7 +1448,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line74">line 74</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -1456,7 +1514,7 @@
 
 
 <div class="description">
-    Este método desenha um <em>círculo</em> no <em>canvas</em>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo de um <em>quadrado</em> imaginário que envolva o <em>círculo</em>.
+    Este método desenha um <em>círculo</em> no <code>canvas</code>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo de um <em>quadrado</em> imaginário que envolva o <em>círculo</em>.
 </div>
 
 
@@ -1508,7 +1566,7 @@
 
             
 
-            <td class="description last">Objecto que representa o elemento <em>canvas</em> onde será desenhado o <em>círculo</em></td>
+            <td class="description last">Objecto que representa o elemento <code>canvas</code> onde será desenhado o <em>círculo</em></td>
         </tr>
 
     
@@ -1554,7 +1612,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line165">line 165</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line162">line 162</a>
     </li></ul></dd>
     
 
@@ -1606,7 +1664,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Jun 25 2021 16:02:34 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Apr 29 2022 16:15:00 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

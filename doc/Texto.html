@@ -111,7 +111,7 @@
                 </td>
             
 
-            <td class="description last">Abscissa para posicionar o <em>texto</em> no <em>canvas</em></td>
+            <td class="description last">Abscissa para posicionar o <em>texto</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -138,7 +138,7 @@
                 </td>
             
 
-            <td class="description last">Ordenada para posicionar o <em>texto</em> no <em>canvas</em></td>
+            <td class="description last">Ordenada para posicionar o <em>texto</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -165,7 +165,7 @@
                 </td>
             
 
-            <td class="description last">Conteúdo de <em>texto</em> a desenhar no <em>canvas</em></td>
+            <td class="description last">Conteúdo de <em>texto</em> a desenhar no <code>canvas</code></td>
         </tr>
 
     
@@ -312,7 +312,7 @@
                 </td>
             
 
-            <td class="description last">Abscissa para posicionar o <em>texto</em> no <em>canvas</em></td>
+            <td class="description last">Abscissa para posicionar o <em>texto</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -339,7 +339,7 @@
                 </td>
             
 
-            <td class="description last">Ordenada para posicionar o <em>texto</em> no <em>canvas</em></td>
+            <td class="description last">Ordenada para posicionar o <em>texto</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -366,7 +366,7 @@
                 </td>
             
 
-            <td class="description last">Cor do preenchimento do <em>texto</em> &mdash; se a cor for especificada como <code>empty</code>, o <em>texto</em> não é preenchido</td>
+            <td class="description last">Cor do preenchimento do <em>texto</em> &mdash; se a cor for especificada como <code>null</code>, o <em>texto</em> não é preenchido</td>
         </tr>
 
     
@@ -393,7 +393,7 @@
                 </td>
             
 
-            <td class="description last">Cor do contorno do <em>texto</em> &mdash; se a cor for especificada como <code>empty</code>, o contorno não é desenhado</td>
+            <td class="description last">Cor do contorno do <em>texto</em> &mdash; se a cor for especificada como <code>null</code>, o contorno não é desenhado</td>
         </tr>
 
     
@@ -449,7 +449,7 @@
                 </td>
             
 
-            <td class="description last">Tamanho do <em>texto</em></td>
+            <td class="description last">Tamanho do <em>texto</em> em pontos (<code>pt</code)</td>
         </tr>
 
     
@@ -623,7 +623,7 @@
                 </td>
             
 
-            <td class="description last">Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> até à posição <em>x</em> do cursor do rato</td>
+            <td class="description last">Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato</td>
         </tr>
 
     
@@ -652,14 +652,14 @@
                 </td>
             
 
-            <td class="description last">Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> até à posição <em>y</em> do cursor do rato</td>
+            <td class="description last">Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>rotacao</code></td>
+                <td class="name"><code>angulo</code></td>
             
 
             <td class="type">
@@ -681,7 +681,65 @@
                 </td>
             
 
-            <td class="description last">Ângulo de rotação do <em>texto</em> quando desenhado no <em>canvas</em> &mdash; a rotação é feita tendo como referência o centro do <em>texto</em></td>
+            <td class="description last">Ângulo de rotação do <em>texto</em> quando desenhado no <code>canvas</code> &mdash; a rotação é feita tendo como referência o centro do <em>texto</em></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gravidade</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Força que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação vertical do <em>texto</em>, actuando como a <em>gravidade</em></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>velocidade</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Velocidade que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação horizontal e vertical do <em>texto</em></td>
         </tr>
 
     
@@ -710,7 +768,36 @@
                 </td>
             
 
-            <td class="description last">Indicação de que o <em>texto</em> deve testar colisões</td>
+            <td class="description last">Indicação de que o <em>texto</em> deve testar colisões, quando chamado o método <code>colide(outro)</code></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rotacao</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Indicação de que o <em>círculo</em> deve rodar, reflectindo o  seu <em>ângulo</em></td>
         </tr>
 
     
@@ -739,36 +826,7 @@
                 </td>
             
 
-            <td class="description last">Indicação de que o <em>texto</em> deve ser desenhado no <em>canvas</em></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>seleccionado</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
-
-            <td class="description last">Indicação de que o <em>texto</em> se encontra seleccionado &mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato</td>
+            <td class="description last">Indicação de que o <em>texto</em> deve ser desenhado no <code>canvas</code>, quando chamado o método <code>desenha(tela)</code></td>
         </tr>
 
     
@@ -807,7 +865,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line482">line 482</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line486">line 486</a>
     </li></ul></dd>
     
 
@@ -922,7 +980,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line519">line 519</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line523">line 523</a>
     </li></ul></dd>
     
 
@@ -994,7 +1052,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line508">line 508</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line512">line 512</a>
     </li></ul></dd>
     
 
@@ -1128,7 +1186,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line50">line 50</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line54">line 54</a>
     </li></ul></dd>
     
 
@@ -1315,7 +1373,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line529">line 529</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line533">line 533</a>
     </li></ul></dd>
     
 
@@ -1479,7 +1537,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line74">line 74</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -1545,7 +1603,7 @@
 
 
 <div class="description">
-    Este método desenha uma linha de <em>texto</em> no <em>canvas</em>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo de um <em>rectângulo</em> imaginário que contenha o <em>texto</em>, assumindo um alinhamento horizontal à esquerda e verticalmente ao topo. Alterações no alinhamento implicarão uma outra referência no posicionamento.
+    Este método desenha uma linha de <em>texto</em> no <code>canvas</code>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo de um <em>rectângulo</em> imaginário que contenha o <em>texto</em>, assumindo um alinhamento horizontal à esquerda e verticalmente ao topo. Alterações no alinhamento implicarão uma outra referência no posicionamento.
 </div>
 
 
@@ -1597,7 +1655,7 @@
 
             
 
-            <td class="description last">Objecto que representa o elemento <em>canvas</em> onde será desenhado o <em>texto</em></td>
+            <td class="description last">Objecto que representa o elemento <code>canvas</code> onde será desenhado o <em>texto</em></td>
         </tr>
 
     
@@ -1643,7 +1701,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line542">line 542</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line541">line 541</a>
     </li></ul></dd>
     
 
@@ -1695,7 +1753,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Jun 25 2021 16:02:34 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Apr 29 2022 16:15:00 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

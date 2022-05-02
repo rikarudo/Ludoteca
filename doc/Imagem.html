@@ -105,7 +105,7 @@
 
             
 
-            <td class="description last">Abscissa para posicionar a <em>imagem</em> no <em>canvas</em></td>
+            <td class="description last">Abscissa para posicionar a <em>imagem</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -128,7 +128,7 @@
 
             
 
-            <td class="description last">Ordenada para posicionar a <em>imagem</em> no <em>canvas</em></td>
+            <td class="description last">Ordenada para posicionar a <em>imagem</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -211,7 +211,7 @@
                 </td>
             
 
-            <td class="description last">Abscissa para posicionar a <em>imagem</em> no <em>canvas</em></td>
+            <td class="description last">Abscissa para posicionar a <em>imagem</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -238,7 +238,7 @@
                 </td>
             
 
-            <td class="description last">Ordenada para posicionar a <em>imagem</em> no <em>canvas</em></td>
+            <td class="description last">Ordenada para posicionar a <em>imagem</em> no <code>canvas</code></td>
         </tr>
 
     
@@ -406,7 +406,7 @@
                 </td>
             
 
-            <td class="description last">Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> até à posição <em>x</em> do cursor do rato</td>
+            <td class="description last">Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato</td>
         </tr>
 
     
@@ -435,14 +435,14 @@
                 </td>
             
 
-            <td class="description last">Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> até à posição <em>y</em> do cursor do rato</td>
+            <td class="description last">Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>rotacao</code></td>
+                <td class="name"><code>angulo</code></td>
             
 
             <td class="type">
@@ -464,7 +464,66 @@
                 </td>
             
 
-            <td class="description last">Ângulo de rotação da <em>imagem</em> quando desenhado no <em>canvas</em> &mdash; a rotação é feita tendo como referência o centro da <em>imagem</em></td>
+            <td class="description last">Ângulo de rotação da <em>imagem</em> quando desenhado no <code>canvas</code> &mdash; a rotação é feita tendo como referência o centro da <em>imagem</em></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gravidade</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Força que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação vertical da <em>imagem</em>, actuando como a <em>gravidade</em></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>velocidade</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Velocidade que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação horizontal e vertical da <em>imagem</em>
+tendo como referência o centro da <em>imagem</em></td>
         </tr>
 
     
@@ -493,7 +552,36 @@
                 </td>
             
 
-            <td class="description last">Indicação de que a <em>imagem</em> deve testar colisões</td>
+            <td class="description last">Indicação de que a <em>imagem</em> deve testar colisões, quando chamado o método <code>colide(outro)</code></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rotacao</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Indicação de que o <em>círculo</em> deve rodar, reflectindo o  seu <em>ângulo</em></td>
         </tr>
 
     
@@ -522,36 +610,7 @@
                 </td>
             
 
-            <td class="description last">Indicação de que a <em>imagem</em> deve ser desenhado no <em>canvas</em></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>seleccionado</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
-
-            <td class="description last">Indicação de que a <em>imagem</em> se encontra seleccionado &mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato</td>
+            <td class="description last">Indicação de que a <em>imagem</em> deve ser desenhada no <code>canvas</code>, quando chamado o método <code>desenha(tela)</code></td>
         </tr>
 
     
@@ -590,7 +649,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line599">line 599</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line603">line 603</a>
     </li></ul></dd>
     
 
@@ -705,7 +764,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line623">line 623</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line627">line 627</a>
     </li></ul></dd>
     
 
@@ -777,7 +836,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line615">line 615</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line619">line 619</a>
     </li></ul></dd>
     
 
@@ -911,7 +970,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line50">line 50</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line54">line 54</a>
     </li></ul></dd>
     
 
@@ -1098,7 +1157,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line633">line 633</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line637">line 637</a>
     </li></ul></dd>
     
 
@@ -1262,7 +1321,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line74">line 74</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -1328,7 +1387,7 @@
 
 
 <div class="description">
-    Este método desenha uma <em>imagem</em> no <em>canvas</em>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo dessa <em>imagem</em>.
+    Este método desenha uma <em>imagem</em> no <code>canvas</code>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo dessa <em>imagem</em>.
 </div>
 
 
@@ -1380,7 +1439,7 @@
 
             
 
-            <td class="description last">Objecto que representa o elemento <em>canvas</em> onde será desenhada a <em>imagem</em></td>
+            <td class="description last">Objecto que representa o elemento <code>canvas</code> onde será desenhada a <em>imagem</em></td>
         </tr>
 
     
@@ -1426,7 +1485,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line646">line 646</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line645">line 645</a>
     </li></ul></dd>
     
 
@@ -1478,7 +1537,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Jun 25 2021 16:02:34 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Apr 29 2022 16:15:00 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

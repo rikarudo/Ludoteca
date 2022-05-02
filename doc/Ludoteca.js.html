@@ -27,32 +27,34 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @file Biblioteca de classes que representam vários tipos de &lt;em>gráficos&lt;/em> a desenhar num &lt;em>canvas&lt;/em>, bem como o próprio &lt;em>canvas&lt;/em>, e também os elementos &lt;em>audio&lt;/em> e &lt;em>video&lt;/em>, cujo propósito é facilitar o desenvolvimento de jogos e outras aplicações multimédia num contexto académico. Procura-se que esta biblioteca aborde apenas os casos mais comuns, evitando complexidade desnecessária, se bem que algumas classes contenham algumas propriedades para facilitar a caracterização dos objectos criados para casos habituais e fora do estritamente necessário.
- * @version 0.9
+ * @file Biblioteca de classes que representam vários tipos de &lt;em>gráficos&lt;/em> a desenhar num &lt;code>canvas&lt;/code>, o próprio &lt;code>canvas&lt;/code>, e também os elementos &lt;code>audio&lt;/code> e &lt;code>video&lt;/code>. O propósito desta biblioteca é facilitar o desenvolvimento de jogos e outras aplicações multimédia num contexto académico. Procura-se que esta aborde apenas os casos mais comuns, evitando complexidade desnecessária, se bem que algumas classes contenham algumas propriedades suplementares para facilitar a caracterização dos objectos criados para casos habituais, ainda que fora do estritamente necessário.
+ * @version 0.9.1
  * @author Ricardo Rodrigues
- * @date 2021-06-25
- * @copyright Ricardo Rodrigues (2021)
+ * @date 2022-04-29
+ * @copyright Ricardo Rodrigues (2021, 2022)
  */
 
 /**
  * @class
- * @classdesc A classe &lt;code>Grafico&lt;/code> é, na prática, uma classe &lt;em>abstracta&lt;/em>, servindo apenas de base para as subclasses de &lt;code>Grafico&lt;/code>.
- * @property {number} x Abscissa para posicionar o &lt;em>gráfico&lt;/em> no &lt;em>canvas&lt;/em>
- * @property {number} y Ordenada para posicionar o &lt;em>gráfico&lt;/em> no &lt;em>canvas&lt;/em>
+ * @classdesc A classe &lt;code>Grafico&lt;/code> é, para todos os efeitos, uma classe &lt;em>abstracta&lt;/em>, servindo apenas de base para as subclasses de &lt;code>Grafico&lt;/code>.
+ * @property {number} x Abscissa para posicionar o &lt;em>gráfico&lt;/em> no &lt;code>canvas&lt;/code>
+ * @property {number} y Ordenada para posicionar o &lt;em>gráfico&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>gráfico&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>gráfico&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} rotacao=0 Ângulo de rotação do &lt;em>gráfico&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>gráfico&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>gráfico&lt;/em> deve testar colisões
- * @property {boolean} visivel=true Indicação de que o &lt;em>gráfico&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
- * @property {boolean} seleccionado=false Indicação de que o &lt;em>polígono&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} angulo=0 Ângulo de rotação do &lt;em>gráfico&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>gráfico&lt;/em>
+ * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>gráfico&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
+ * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>gráfico&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>gráfico&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
+ * @property {boolean} rotacao=false Indicação de que o &lt;em>círculo&lt;/em> deve rodar, reflectindo o  seu &lt;em>ângulo&lt;/em>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>gráfico&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
  */
 class Grafico {
   /**
    * Construtor da classe &lt;code>Grafico&lt;/code>. &lt;em>Este construtor não deve ser usado directamente. Se tal acontecer, é gerada uma excepção (&lt;code>TypeError&lt;/code>).&lt;/em>
-   * @param {number} x Abscissa para posicionar o &lt;em>gráfico&lt;/em> no &lt;em>canvas&lt;/em>
-   * @param {number} y Ordenada para posicionar o &lt;em>gráfico&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} x Abscissa para posicionar o &lt;em>gráfico&lt;/em> no &lt;code>canvas&lt;/code>
+   * @param {number} y Ordenada para posicionar o &lt;em>gráfico&lt;/em> no &lt;code>canvas&lt;/code>
    */
   constructor(x, y) {
     this.x = x;
@@ -61,10 +63,12 @@ class Grafico {
     this.deltaY = 0;
     this.distX = 0;
     this.distY = 0;
-    this.rotacao = 0;
+    this.angulo = 0;
+    this.gravidade = 0;
+    this.velocidade = 0;
     this.activo = true;
+    this.rotacao = false;
     this.visivel = true;
-    this.seleccionado = false;
     if (this.constructor.name == "Grafico") {
       throw new TypeError("A classe abstracta 'Grafico' não pode ser instanciada directamente, devendo ser implementada através de subclasses (que poderão então ser instanciadas).");
     }
@@ -76,16 +80,11 @@ class Grafico {
    * @returns {boolean} Se houver colisão, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
    */
   colide(outro) {
-    if (this.activo &amp;&amp; outro.activo &amp;&amp; (this.contemPonto(outro.x, outro.y) || this.contemPonto(outro.x + outro.largura, outro.y) || this.contemPonto(outro.x, outro.y + outro.altura) || this.contemPonto(outro.x + outro.largura, outro.y + outro.altura) || outro.contemPonto(this.x, this.y) || outro.contemPonto(this.x + this.largura, this.y) || outro.contemPonto(this.x, this.y + this.altura) || outro.contemPonto(this.x + this.largura, this.y + this.altura))) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return (this.activo &amp;&amp; outro.activo &amp;&amp; (this.contemPonto(outro.x, outro.y) || this.contemPonto(outro.x + outro.largura, outro.y) || this.contemPonto(outro.x, outro.y + outro.altura) || this.contemPonto(outro.x + outro.largura, outro.y + outro.altura) || outro.contemPonto(this.x, this.y) || outro.contemPonto(this.x + this.largura, this.y) || outro.contemPonto(this.x, this.y + this.altura) || outro.contemPonto(this.x + this.largura, this.y + this.altura)));
   }
 
   /**
-   * &lt;em>Este método deve ser implementado nas subclasses de &lt;code>Grafico&lt;/code>, respeitando as especifidades de cada forma representada nelas. Se tal não acontecer, é gerada uma excepção (&lt;code>Error&lt;/code>).&lt;/em>
+   * &lt;em>Este método deve ser implementado nas subclasses de &lt;code>Grafico&lt;/code>, respeitando as especificidades de cada forma representada nelas. Se tal não acontecer, é gerada uma excepção (&lt;code>Error&lt;/code>).&lt;/em>
    * @param {number} x Abscissa do ponto a testar se está contido no &lt;em>gráfico&lt;/em>
    * @param {number} y Ordenada do ponto a testar se está contido no &lt;em>gráfico&lt;/em>
    * @returns {boolean} Se o ponto estiver contido neste &lt;em>grafico&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
@@ -109,8 +108,8 @@ class Grafico {
   }
 
   /**
-   * &lt;em>Este método deve ser implementado nas subclasses de &lt;code>Grafico&lt;/code>, respeitando as especifidades de cada forma representada nelas. Se tal não acontecer, é gerada uma excepção (&lt;code>Error&lt;/code>).&lt;/em>
-   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhado o &lt;em>gráfico&lt;/em>
+   * &lt;em>Este método deve ser implementado nas subclasses de &lt;code>Grafico&lt;/code>, respeitando as especificidades de cada forma representada nelas. Se tal não acontecer, é gerada uma excepção (&lt;code>Error&lt;/code>).&lt;/em>
+   * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhado o &lt;em>gráfico&lt;/em>
    */
   desenha(tela) {
     throw new Error("O método 'desenha(tela)' tem de ser implementado nas subclasses da classe 'Grafico'.");
@@ -122,27 +121,29 @@ class Grafico {
 /**
  * @class
  * @extends Grafico
- * @classdesc A classe &lt;code>Circulo&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>círculos&lt;/em>. Num nível básico, um &lt;em>círculo&lt;/em> é definido por um &lt;em>ponto&lt;/em> central e por um &lt;em>raio&lt;/em>. Contudo, para que exista uniformidade no posicionamento das formas representadas pelas várias subclasses de &lt;code>Grafico&lt;/code>, os círculos são também posicionados usando o canto superior esquerdo (de um &lt;em>quadrado&lt;/em> imaginário que o contenha), em vez do seu centro &amp;mdash; daí, o &lt;em>raio&lt;/em> é somado ao &lt;em>x&lt;/em> e ao &lt;em>y&lt;/em> para fazer as devidas compensações de posicionamento para determinar o centro.
- * @property {number} x Abscissa para posicionar o &lt;em>círculo&lt;/em> no &lt;em>canvas&lt;/em>
- * @property {number} y Ordenada para posicionar o &lt;em>círculo&lt;/em> no &lt;em>canvas&lt;/em>
+ * @classdesc A classe &lt;code>Circulo&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>círculos&lt;/em>. Num nível básico, um &lt;em>círculo&lt;/em> é definido por um &lt;em>ponto&lt;/em> central e por um &lt;em>raio&lt;/em>. Contudo, para que exista uniformidade no posicionamento das formas representadas pelas várias subclasses de &lt;code>Grafico&lt;/code>, os círculos são também posicionados usando o canto superior esquerdo (de um &lt;em>quadrado&lt;/em> imaginário que o contenha), em vez do seu centro &amp;mdash; assim, o &lt;em>raio&lt;/em> é somado ao &lt;em>x&lt;/em> e ao &lt;em>y&lt;/em> para fazer as devidas compensações de posicionamento, determinando o &lt;em>centro&lt;/em>.
+ * @property {number} x Abscissa para posicionar o &lt;em>círculo&lt;/em> no &lt;code>canvas&lt;/code>
+ * @property {number} y Ordenada para posicionar o &lt;em>círculo&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {number} raio Raio do &lt;em>círculo&lt;/em>
- * @property {string} preenchimento Cor do preenchimento &lt;em>círculo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o &lt;em>círculo&lt;/em> não é preenchido
- * @property {string} contorno Cor do contorno do &lt;em>círculo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o contorno não é desenhado
+ * @property {string} preenchimento Cor do preenchimento &lt;em>círculo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>null&lt;/code>, o &lt;em>círculo&lt;/em> não é preenchido
+ * @property {string} contorno Cor do contorno do &lt;em>círculo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>null&lt;/code>, o contorno não é desenhado
  * @property {number} espessura Espessura do contorno do &lt;em>círculo&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>círculo&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>círculo&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} rotacao=0 Ângulo de rotação do &lt;em>círculo&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; dadas as características do &lt;em>círculo&lt;/em>, esta propriedade é ignorada no seu desenho no &lt;em>canvas&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>círculo&lt;/em> deve testar colisões
- * @property {boolean} visivel=true Indicação de que o &lt;em>círculo&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
- * @property {boolean} seleccionado=false Indicação de que o &lt;em>círculo&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} angulo=0 Ângulo de rotação do &lt;em>círculo&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; dadas as características do &lt;em>círculo&lt;/em>, esta propriedade é ignorada no seu desenho no &lt;code>canvas&lt;/code>
+ * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>cículo&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
+ * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>círculo&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>círculo&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
+ * @property {boolean} rotacao=false Indicação de que o &lt;em>círculo&lt;/em> deve rodar, reflectindo o  seu &lt;em>ângulo&lt;/em> &amp;mdash; dadas as características do &lt;em>círculo&lt;/em>, esta propriedade é ignorada no seu desenho no &lt;code>canvas&lt;/code>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>círculo&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
  */
 class Circulo extends Grafico {
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>Círculo&lt;/code>
-   * @param {number} x Abscissa para posicionar o &lt;em>círculo&lt;/em> no &lt;em>canvas&lt;/em>
-   * @param {number} y Ordenada para posicionar o &lt;em>círculo&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} x Abscissa para posicionar o &lt;em>círculo&lt;/em> no &lt;code>canvas&lt;/code>
+   * @param {number} y Ordenada para posicionar o &lt;em>círculo&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {number} raio Raio do &lt;em>círculo&lt;/em>
    * @param {string} preenchimento="black" Cor do preenchimento &lt;em>círculo&lt;/em>
    * @param {string} contorno="black" Cor do contorno do &lt;em>círculo&lt;/em>
@@ -179,18 +180,16 @@ class Circulo extends Grafico {
    * @returns {boolean} Se o ponto estiver contido neste &lt;em>círculo&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
    */
   contemPonto(x, y) {
-    if (Math.hypot((this.x + this.raio) - x, (this.y + this.raio) - y) &lt; this.raio) {
-      return true;
-    } else {
-      return false;
-    }
+    return (Math.hypot((this.x + this.raio) - x, (this.y + this.raio) - y) &lt; this.raio);
   }
 
   /**
-   * Este método desenha um &lt;em>círculo&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo de um &lt;em>quadrado&lt;/em> imaginário que envolva o &lt;em>círculo&lt;/em>.
-   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhado o &lt;em>círculo&lt;/em>
+   * Este método desenha um &lt;em>círculo&lt;/em> no &lt;code>canvas&lt;/code>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo de um &lt;em>quadrado&lt;/em> imaginário que envolva o &lt;em>círculo&lt;/em>.
+   * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhado o &lt;em>círculo&lt;/em>
    */
   desenha(tela) {
+    this.x += this.distX;
+    this.y += this.distY;
     if (this.visivel) {
       // no caso do círculo, definir um ângulo de rotação é irrelevante, pelo que não se implementa, até para evitar processamento desnecessário
       var contexto = tela.contexto;
@@ -201,16 +200,16 @@ class Circulo extends Grafico {
       contexto.fillStyle = this.preenchimento;
       contexto.strokeStyle = this.contorno;
       contexto.lineWidth = this.espessura;
-      if (this.preenchimento.toLowerCase() != "empty") {
+      if (this.preenchimento != null) {
         contexto.fill();
       }
-      if ((this.contorno.toLowerCase() != "empty") &amp;&amp; (this.espessura > 0)) {
+      if ((this.contorno != null) &amp;&amp; (this.espessura > 0)) {
         contexto.stroke();
       }
       contexto.restore();
     }
-    this.x += this.deltaX;
-    this.y += this.deltaY;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
   }
 }
 
@@ -220,27 +219,29 @@ class Circulo extends Grafico {
  * @class
  * @extends Grafico
  * @classdesc A classe &lt;code>Rectangulo&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>rectângulos&lt;/em>. Num nível básico, um &lt;em>rectângulo&lt;/em> é definido por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo e por uma &lt;em>largura&lt;/em> e por uma &lt;em>altura&lt;/em>.
- * @property {number} x Abscissa para posicionar o &lt;em>rectângulo&lt;/em> no &lt;em>canvas&lt;/em>
- * @property {number} y Ordenada para posicionar o &lt;em>rectângulo&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} x Abscissa para posicionar o &lt;em>rectângulo&lt;/em> no &lt;code>canvas&lt;/code>
+ * @property {number} y Ordenada para posicionar o &lt;em>rectângulo&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {number} largura Largura do &lt;em>rectângulo&lt;/em>
  * @property {number} altura Altura do &lt;em>rectângulo&lt;/em>
- * @property {string} preenchimento Cor do preenchimento &lt;em>rectângulo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o &lt;em>rectângulo&lt;/em> não é preenchido
- * @property {string} contorno Cor do contorno do &lt;em>rectângulo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o contorno não é desenhado
+ * @property {string} preenchimento Cor do preenchimento &lt;em>rectângulo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>null&lt;/code>, o &lt;em>rectângulo&lt;/em> não é preenchido
+ * @property {string} contorno Cor do contorno do &lt;em>rectângulo&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>null&lt;/code>, o contorno não é desenhado
  * @property {number} espessura Espessura do contorno do &lt;em>rectângulo&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>rectângulo&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>rectângulo&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} rotacao=0 Ângulo de rotação do &lt;em>rectângulo&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>rectângulo&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>rectângulo&lt;/em> deve testar colisões
- * @property {boolean} visivel=true Indicação de que o &lt;em>rectângulo&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
- * @property {boolean} seleccionado=false Indicação de que o &lt;em>rectângulo&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} angulo=0 Ângulo de rotação do &lt;em>rectângulo&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>rectângulo&lt;/em>
+ * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>rectângulo&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
+ * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>rectângulo&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>rectângulo&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
+ * @property {boolean} rotacao=false Indicação de que o &lt;em>círculo&lt;/em> deve rodar, reflectindo o  seu &lt;em>ângulo&lt;/em>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>rectângulo&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
   */
 class Rectangulo extends Grafico {
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>Rectangulo&lt;/code>
-   * @param {number} x Abscissa para posicionar o &lt;em>rectângulo&lt;/em> no &lt;em>canvas&lt;/em>
-   * @param {number} y Ordenada para posicionar o &lt;em>rectângulo&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} x Abscissa para posicionar o &lt;em>rectângulo&lt;/em> no &lt;code>canvas&lt;/code>
+   * @param {number} y Ordenada para posicionar o &lt;em>rectângulo&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {number} largura Largura do &lt;em>rectângulo&lt;/em>
    * @param {number} altura Altura do &lt;em>rectângulo&lt;/em>
    * @param {string} preenchimento="black" Cor do preenchimento &lt;em>rectângulo&lt;/em>
@@ -263,27 +264,24 @@ class Rectangulo extends Grafico {
    * @returns {boolean} Se o ponto estiver contido neste &lt;em>rectângulo&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
    */
   contemPonto(x, y) {
-    if ((this.x &lt;= x) &amp;&amp; (this.x + this.largura >= x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura >= y)) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return ((this.x &lt;= x) &amp;&amp; (this.x + this.largura > x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura > y));
   }
 
   /**
-   * Este método desenha um &lt;em>rectângulo&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo desse &lt;em>rectângulo&lt;/em>.
-   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhado o &lt;em>rectângulo&lt;/em>
+   * Este método desenha um &lt;em>rectângulo&lt;/em> no &lt;code>canvas&lt;/code>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo desse &lt;em>rectângulo&lt;/em>.
+   * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhado o &lt;em>rectângulo&lt;/em>
    */
   desenha(tela) {
+    this.x += this.distX;
+    this.y += this.distY;
     if (this.visivel) {
       var contexto = tela.contexto;
       contexto.save();
       contexto.beginPath();
       // para evitar processamento desnecessário, só se faz a translação e a rotação do canvas quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer translação e rotação
-      if (this.rotacao != 0) {
+      if (this.rotacao &amp;&amp; this.angulo != 0) {
         contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
-        contexto.rotate(this.rotacao * Math.PI / 180);
+        contexto.rotate(this.angulo * Math.PI / 180);
         contexto.rect(Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5), this.largura, this.altura);
       }
       else {
@@ -293,16 +291,16 @@ class Rectangulo extends Grafico {
       contexto.fillStyle = this.preenchimento;
       contexto.strokeStyle = this.contorno;
       contexto.lineWidth = this.espessura;
-      if (this.preenchimento.toLowerCase() != "empty") {
+      if (this.preenchimento != null) {
         contexto.fill();
       }
-      if ((this.contorno.toLowerCase() != "empty") &amp;&amp; (this.espessura > 0)) {
+      if ((this.contorno != null) &amp;&amp; (this.espessura > 0)) {
         contexto.stroke();
       }
       contexto.restore();
     }
-    this.x += this.deltaX;
-    this.y += this.deltaY;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
   }
 }
 
@@ -311,34 +309,36 @@ class Rectangulo extends Grafico {
 /**
  * @class
  * @extends Grafico
- * @classdesc A classe &lt;code>Poligono&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>polígonos&lt;/em>. Num nível básico, um &lt;em>polígono&lt;/em> é definido por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo de um &lt;em>rectângulo&lt;/em> imaginário que contenha o &lt;em>polígono&lt;/em>. Assim, este será o &lt;em>ponto&lt;/em> relativamente ao qual todos os pontos do &lt;em>polígono&lt;/em> serão posicionados. Aconselha-se que todos os pontos do polígono se encontrem à direita e abaixo desta origem e tão próximos dela quanto possível; caso contrário, aspectos como a rotação do polígono poderão ter resultados diferentes do esperado, o mesmo acontecendo com as colisões baseadas nesse rectângulo imaginário. Deste modo, há a possibilidade, activada por omissão através do atributo &lt;code>ajuste&lt;/code>, de &lt;em>encostar&lt;/em> o polígono à origem &amp;mdash; contudo, tal implica a alteração (o referido ajuste) de todos os pontos.
- * @property {number} x Abscissa para posicionar o &lt;em>polígono&lt;/em> no &lt;em>canvas&lt;/em>
- * @property {number} y Ordenada para posicionar o &lt;em>polígono&lt;/em> no &lt;em>canvas&lt;/em>
+ * @classdesc A classe &lt;code>Poligono&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>polígonos&lt;/em>. Num nível básico, um &lt;em>polígono&lt;/em> é definido por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo de um &lt;em>rectângulo&lt;/em> imaginário que contenha o &lt;em>polígono&lt;/em>. Assim, este será o &lt;em>ponto&lt;/em> relativamente ao qual todos os pontos do &lt;em>polígono&lt;/em> serão posicionados. Aconselha-se que todos os pontos do polígono se encontrem à direita e abaixo desta origem e tão próximos dela quanto possível; caso contrário, aspectos como a rotação do polígono poderão ter resultados diferentes do esperado, o mesmo acontecendo com as colisões baseadas nesse rectângulo imaginário. Deste modo, há a possibilidade, activada por omissão através do atributo &lt;code>ajuste&lt;/code>, de &lt;em>encostar&lt;/em> o polígono à origem &amp;mdash; contudo, tal implica a alteração (o referido &lt;em>ajuste&lt;/em>) de todos os pontos.
+ * @property {number} x Abscissa para posicionar o &lt;em>polígono&lt;/em> no &lt;code>canvas&lt;/code>
+ * @property {number} y Ordenada para posicionar o &lt;em>polígono&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {array} pontos Conjunto de pontos com os vários vértices do &lt;em>polígono&lt;/em>
- * @property {string} preenchimento Cor do preenchimento &lt;em>polígono&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o &lt;em>polígono&lt;/em> não é preenchido
- * @property {string} contorno Cor do contorno do &lt;em>polígono&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o contorno não é desenhado
+ * @property {string} preenchimento Cor do preenchimento &lt;em>polígono&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>null&lt;/code>, o &lt;em>polígono&lt;/em> não é preenchido
+ * @property {string} contorno Cor do contorno do &lt;em>polígono&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>null&lt;/code>, o contorno não é desenhado
  * @property {number} espessura Espessura do contorno do &lt;em>polígono&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>polígono&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>polígono&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
  * @property {number} deslocX=0 Deslocamento horizontal do ponto mais à esquerda do polígono até ponto usado para posicionar o &lt;em>polígono&lt;/em>, quando se fez o ajuste posicional do polígono &amp;mdash; se o seu valor for zero (&lt;code>0&lt;/code>), não foi feito qualquer ajuste
  * @property {number} deslocY=0 Deslocamento vertical do ponto mais à esquerda do polígono até ponto usado para posicionar o &lt;em>polígono&lt;/em>, quando se fez o ajuste posicional do polígono &amp;mdash; se o seu valor for zero (&lt;code>0&lt;/code>), não foi feito qualquer ajuste
- * @property {number} rotacao=0 Ângulo de rotação do &lt;em>polígono&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>polígono&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>polígono&lt;/em> deve testar colisões
- * @property {boolean} visivel=true Indicação de que o &lt;em>polígono&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
- * @property {boolean} seleccionado=false Indicação de que o &lt;em>polígono&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ * @property {number} angulo=0 Ângulo de rotação do &lt;em>polígono&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>polígono&lt;/em>
+ * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>polígono&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
+ * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>polígono&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>polígono&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
+ * @property {boolean} rotacao=false Indicação de que o &lt;em>círculo&lt;/em> deve rodar, reflectindo o  seu &lt;em>ângulo&lt;/em>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>polígono&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
  */
 class Poligono extends Grafico {
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>Rectangulo&lt;/code>
-   * @param {number} x Abscissa para posicionar o &lt;em>polígono&lt;/em> no &lt;em>canvas&lt;/em>
-   * @param {number} y Ordenada para posicionar o &lt;em>polígono&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} x Abscissa para posicionar o &lt;em>polígono&lt;/em> no &lt;code>canvas&lt;/code>
+   * @param {number} y Ordenada para posicionar o &lt;em>polígono&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {array} pontos Conjunto de pontos com os vários vértices do &lt;em>polígono&lt;/em>
    * @param {string} preenchimento="black" Cor do preenchimento &lt;em>polígono&lt;/em>
    * @param {string} contorno="black" Cor do contorno do &lt;em>polígono&lt;/em>
    * @param {number} espessura=0 Espessura do contorno do &lt;em>polígono&lt;/em>
-   * @param {boolean} ajuste=true Indicação de que o &lt;em>polígono&lt;/em> deve ser reposicionado de forma a ficar &lt;em>encostado&lt;/em> ao ponto usado para definir o seu posicionamento no &lt;em>canvas&lt;/em>
+   * @param {boolean} ajuste=true Indicação de que o &lt;em>polígono&lt;/em> deve ser reposicionado de forma a ficar &lt;em>encostado&lt;/em> ao ponto usado para definir o seu posicionamento no &lt;code>canvas&lt;/code>
    */
   constructor(x, y, pontos, preenchimento = "black", contorno = "black", espessura = 0, ajuste = true) {
     super(x, y);
@@ -355,7 +355,7 @@ class Poligono extends Grafico {
   }
 
   /**
-  * Este método ajusta o &lt;em>polígono&lt;/em> de forma a ficar &lt;em>encostado&lt;/em> ao ponto usado para definir o seu posicionamento no &lt;em>canvas&lt;/em>. Se os pontos do &lt;em>polígono&lt;/em> forem alterados após a criação do objecto, deve ser ponderada a chamada a este método.
+  * Este método ajusta o &lt;em>polígono&lt;/em> de forma a ficar &lt;em>encostado&lt;/em> ao ponto usado para definir o seu posicionamento no &lt;code>canvas&lt;/code>. Se os pontos do &lt;em>polígono&lt;/em> forem alterados após a criação do objecto, deve ser ponderada a chamada a este método.
   */
   ajusta() {
     this.deslocX = Number.MAX_VALUE;
@@ -435,18 +435,20 @@ class Poligono extends Grafico {
   }
 
   /**
-   * Este método desenha um &lt;em>polígono&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo de um &lt;em>rectângulo&lt;/em> imaginário que contenha o &lt;em>polígono&lt;/em>.
-   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhado o &lt;em>polígono&lt;/em>
+   * Este método desenha um &lt;em>polígono&lt;/em> no &lt;code>canvas&lt;/code>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo de um &lt;em>rectângulo&lt;/em> imaginário que contenha o &lt;em>polígono&lt;/em>.
+   * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhado o &lt;em>polígono&lt;/em>
    */
   desenha(tela) {
+    this.x += this.distX;
+    this.y += this.distY;
     if (this.visivel) {
       var contexto = tela.contexto;
       contexto.save();
       contexto.beginPath()
-      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o angulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao != 0) {
+      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
+      if (this.rotacao &amp;&amp; this.angulo != 0) {
         contexto.translate(Math.floor(this.x + this.centroide.x), Math.floor(this.y + this.centroide.y));
-        contexto.rotate(this.rotacao * Math.PI / 180);
+        contexto.rotate(this.angulo * Math.PI / 180);
         for (var i = 0; i &lt; this.pontos.length; i++) {
           if (i == 0) {
             contexto.moveTo(Math.floor(this.pontos[i].x - this.centroide.x), Math.floor(this.pontos[i].y - this.centroide.y));
@@ -470,16 +472,16 @@ class Poligono extends Grafico {
       contexto.fillStyle = this.preenchimento;
       contexto.strokeStyle = this.contorno;
       contexto.lineWidth = this.espessura;
-      if (this.preenchimento.toLowerCase() != "empty") {
+      if (this.preenchimento != null) {
         contexto.fill();
       }
-      if ((this.contorno.toLowerCase() != "empty") &amp;&amp; (this.espessura > 0)) {
+      if ((this.contorno != null) &amp;&amp; (this.espessura > 0)) {
         contexto.stroke();
       }
       contexto.restore();
     }
-    this.x += this.deltaX;
-    this.y += this.deltaY;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
   }
 }
 
@@ -489,30 +491,32 @@ class Poligono extends Grafico {
  * @class
  * @extends Grafico
  * @classdesc A classe &lt;code>Texto&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar uma &lt;em>(linha de) texto&lt;/em>.
- * @property {number} x Abscissa para posicionar o &lt;em>texto&lt;/em> no &lt;em>canvas&lt;/em>
- * @property {number} y Ordenada para posicionar o &lt;em>texto&lt;/em> no &lt;em>canvas&lt;/em>
- * @property {string} preenchimento Cor do preenchimento do &lt;em>texto&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o &lt;em>texto&lt;/em> não é preenchido
- * @property {string} contorno Cor do contorno do &lt;em>texto&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>empty&lt;/code>, o contorno não é desenhado
+ * @property {number} x Abscissa para posicionar o &lt;em>texto&lt;/em> no &lt;code>canvas&lt;/code>
+ * @property {number} y Ordenada para posicionar o &lt;em>texto&lt;/em> no &lt;code>canvas&lt;/code>
+ * @property {string} preenchimento Cor do preenchimento do &lt;em>texto&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>null&lt;/code>, o &lt;em>texto&lt;/em> não é preenchido
+ * @property {string} contorno Cor do contorno do &lt;em>texto&lt;/em> &amp;mdash; se a cor for especificada como &lt;code>null&lt;/code>, o contorno não é desenhado
  * @property {number} espessura Espessura do contorno do &lt;em>texto&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
- * @property {number} tamanho=16 Tamanho do &lt;em>texto&lt;/em>
+ * @property {number} tamanho=16 Tamanho do &lt;em>texto&lt;/em> em pontos (&lt;code>pt&lt;/code)
  * @property {number} fonte="sans-serif" Fonte do &lt;em>texto&lt;/em>
  * @property {number} alinhamento="left" Alinhamento horizontal do &lt;em>texto&lt;/em>
  * @property {number} base="top" Alinhamento vertical do &lt;em>texto&lt;/em>
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>texto&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>texto&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} rotacao=0 Ângulo de rotação do &lt;em>texto&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>texto&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>texto&lt;/em> deve testar colisões
- * @property {boolean} visivel=true Indicação de que o &lt;em>texto&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
- * @property {boolean} seleccionado=false Indicação de que o &lt;em>texto&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} angulo=0 Ângulo de rotação do &lt;em>texto&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>texto&lt;/em>
+ * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>texto&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
+ * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>texto&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>texto&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
+ * @property {boolean} rotacao=false Indicação de que o &lt;em>círculo&lt;/em> deve rodar, reflectindo o  seu &lt;em>ângulo&lt;/em>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>texto&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
  */
 class Texto extends Grafico {
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>texto&lt;/code>
-   * @param {number} x Abscissa para posicionar o &lt;em>texto&lt;/em> no &lt;em>canvas&lt;/em>
-   * @param {number} y Ordenada para posicionar o &lt;em>texto&lt;/em> no &lt;em>canvas&lt;/em>
-   * @param {string} texto Conteúdo de &lt;em>texto&lt;/em> a desenhar no &lt;em>canvas&lt;/em>
+   * @param {number} x Abscissa para posicionar o &lt;em>texto&lt;/em> no &lt;code>canvas&lt;/code>
+   * @param {number} y Ordenada para posicionar o &lt;em>texto&lt;/em> no &lt;code>canvas&lt;/code>
+   * @param {string} texto Conteúdo de &lt;em>texto&lt;/em> a desenhar no &lt;code>canvas&lt;/code>
    * @param {string} preenchimento="black" Cor do preenchimento do &lt;em>texto&lt;/em>
    * @param {string} contorno="black" Cor do contorno do &lt;em>texto&lt;/em>
    * @param {number} espessura=0 Espessura do contorno do &lt;em>texto&lt;/em>
@@ -555,19 +559,16 @@ class Texto extends Grafico {
    * @returns {boolean} Se o ponto estiver contido neste &lt;em>texto&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
    */
   contemPonto(x, y) {
-    if ((this.x &lt;= x) &amp;&amp; (this.x + this.largura >= x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura >= y)) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return ((this.x &lt;= x) &amp;&amp; (this.x + this.largura > x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura > y));
   }
 
   /**
-   * Este método desenha uma linha de &lt;em>texto&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo de um &lt;em>rectângulo&lt;/em> imaginário que contenha o &lt;em>texto&lt;/em>, assumindo um alinhamento horizontal à esquerda e verticalmente ao topo. Alterações no alinhamento implicarão uma outra referência no posicionamento.
-   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhado o &lt;em>texto&lt;/em>
+   * Este método desenha uma linha de &lt;em>texto&lt;/em> no &lt;code>canvas&lt;/code>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo de um &lt;em>rectângulo&lt;/em> imaginário que contenha o &lt;em>texto&lt;/em>, assumindo um alinhamento horizontal à esquerda e verticalmente ao topo. Alterações no alinhamento implicarão uma outra referência no posicionamento.
+   * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhado o &lt;em>texto&lt;/em>
    */
   desenha(tela) {
+    this.x += this.distX;
+    this.y += this.distY;
     if (this.visivel) {
       var contexto = tela.contexto;
       contexto.save();
@@ -576,31 +577,31 @@ class Texto extends Grafico {
       contexto.lineWidth = this.espessura;
       contexto.textAlign = this.alinhamento;
       contexto.textBaseline = this.base;
-      contexto.font = this.tamanho + "px " + this.fonte;
+      contexto.font = this.tamanho + "pt " + this.fonte;
       contexto.fillStyle = this.preenchimento;
-      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o angulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao != 0) {
+      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
+      if (this.rotacao &amp;&amp; this.angulo != 0) {
         contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
-        contexto.rotate(this.rotacao * Math.PI / 180);
-        if (this.preenchimento.toLowerCase() != "empty") {
+        contexto.rotate(this.angulo * Math.PI / 180);
+        if (this.preenchimento != null) {
           contexto.fillText(this.texto, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
         }
-        if ((this.contorno.toLowerCase() != "empty") &amp;&amp; (this.espessura > 0)) {
+        if ((this.contorno != null) &amp;&amp; (this.espessura > 0)) {
           contexto.strokeText(this.texto, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
         }
       }
       else {
-        if (this.preenchimento.toLowerCase() != "empty") {
+        if (this.preenchimento != null) {
           contexto.fillText(this.texto, Math.floor(this.x), Math.floor(this.y));
         }
-        if ((this.contorno.toLowerCase() != "empty") &amp;&amp; (this.espessura > 0)) {
+        if ((this.contorno != null) &amp;&amp; (this.espessura > 0)) {
           contexto.strokeText(this.texto, Math.floor(this.x), Math.floor(this.y));
         }
       }
       contexto.restore();
     }
-    this.x += this.deltaX;
-    this.y += this.deltaY;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
   }
 }
 
@@ -610,25 +611,28 @@ class Texto extends Grafico {
  * @class
  * @extends Grafico
  * @classdesc A classe &lt;code>Imagem&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>imagens&lt;/em>. Num nível básico, uma &lt;em>imagem&lt;/em> é definida por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem.
- * @property {number} x Abscissa para posicionar a &lt;em>imagem&lt;/em> no &lt;em>canvas&lt;/em>
- * @property {number} y Ordenada para posicionar a &lt;em>imagem&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} x Abscissa para posicionar a &lt;em>imagem&lt;/em> no &lt;code>canvas&lt;/code>
+ * @property {number} y Ordenada para posicionar a &lt;em>imagem&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {HTMLElement} imagem Elemento HTML que contém a &lt;em>imagem&lt;/em>
  * @property {number} largura Largura da &lt;em>imagem&lt;/em>
  * @property {number} altura Altura da &lt;em>imagem&lt;/em>
  * @property {number} deltaX=0 Variação horizontal da posição da &lt;em>imagem&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição da &lt;em>imagem&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} rotacao=0 Ângulo de rotação da &lt;em>imagem&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro da &lt;em>imagem&lt;/em>
- * @property {boolean} activo=true Indicação de que a &lt;em>imagem&lt;/em> deve testar colisões
- * @property {boolean} visivel=true Indicação de que a &lt;em>imagem&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
- * @property {boolean} seleccionado=false Indicação de que a &lt;em>imagem&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} angulo=0 Ângulo de rotação da &lt;em>imagem&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro da &lt;em>imagem&lt;/em>
+ * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical da &lt;em>imagem&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
+ * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical da &lt;em>imagem&lt;/em>
+tendo como referência o centro da &lt;em>imagem&lt;/em>
+ * @property {boolean} activo=true Indicação de que a &lt;em>imagem&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
+ * @property {boolean} rotacao=false Indicação de que o &lt;em>círculo&lt;/em> deve rodar, reflectindo o  seu &lt;em>ângulo&lt;/em>
+ * @property {boolean} visivel=true Indicação de que a &lt;em>imagem&lt;/em> deve ser desenhada no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
   */
 class Imagem extends Grafico {
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>Imagem&lt;/code>
-   * @param {number} x Abscissa para posicionar a &lt;em>imagem&lt;/em> no &lt;em>canvas&lt;/em>
-   * @param {number} y Ordenada para posicionar a &lt;em>imagem&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} x Abscissa para posicionar a &lt;em>imagem&lt;/em> no &lt;code>canvas&lt;/code>
+   * @param {number} y Ordenada para posicionar a &lt;em>imagem&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {HTMLElement} imagem Elemento HTML que contém a &lt;em>imagem&lt;/em>
    */
   constructor(x, y, imagem) {
@@ -659,26 +663,23 @@ class Imagem extends Grafico {
    * @returns {boolean} Se o ponto estiver contido nesta &lt;em>imagem&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
    */
   contemPonto(x, y) {
-    if ((this.x &lt;= x) &amp;&amp; (this.x + this.largura >= x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura >= y)) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return ((this.x &lt;= x) &amp;&amp; (this.x + this.largura > x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura > y));
   }
 
   /**
-   * Este método desenha uma &lt;em>imagem&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo dessa &lt;em>imagem&lt;/em>.
-   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhada a &lt;em>imagem&lt;/em>
+   * Este método desenha uma &lt;em>imagem&lt;/em> no &lt;code>canvas&lt;/code>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo dessa &lt;em>imagem&lt;/em>.
+   * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhada a &lt;em>imagem&lt;/em>
    */
   desenha(tela) {
+    this.x += this.distX;
+    this.y += this.distY;
     if (this.visivel) {
       var contexto = tela.contexto;
-      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o angulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao != 0) {
+      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
+      if (this.rotacao &amp;&amp; this.angulo != 0) {
         contexto.save();
         contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
-        contexto.rotate(this.rotacao * Math.PI / 180);
+        contexto.rotate(this.angulo * Math.PI / 180);
         contexto.drawImage(this.imagem, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
         contexto.restore();
       }
@@ -686,8 +687,8 @@ class Imagem extends Grafico {
         contexto.drawImage(this.imagem, Math.floor(this.x), Math.floor(this.y));
       }
     }
-    this.x += this.deltaX;
-    this.y += this.deltaY;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
   }
 }
 
@@ -697,8 +698,8 @@ class Imagem extends Grafico {
  * @class
  * @extends Imagem
  * @classdesc A classe &lt;code>ImagemAnimada&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>imagens animadas&lt;/em> (ou &lt;em>sprites&lt;/em>). Num nível básico, uma &lt;em>imagem animada&lt;/em> é definida por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo, com os vários fotogramas a serem desenhados nessa posição, assumindo-se dimensões idênticas para cada um deles. Assim, os &lt;em>sprites&lt;/em> utilizados podem ter uma sequência horizontal (tira) ou várias, desde que os fotogramas tenham as mesmas dimensões.
- * @property {number} x Abscissa para posicionar o &lt;em>sprite&lt;/em> no &lt;em>canvas&lt;/em>
- * @property {number} y Ordenada para posicionar o &lt;em>sprite&lt;/em> no &lt;em>canvas&lt;/em>
+ * @property {number} x Abscissa para posicionar o &lt;em>sprite&lt;/em> no &lt;code>canvas&lt;/code>
+ * @property {number} y Ordenada para posicionar o &lt;em>sprite&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {HTMLElement} imagem Elemento HTML que contém o &lt;em>sprite&lt;/em>
  * @property {number} fotogramas Número de fotogramas (&lt;em>frames&lt;/em>) do &lt;em>sprite&lt;/em> 
  * @property {number} iteracoes Número de iterações &amp;mdash; na prática, o número de &lt;em>frames&lt;/em> a serem gerados por via do método &lt;code>window.requestAnimationFrame()&lt;/code> &amp;mdash; antes de se passar ao fotograma seguinte do &lt;em>sprite&lt;/em> 
@@ -707,17 +708,19 @@ class Imagem extends Grafico {
  * @property {number} altura Altura de um &lt;em>fotograma&lt;/em> do &lt;em>sprite&lt;/em>
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>sprite&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>sprite&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} rotacao=0 Ângulo de rotação do &lt;em>sprite&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>sprite&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>sprite&lt;/em> deve testar colisões
- * @property {boolean} visivel=true Indicação de que o &lt;em>sprite&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
- * @property {boolean} seleccionado=false Indicação de que o &lt;em>sprite&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} angulo=0 Ângulo de rotação do &lt;em>sprite&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>sprite&lt;/em>
+ * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>sprite&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
+ * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>sprite&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>sprite&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
+ * @property {boolean} rotacao=false Indicação de que o &lt;em>círculo&lt;/em> deve rodar, reflectindo o  seu &lt;em>ângulo&lt;/em>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>sprite&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
   */class ImagemAnimada extends Imagem {
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>ImagemAnimada&lt;/code>
-   * @param {number} x Abscissa para posicionar o &lt;em>sprite&lt;/em> no &lt;em>canvas&lt;/em>
-   * @param {number} y Ordenada para posicionar o &lt;em>sprite&lt;/em> no &lt;em>canvas&lt;/em>
+   * @param {number} x Abscissa para posicionar o &lt;em>sprite&lt;/em> no &lt;code>canvas&lt;/code>
+   * @param {number} y Ordenada para posicionar o &lt;em>sprite&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {HTMLElement} imagem Elemento HTML que contém o &lt;em>sprite&lt;/em>
    * @param {number} fotogramas Número de fotogramas (&lt;em>frames&lt;/em>) do &lt;em>sprite&lt;/em> 
    * @param {number} iteracoes Número de iterações &amp;mdash; na prática, o número de &lt;em>frames&lt;/em> a serem gerados por via do método &lt;code>window.requestAnimationFrame()&lt;/code> &amp;mdash; antes de se passar ao fotograma seguinte do &lt;em>sprite&lt;/em> 
@@ -751,17 +754,19 @@ class Imagem extends Grafico {
   }
 
   /**
-   * Este método desenha uma &lt;em>imagem animada&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo dessa &lt;em>imagem animada&lt;/em>, no caso de uma única tira. Havendo mais que uma tira, usará o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo dessa tira.
-   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhada a &lt;em>imagem animada&lt;/em>
+   * Este método desenha uma &lt;em>imagem animada&lt;/em> no &lt;code>canvas&lt;/code>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo dessa &lt;em>imagem animada&lt;/em>, no caso de uma única tira. Havendo mais que uma tira, usará o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo dessa tira.
+   * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhada a &lt;em>imagem animada&lt;/em>
    */
   desenha(tela) {
+    this.x += this.distX;
+    this.y += this.distY;
     if (this.visivel) {
       var contexto = tela.contexto;
-      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o angulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao != 0) {
+      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
+      if (this.rotacao &amp;&amp; this.angulo != 0) {
         contexto.save();
         contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
-        contexto.rotate(this.rotacao * Math.PI / 180);
+        contexto.rotate(this.angulo * Math.PI / 180);
         contexto.drawImage(this.imagem, this.indiceFotograma * this.largura, this.indiceTira * this.altura, this.largura, this.altura, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5), this.largura, this.altura);
         contexto.restore();
       }
@@ -778,8 +783,8 @@ class Imagem extends Grafico {
         this.contador++;
       }
     }
-    this.x += this.deltaX;
-    this.y += this.deltaY;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
   }
 }
 
@@ -788,26 +793,28 @@ class Imagem extends Grafico {
 /**
  * @class
  * @extends Imagem
- * @classdesc A classe &lt;code>ImagemFilme&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>filmes&lt;/em> (&lt;em>videos&lt;/em>) de forma embutida no &lt;em>canvas&lt;/em>. Num nível básico, uma &lt;em>imagem de filme&lt;/em> é definida por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem &amp;mdash; isto é, o filme.
- * @property {number} x Abscissa para posicionar o &lt;em>filme&lt;/em> no &lt;em>canvas&lt;/em>
- * @property {number} y Ordenada para posicionar o &lt;em>filme&lt;/em> no &lt;em>canvas&lt;/em>
- * @property {Filme} filme Objecto de &lt;em>vídeo&lt;/em> a ser desenhado no &lt;em>canvas&lt;/em>
- * @property {number} y Ordenada para posicionar o &lt;em>filme&lt;/em> no &lt;em>canvas&lt;/em>
+ * @classdesc A classe &lt;code>ImagemFilme&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>filmes&lt;/em> (&lt;em>videos&lt;/em>) de forma embutida no &lt;code>canvas&lt;/code>. Num nível básico, uma &lt;em>imagem de filme&lt;/em> é definida por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem &amp;mdash; isto é, o filme.
+ * @property {number} x Abscissa para posicionar o &lt;em>filme&lt;/em> no &lt;code>canvas&lt;/code>
+ * @property {number} y Ordenada para posicionar o &lt;em>filme&lt;/em> no &lt;code>canvas&lt;/code>
+ * @property {Filme} filme Objecto de &lt;em>vídeo&lt;/em> a ser desenhado no &lt;code>canvas&lt;/code>
+ * @property {number} y Ordenada para posicionar o &lt;em>filme&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {number} altura Altura do &lt;em>filme&lt;/em> (&lt;em>vídeo&lt;/em>)
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>filme&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>filme&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> até à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> até à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} rotacao=0 Ângulo de rotação do &lt;em>filme&lt;/em> quando desenhado no &lt;em>canvas&lt;/em> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>filme&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>filme&lt;/em> deve testar colisões
- * @property {boolean} visivel=true Indicação de que o &lt;em>filme&lt;/em> deve ser desenhado no &lt;em>canvas&lt;/em>
- * @property {boolean} seleccionado=false Indicação de que o &lt;em>filme&lt;/em> se encontra seleccionado &amp;mdash; pode ser usado, por exemplo, para indicar que foi seleccionado com o cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usado, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} angulo=0 Ângulo de rotação do &lt;em>filme&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>filme&lt;/em>
+ * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>filme&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
+ * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>filme&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>filme&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
+ * @property {boolean} rotacao=false Indicação de que o &lt;em>círculo&lt;/em> deve rodar, reflectindo o  seu &lt;em>ângulo&lt;/em>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>filme&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
   */class ImagemFilme extends Imagem {
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>ImagemFilme&lt;/code>
-   * @param {number} x Abscissa para posicionar o &lt;em>filme&lt;/em> no &lt;em>canvas&lt;/em>
-   * @param {number} y Ordenada para posicionar o &lt;em>filme&lt;/em> no &lt;em>canvas&lt;/em>
-   * @param {Filme} filme Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhada o &lt;em>filme&lt;/em>
+   * @param {number} x Abscissa para posicionar o &lt;em>filme&lt;/em> no &lt;code>canvas&lt;/code>
+   * @param {number} y Ordenada para posicionar o &lt;em>filme&lt;/em> no &lt;code>canvas&lt;/code>
+   * @param {Filme} filme Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhada o &lt;em>filme&lt;/em>
    */
   constructor(x, y, filme) {
     super(x, y, filme);
@@ -831,17 +838,19 @@ class Imagem extends Grafico {
   }
 
   /**
-   * Este método desenha um &lt;em>video&lt;/em> no &lt;em>canvas&lt;/em>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo desse &lt;em>vídeo&lt;/em>. Note-se que o &lt;em>vídeo&lt;/em> só é efetivamente reproduzido no &lt;em>canvas&lt;/em> se o elemento &lt;code>video&lt;/code> associado por via da propriedade &lt;code>filme&lt;/code> estiver também a ser reproduzido.
-   * @param {Tela} tela Objecto que representa o elemento &lt;em>canvas&lt;/em> onde será desenhada o &lt;em>vídeo&lt;/em>
+   * Este método desenha um &lt;code>video&lt;/code> no &lt;code>canvas&lt;/code>, usando como referência de posicionamento o &lt;em>ponto&lt;/em> correspondente ao canto superior esquerdo desse &lt;em>vídeo&lt;/em>. Note-se que o &lt;em>vídeo&lt;/em> só é efetivamente reproduzido no &lt;code>canvas&lt;/code> se o elemento &lt;code>video&lt;/code> associado por via da propriedade &lt;code>filme&lt;/code> estiver também a ser reproduzido.
+   * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhada o &lt;em>vídeo&lt;/em>
    */
   desenha(tela) {
+    this.x += this.distX;
+    this.y += this.distY;
     if (this.visivel) {
       var contexto = tela.contexto;
-      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o angulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao != 0) {
+      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
+      if (this.rotacao &amp;&amp; this.angulo != 0) {
         contexto.save();
         contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
-        contexto.rotate(this.rotacao * Math.PI / 180);
+        contexto.rotate(this.angulo * Math.PI / 180);
         contexto.drawImage(this.filme.elemento, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
         contexto.restore();
       }
@@ -849,17 +858,17 @@ class Imagem extends Grafico {
         contexto.drawImage(this.filme.elemento, Math.floor(this.x), Math.floor(this.y));
       }
     }
-    this.x += this.deltaX;
-    this.y += this.deltaY;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
   }
 }
 
 //
 
 /**
- * Esta função desenha um &lt;em>gráfico&lt;/em> ou percorre um &lt;em>array&lt;/em> de &lt;em>gráficos&lt;/em> (instâncias ou objectos de subclasses da classe &lt;code>Grafico&lt;/code>) e desenha-os no &lt;em>canvas&lt;/em> especificado. A função funciona de forma recursiva, pelo que o &lt;em>array&lt;/em> pode conter, ele próprio, também &lt;em>arrays&lt;/em> em qualquer das suas posições.
+ * Esta função desenha um &lt;em>gráfico&lt;/em> ou percorre um &lt;em>array&lt;/em> de &lt;em>gráficos&lt;/em> (instâncias ou objectos de subclasses da classe &lt;code>Grafico&lt;/code>) e desenha-os no &lt;code>canvas&lt;/code> especificado. A função funciona de forma recursiva, pelo que o &lt;em>array&lt;/em> pode conter, ele próprio, também &lt;em>arrays&lt;/em> em qualquer das suas posições.
  * @param {Grafico} graficos Um &lt;em>array&lt;/em> de &lt;em>gráficos&lt;/em> ou mesmo apenas um único &lt;em>gráfico&lt;/em> 
- * @param {Tela} tela O &lt;em>canvas&lt;/em> onde vão ser desenhados os &lt;em>gráficos&lt;/em>
+ * @param {Tela} tela O &lt;code>canvas&lt;/code> onde vão ser desenhados os &lt;em>gráficos&lt;/em>
  */
 function desenhaGraficos(graficos, tela) {
   for (var i = 0; i &lt; graficos.length; i++) {
@@ -875,7 +884,7 @@ function desenhaGraficos(graficos, tela) {
 
 /**
  * @class
- * @classdesc A classe &lt;code>Tela&lt;/code> serve essencialmente como um envelope (&lt;em>wrapper&lt;/em>) para elementos de &lt;em>canvas&lt;/em>.
+ * @classdesc A classe &lt;code>Tela&lt;/code> serve essencialmente como um envelope (&lt;em>wrapper&lt;/em>) para elementos de &lt;code>canvas&lt;/code>.
  * @property {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>canvas&lt;/code> a ser representado
  */
 class Tela {
@@ -888,7 +897,7 @@ class Tela {
   }
 
   /**
-   * Contexto &lt;strong>2D&lt;/strong> do &lt;em>canvas&lt;/em>, para acesso aos métodos por ele nativamente disponibilizados
+   * Contexto &lt;strong>2D&lt;/strong> da &lt;em>tela&lt;/em>, para acesso aos métodos nativamente disponibilizados pelo &lt;code>canvas&lt;/code>
    * @type {number}
    */
   get contexto() {
@@ -896,7 +905,7 @@ class Tela {
   }
 
   /**
-   * Largura do &lt;em>canvas&lt;/em> (número de colunas)
+   * Largura da &lt;em>tela&lt;/em> (número de colunas)
    * @type {number}
    */
   get largura() {
@@ -904,7 +913,7 @@ class Tela {
   }
 
   /**
-   * Altura do &lt;em>canvas&lt;/em> (número de linhas)
+   * Altura da &lt;em>tela&lt;/em> (número de linhas)
    * @type {number}
    */
   get altura() {
@@ -912,7 +921,7 @@ class Tela {
   }
 
   /**
-   * Largura final do &lt;em>canvas&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
+   * Largura final da &lt;em>tela&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
    * @type {number}
    */
   get larguraFinal() {
@@ -920,7 +929,7 @@ class Tela {
   }
 
   /**
-   * Altura final do &lt;em>canvas&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
+   * Altura final da &lt;em>tela&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
    * @type {number}
    */
   get alturaFinal() {
@@ -932,7 +941,7 @@ class Tela {
 
 /**
  * @class
- * @classdesc A classe &lt;code>Media&lt;/code> é, na prática, uma classe &lt;em>abstracta&lt;/em>, servindo apenas de base para as subclasses de &lt;code>Media&lt;/code>. Para além disso, funcionará essencialmente como um envelope (&lt;em>wrapper&lt;/em>) para elementos de &lt;em>áudio&lt;/em> e de &lt;em>vídeo&lt;/em> em eventuais subclasses.
+ * @classdesc A classe &lt;code>Media&lt;/code> é, na prática, uma classe &lt;em>abstracta&lt;/em>, servindo apenas de base para as subclasses de &lt;code>Media&lt;/code>. Para além disso, funcionará essencialmente como um envelope (&lt;em>wrapper&lt;/em>) para elementos de &lt;code>audio&lt;/code> e de &lt;code>video&lt;/code> em eventuais subclasses.
  * @property {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML a ser representado
  */
 class Media {
@@ -1064,7 +1073,7 @@ class Filme extends Media {
   }
 
   /**
-   * Largura do &lt;em>vídeo&lt;/em> (número de colunas)
+   * Largura do &lt;em>filme&lt;/em> (número de colunas)
    * @type {number}
    */
   get largura() {
@@ -1072,7 +1081,7 @@ class Filme extends Media {
   }
 
   /**
-   * Altura do &lt;em>vídeo&lt;/em> (número de linhas)
+   * Altura do &lt;em>filme&lt;/em> (número de linhas)
    * @type {number}
    */
   get altura() {
@@ -1080,7 +1089,7 @@ class Filme extends Media {
   }
 
   /**
-  * Largura final do &lt;em>vídeo&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
+  * Largura final do &lt;em>filme&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
   * @type {number}
   */
   get larguraFinal() {
@@ -1088,7 +1097,7 @@ class Filme extends Media {
   }
 
   /**
-   * Altura final do &lt;em>vídeo&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
+   * Altura final do &lt;em>filme&lt;/em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
    * @type {number}
    */
   get alturaFinal() {
@@ -1111,7 +1120,7 @@ class Filme extends Media {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Jun 25 2021 16:02:34 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Apr 29 2022 16:15:00 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
