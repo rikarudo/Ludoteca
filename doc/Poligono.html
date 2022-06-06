@@ -863,7 +863,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line304">line 304</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line339">line 339</a>
     </li></ul></dd>
     
 
@@ -978,7 +978,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line365">line 365</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line400">line 400</a>
     </li></ul></dd>
     
 
@@ -1050,7 +1050,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line397">line 397</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line432">line 432</a>
     </li></ul></dd>
     
 
@@ -1122,7 +1122,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line351">line 351</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line386">line 386</a>
     </li></ul></dd>
     
 
@@ -1202,7 +1202,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line332">line 332</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line367">line 367</a>
     </li></ul></dd>
     
 
@@ -1298,7 +1298,7 @@
 
             
 
-            <td class="description last">Outro <em>gráfico</em> para verificar se existe alguma colisão entre esse e este</td>
+            <td class="description last">Outro <em>gráfico</em> para verificar se existe alguma colisão entre <em>esse</em> e <em>este</em></td>
         </tr>
 
     
@@ -1373,7 +1373,7 @@
 
         
 <div class="param-desc">
-    Se houver colisão, <code>true</code>; se não, <code>false</code>
+    Se houver colisão, <code>true</code>; senão, <code>false</code>
 </div>
 
 
@@ -1531,7 +1531,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line381">line 381</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line416">line 416</a>
     </li></ul></dd>
     
 
@@ -1560,7 +1560,7 @@
 
         
 <div class="param-desc">
-    Se o ponto estiver contido neste <em>polígono</em>, <code>true</code>; se não, <code>false</code>
+    Se o ponto estiver contido neste <em>polígono</em>, <code>true</code>; senão, <code>false</code>
 </div>
 
 
@@ -1695,7 +1695,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line73">line 73</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line108">line 108</a>
     </li></ul></dd>
     
 
@@ -1724,7 +1724,7 @@
 
         
 <div class="param-desc">
-    Se algum um dos pontos constantes no <em>array</em> estiver contido neste <em>grafico</em>, <code>true</code>; se não, <code>false</code>
+    Se algum um dos pontos constantes no <em>array</em> estiver contido neste <em>grafico</em>, <code>true</code>; senão, <code>false</code>
 </div>
 
 
@@ -1859,7 +1859,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line413">line 413</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line448">line 448</a>
     </li></ul></dd>
     
 
@@ -1890,6 +1890,170 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="reposicionaContra"><span class="type-signature"></span>reposicionaContra<span class="signature">(outro)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Este método testa a colisão entre <em>este objecto gráfico</em> e <em>outro objecto gráfico</em> e, quando tal se verifica, reposiciona <em>este objecto gráfico</em>, deixando-o encostrado ao <em>outro</em>, evitando a sobreposição de ambos. O reposicionamento depende da posição imediatamente anterior <em>deste objecto gráfico</em> em relação ao <em>outro</em>.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>outro</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Grafico.html">Grafico</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Outro <em>gráfico</em> para verificar se existe alguma colisão entre <em>esse</em> e <em>este</em>, efectuando o subsequente reposicionamento <em>deste</em></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#reposicionaContra">Grafico#reposicionaContra</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line63">line 63</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Se houver colisão e o correspondente reposicionamento, <code>true</code>; senão, <code>false</code>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -1911,7 +2075,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Apr 29 2022 16:15:00 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Jun 06 2022 14:00:12 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

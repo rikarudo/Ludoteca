@@ -28,9 +28,9 @@
         <article>
             <pre class="prettyprint source linenums"><code>/**
  * @file Biblioteca de classes que representam vários tipos de &lt;em>gráficos&lt;/em> a desenhar num &lt;code>canvas&lt;/code>, o próprio &lt;code>canvas&lt;/code>, e também os elementos &lt;code>audio&lt;/code> e &lt;code>video&lt;/code>. O propósito desta biblioteca é facilitar o desenvolvimento de jogos e outras aplicações multimédia num contexto académico. Procura-se que esta aborde apenas os casos mais comuns, evitando complexidade desnecessária, se bem que algumas classes contenham algumas propriedades suplementares para facilitar a caracterização dos objectos criados para casos habituais, ainda que fora do estritamente necessário.
- * @version 0.9.1
+ * @version 0.9.2
  * @author Ricardo Rodrigues
- * @date 2022-04-29
+ * @date 2022-06-06
  * @copyright Ricardo Rodrigues (2021, 2022)
  */
 
@@ -50,7 +50,7 @@
  * @property {boolean} rotacao=false Indicação de que o &lt;em>círculo&lt;/em> deve rodar, reflectindo o  seu &lt;em>ângulo&lt;/em>
  * @property {boolean} visivel=true Indicação de que o &lt;em>gráfico&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
  */
-class Grafico {
+ class Grafico {
   /**
    * Construtor da classe &lt;code>Grafico&lt;/code>. &lt;em>Este construtor não deve ser usado directamente. Se tal acontecer, é gerada uma excepção (&lt;code>TypeError&lt;/code>).&lt;/em>
    * @param {number} x Abscissa para posicionar o &lt;em>gráfico&lt;/em> no &lt;code>canvas&lt;/code>
@@ -76,18 +76,53 @@ class Grafico {
 
   /**
    * Este método encontra-se implementado na superclasse &lt;code>Grafico&lt;/code>, assumindo que todas as formas definidas nas suas subclasses são limitadas, de um modo genérico, por um rectângulo imaginário que engloba a totalidade do &lt;em>gráfico&lt;/em>. &lt;em>Se este método, tal como se encontra definido, não for o mais apropriado para uma dada subclasse, pode ser sempre redefinido (&lt;em>overrided&lt;/em>) nessa mesma subclasse.&lt;/em>
-   * @param {Grafico} outro Outro &lt;em>gráfico&lt;/em> para verificar se existe alguma colisão entre esse e este
-   * @returns {boolean} Se houver colisão, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   * @param {Grafico} outro Outro &lt;em>gráfico&lt;/em> para verificar se existe alguma colisão entre &lt;em>esse&lt;/em> e &lt;em>este&lt;/em>
+   * @returns {boolean} Se houver colisão, &lt;code>true&lt;/code>; senão, &lt;code>false&lt;/code>
    */
   colide(outro) {
     return (this.activo &amp;&amp; outro.activo &amp;&amp; (this.contemPonto(outro.x, outro.y) || this.contemPonto(outro.x + outro.largura, outro.y) || this.contemPonto(outro.x, outro.y + outro.altura) || this.contemPonto(outro.x + outro.largura, outro.y + outro.altura) || outro.contemPonto(this.x, this.y) || outro.contemPonto(this.x + this.largura, this.y) || outro.contemPonto(this.x, this.y + this.altura) || outro.contemPonto(this.x + this.largura, this.y + this.altura)));
   }
 
   /**
+   * Este método testa a colisão entre &lt;em>este objecto gráfico&lt;/em> e &lt;em>outro objecto gráfico&lt;/em> e, quando tal se verifica, reposiciona &lt;em>este objecto gráfico&lt;/em>, deixando-o encostrado ao &lt;em>outro&lt;/em>, evitando a sobreposição de ambos. O reposicionamento depende da posição imediatamente anterior &lt;em>deste objecto gráfico&lt;/em> em relação ao &lt;em>outro&lt;/em>.
+   * @param {Grafico} outro Outro &lt;em>gráfico&lt;/em> para verificar se existe alguma colisão entre &lt;em>esse&lt;/em> e &lt;em>este&lt;/em>, efectuando o subsequente reposicionamento &lt;em>deste&lt;/em>
+   * @returns {boolean} Se houver colisão e o correspondente reposicionamento, &lt;code>true&lt;/code>; senão, &lt;code>false&lt;/code>
+   */
+  reposicionaContra(outro) {
+    if (this.colide(outro)) {
+      // posicão anterior: em cima
+      if (this.y + this.altura - Math.abs(this.gravidade) &lt;= outro.y) {
+        this.y = outro.y - this.altura;
+        this.angulo = 0;
+      }
+      // posicão anterior: em baixo
+      else if (this.y - outro.altura + Math.abs(this.gravidade) >= outro.y) {
+        this.y = outro.y + outro.altura;
+        this.angulo = 0;
+      }
+      // posicão anterior: à esquerda
+      else if (this.x + this.largura - Math.abs(this.deltaX) &lt;= outro.x) {
+        this.x = outro.x - this.largura;
+      }
+      // posicão anterior: à direita
+      else if (this.x - outro.largura + Math.abs(this.deltaX) >= outro.x) {
+        this.x = outro.x + outro.largura;
+      }
+      else {
+        return false;
+      }
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  /**
    * &lt;em>Este método deve ser implementado nas subclasses de &lt;code>Grafico&lt;/code>, respeitando as especificidades de cada forma representada nelas. Se tal não acontecer, é gerada uma excepção (&lt;code>Error&lt;/code>).&lt;/em>
    * @param {number} x Abscissa do ponto a testar se está contido no &lt;em>gráfico&lt;/em>
    * @param {number} y Ordenada do ponto a testar se está contido no &lt;em>gráfico&lt;/em>
-   * @returns {boolean} Se o ponto estiver contido neste &lt;em>grafico&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   * @returns {boolean} Se o ponto estiver contido neste &lt;em>grafico&lt;/em>, &lt;code>true&lt;/code>; senão, &lt;code>false&lt;/code>
    */
   contemPonto(x, y) {
     throw new Error("O método 'contemPonto(x, y)' tem de ser implementado nas subclasses da classe 'Grafico'.");
@@ -96,7 +131,7 @@ class Grafico {
   /**
    * Este método mais não faz que chamar o método &lt;code>contemPonto(x, y)&lt;/code> para cada um dos pontos do &lt;em>array&lt;/em>, verificando se algum deles se encontra dentro do &lt;em>gráfico&lt;/em>.
    * @param {array} pontos Conjunto de pontos a verificar se estão contidos no &lt;em>gráfico&lt;/em>
-   * @returns {boolean} Se algum um dos pontos constantes no &lt;em>array&lt;/em> estiver contido neste &lt;em>grafico&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   * @returns {boolean} Se algum um dos pontos constantes no &lt;em>array&lt;/em> estiver contido neste &lt;em>grafico&lt;/em>, &lt;code>true&lt;/code>; senão, &lt;code>false&lt;/code>
    */
   contemPontos(pontos) {
     for (var i = 0; i &lt; pontos.length; i++) {
@@ -177,7 +212,7 @@ class Circulo extends Grafico {
    * Este método verifica se um dado &lt;em>ponto&lt;/em> está contido na área deste &lt;em>círculo&lt;/em>. Tal acontece quando a distância desse &lt;em>ponto&lt;/em> ao centro do &lt;em>círculo&lt;/em> é inferior ao &lt;em>raio&lt;/em> do &lt;em>círculo&lt;/em>.
    * @param {number} x Abscissa do ponto a testar se está contido neste &lt;em>círculo&lt;/em>
    * @param {number} y Ordenada do ponto a testar se está contido neste &lt;em>círculo&lt;/em>
-   * @returns {boolean} Se o ponto estiver contido neste &lt;em>círculo&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   * @returns {boolean} Se o ponto estiver contido neste &lt;em>círculo&lt;/em>, &lt;code>true&lt;/code>; senão, &lt;code>false&lt;/code>
    */
   contemPonto(x, y) {
     return (Math.hypot((this.x + this.raio) - x, (this.y + this.raio) - y) &lt; this.raio);
@@ -261,7 +296,7 @@ class Rectangulo extends Grafico {
    * Este método verifica se um dado &lt;em>ponto&lt;/em> está contido na área deste &lt;em>rectângulo&lt;/em>. Tal acontece quando o &lt;em>x&lt;/em> do ponto se encontra compreendido entre o &lt;em>x&lt;/em> do &lt;em>rectângulo&lt;/em> e &lt;em>x&lt;/em> mais a &lt;em>largura&lt;/em> do &lt;em>rectângulo&lt;/em>, e o &lt;em>y&lt;/em> do ponto se encontra compreendido entre o &lt;em>y&lt;/em> do &lt;em>rectângulo&lt;/em> e &lt;em>y&lt;/em> mais a &lt;em>altura&lt;/em> do &lt;em>rectângulo&lt;/em>.
    * @param {number} x Abscissa do ponto a testar se está contido neste &lt;em>rectângulo&lt;/em>
    * @param {number} y Ordenada do ponto a testar se está contido neste &lt;em>rectângulo&lt;/em>
-   * @returns {boolean} Se o ponto estiver contido neste &lt;em>rectângulo&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   * @returns {boolean} Se o ponto estiver contido neste &lt;em>rectângulo&lt;/em>, &lt;code>true&lt;/code>; senão, &lt;code>false&lt;/code>
    */
   contemPonto(x, y) {
     return ((this.x &lt;= x) &amp;&amp; (this.x + this.largura > x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura > y));
@@ -404,7 +439,7 @@ class Poligono extends Grafico {
     * Este método verifica se um dado &lt;em>ponto&lt;/em> está contido na área deste &lt;em>polígono&lt;/em>. Tal acontece quando um segmento de recta com início no ponto especificado intersecta um número ímpar de arestas do &lt;em>polígono&lt;/em>.
     * @param {number} x Abscissa do ponto a testar se está contido neste &lt;em>polígono&lt;/em>
     * @param {number} y Ordenada do ponto a testar se está contido neste &lt;em>polígono&lt;/em>
-    * @returns {boolean} Se o ponto estiver contido neste &lt;em>polígono&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+    * @returns {boolean} Se o ponto estiver contido neste &lt;em>polígono&lt;/em>, &lt;code>true&lt;/code>; senão, &lt;code>false&lt;/code>
     */
   contemPonto(x, y) {
     var contido = false;
@@ -556,7 +591,7 @@ class Texto extends Grafico {
    * Este método verifica se um dado &lt;em>ponto&lt;/em> está contido na área de &lt;em>rectângulo&lt;/em> que envolva o &lt;em>texto&lt;/em>, definito pelo &lt;em>ponto&lt;/em> que posiciona o texto e pela largura e pela altura do texto. Tal acontece quando o &lt;em>x&lt;/em> do ponto se encontra compreendido entre o &lt;em>x&lt;/em> do &lt;em>rectângulo&lt;/em> e &lt;em>x&lt;/em> mais a &lt;em>largura&lt;/em> do &lt;em>rectângulo&lt;/em>, e o &lt;em>y&lt;/em> do ponto se encontra compreendido entre o &lt;em>y&lt;/em> do &lt;em>rectângulo&lt;/em> e &lt;em>y&lt;/em> mais a &lt;em>altura&lt;/em> do &lt;em>rectângulo&lt;/em>.
    * @param {number} x Abscissa do ponto a testar se está contido neste &lt;em>texto&lt;/em>
    * @param {number} y Ordenada do ponto a testar se está contido neste &lt;em>texto&lt;/em>
-   * @returns {boolean} Se o ponto estiver contido neste &lt;em>texto&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   * @returns {boolean} Se o ponto estiver contido neste &lt;em>texto&lt;/em>, &lt;code>true&lt;/code>; senão, &lt;code>false&lt;/code>
    */
   contemPonto(x, y) {
     return ((this.x &lt;= x) &amp;&amp; (this.x + this.largura > x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura > y));
@@ -660,7 +695,7 @@ class Imagem extends Grafico {
    * Este método verifica se um dado &lt;em>ponto&lt;/em> está contido na área ocupada por esta &lt;em>imagem&lt;/em>. Tal acontece quando o &lt;em>x&lt;/em> do ponto se encontra compreendido entre o &lt;em>x&lt;/em> da &lt;em>imagem&lt;/em> e &lt;em>x&lt;/em> mais a &lt;em>largura&lt;/em> da &lt;em>imagem&lt;/em>, e o &lt;em>y&lt;/em> do ponto se encontra compreendido entre o &lt;em>y&lt;/em> da &lt;em>imagem&lt;/em> e &lt;em>y&lt;/em> mais a &lt;em>altura&lt;/em> da &lt;em>imagem&lt;/em>.
    * @param {number} x Abscissa do ponto a testar se está contido nesta &lt;em>imagem&lt;/em>
    * @param {number} y Ordenada do ponto a testar se está contido nesta &lt;em>imagem&lt;/em>
-   * @returns {boolean} Se o ponto estiver contido nesta &lt;em>imagem&lt;/em>, &lt;code>true&lt;/code>; se não, &lt;code>false&lt;/code>
+   * @returns {boolean} Se o ponto estiver contido nesta &lt;em>imagem&lt;/em>, &lt;code>true&lt;/code>; senão, &lt;code>false&lt;/code>
    */
   contemPonto(x, y) {
     return ((this.x &lt;= x) &amp;&amp; (this.x + this.largura > x) &amp;&amp; (this.y &lt;= y) &amp;&amp; (this.y + this.altura > y));
@@ -1120,7 +1155,7 @@ class Filme extends Media {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Apr 29 2022 16:15:00 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Jun 06 2022 14:00:12 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
