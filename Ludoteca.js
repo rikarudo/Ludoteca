@@ -22,7 +22,7 @@
  * @property {boolean} rotacao=false Indicação de que o <em>círculo</em> deve rodar, reflectindo o  seu <em>ângulo</em>
  * @property {boolean} visivel=true Indicação de que o <em>gráfico</em> deve ser desenhado no <code>canvas</code>, quando chamado o método <code>desenha(tela)</code>
  */
- class Grafico {
+class Grafico {
   /**
    * Construtor da classe <code>Grafico</code>. <em>Este construtor não deve ser usado directamente. Se tal acontecer, é gerada uma excepção (<code>TypeError</code>).</em>
    * @param {number} x Abscissa para posicionar o <em>gráfico</em> no <code>canvas</code>
@@ -56,19 +56,19 @@
   }
 
   /**
-   * Este método testa a colisão entre <em>este objecto gráfico</em> e <em>outro objecto gráfico</em> e, quando tal se verifica, reposiciona <em>este objecto gráfico</em>, deixando-o encostrado ao <em>outro</em>, evitando a sobreposição de ambos. O reposicionamento depende da posição imediatamente anterior <em>deste objecto gráfico</em> em relação ao <em>outro</em>.
+   * Este método testa a colisão entre <em>este objecto gráfico</em> e <em>outro objecto gráfico</em> e, quando tal se verifica, reposiciona <em>este objecto gráfico</em>, deixando-o encostado ao <em>outro</em>, evitando a sobreposição de ambos. O reposicionamento depende da posição imediatamente anterior <em>deste objecto gráfico</em> em relação ao <em>outro</em>.
    * @param {Grafico} outro Outro <em>gráfico</em> para verificar se existe alguma colisão entre <em>esse</em> e <em>este</em>, efectuando o subsequente reposicionamento <em>deste</em>
    * @returns {boolean} Se houver colisão e o correspondente reposicionamento, <code>true</code>; senão, <code>false</code>
    */
   reposicionaContra(outro) {
     if (this.colide(outro)) {
       // posicão anterior: em cima
-      if (this.y + this.altura - Math.abs(this.gravidade) <= outro.y) {
+      if (this.y + this.altura - Math.abs(this.deltaY + this.gravidade) <= outro.y) {
         this.y = outro.y - this.altura;
         this.angulo = 0;
       }
       // posicão anterior: em baixo
-      else if (this.y - outro.altura + Math.abs(this.gravidade) >= outro.y) {
+      else if (this.y - outro.altura + Math.abs(this.deltaY + this.gravidade) >= outro.y) {
         this.y = outro.y + outro.altura;
         this.angulo = 0;
       }
