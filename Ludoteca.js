@@ -22,7 +22,7 @@
  * @property {boolean} rotacao=false Indicação de que o <em>círculo</em> deve rodar, reflectindo o  seu <em>ângulo</em>
  * @property {boolean} visivel=true Indicação de que o <em>gráfico</em> deve ser desenhado no <code>canvas</code>, quando chamado o método <code>desenha(tela)</code>
  */
-class Grafico {
+ class Grafico {
   /**
    * Construtor da classe <code>Grafico</code>. <em>Este construtor não deve ser usado directamente. Se tal acontecer, é gerada uma excepção (<code>TypeError</code>).</em>
    * @param {number} x Abscissa para posicionar o <em>gráfico</em> no <code>canvas</code>
@@ -56,29 +56,30 @@ class Grafico {
   }
 
   /**
-   * Este método testa a colisão entre <em>este objecto gráfico</em> e <em>outro objecto gráfico</em> e, quando tal se verifica, reposiciona <em>este objecto gráfico</em>, deixando-o encostado ao <em>outro</em>, evitando a sobreposição de ambos. O reposicionamento depende da posição imediatamente anterior <em>deste objecto gráfico</em> em relação ao <em>outro</em>.
+   * Este método testa a colisão entre <em>este objecto gráfico</em> e <em>outro objecto gráfico</em> e, quando tal se verifica, reposiciona <em>este objecto gráfico</em>, deixando-o encostado (ou próximo disso, consoante o <em>afastamento</em>) ao <em>outro</em>, evitando a sobreposição de ambos. O reposicionamento depende da posição imediatamente anterior <em>deste objecto gráfico</em> em relação ao <em>outro</em>. <em>Neste momento, ainda só funciona devidamente com movimentos definidos pelo <code>deltaX</code>, pelo <code>deltaY</code> e pela <code>gravidade</code>.</em>
    * @param {Grafico} outro Outro <em>gráfico</em> para verificar se existe alguma colisão entre <em>esse</em> e <em>este</em>, efectuando o subsequente reposicionamento <em>deste</em>
+   * @param {number} afastamento=0 Afastamento a aplicar entre os dois <em>objectos gráficos</em> no reposicionamento; idealmente, este deve ser compreendido entre zero (<code>0</code>) e um valor inferior aos valores de quaisquer deslocamentos horizontais e verticais
    * @returns {boolean} Se houver colisão e o correspondente reposicionamento, <code>true</code>; senão, <code>false</code>
    */
-  reposicionaContra(outro) {
+  reposicionaContra(outro, afastamento = 0) {
     if (this.colide(outro)) {
       // posicão anterior: em cima
       if (this.y + this.altura - Math.abs(this.deltaY + this.gravidade) <= outro.y) {
-        this.y = outro.y - this.altura;
+        this.y = outro.y - this.altura - afastamento;
         this.angulo = 0;
       }
       // posicão anterior: em baixo
       else if (this.y - outro.altura + Math.abs(this.deltaY + this.gravidade) >= outro.y) {
-        this.y = outro.y + outro.altura;
+        this.y = outro.y + outro.altura + afastamento;
         this.angulo = 0;
       }
       // posicão anterior: à esquerda
       else if (this.x + this.largura - Math.abs(this.deltaX) <= outro.x) {
-        this.x = outro.x - this.largura;
+        this.x = outro.x - this.largura - afastamento;
       }
       // posicão anterior: à direita
       else if (this.x - outro.largura + Math.abs(this.deltaX) >= outro.x) {
-        this.x = outro.x + outro.largura;
+        this.x = outro.x + outro.largura + afastamento;
       }
       else {
         return false;
