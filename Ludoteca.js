@@ -2,7 +2,7 @@
  * @file Biblioteca de classes que representam vários tipos de <em>gráficos</em> a desenhar num <code>canvas</code>, o próprio <code>canvas</code>, e também os elementos <code>audio</code> e <code>video</code>. O propósito desta biblioteca é facilitar o desenvolvimento de jogos e outras aplicações multimédia num contexto académico. Procura-se que esta aborde apenas os casos mais comuns, evitando complexidade desnecessária, se bem que algumas classes contenham algumas propriedades suplementares para facilitar a caracterização dos objectos criados para casos habituais, ainda que fora do estritamente necessário.
  * @version 0.9.2
  * @author Ricardo Rodrigues
- * @date 2022-06-06
+ * @date 2022-06-21
  * @copyright Ricardo Rodrigues (2021, 2022)
  */
 
@@ -13,8 +13,8 @@
  * @property {number} y Ordenada para posicionar o <em>gráfico</em> no <code>canvas</code>
  * @property {number} deltaX=0 Variação horizontal da posição do <em>gráfico</em>
  * @property {number} deltaY=0 Variação vertical da posição do <em>gráfico</em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
  * @property {number} angulo=0 Ângulo de rotação do <em>gráfico</em> quando desenhado no <code>canvas</code> &mdash; a rotação é feita tendo como referência o centro do <em>gráfico</em>
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação vertical do <em>gráfico</em>, actuando como a <em>gravidade</em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação horizontal e vertical do <em>gráfico</em>
@@ -138,8 +138,8 @@
  * @property {number} espessura Espessura do contorno do <em>círculo</em> &mdash; se a espessura tiver um valor igual ou inferior a zero (<code>0</code>), o contorno não é desenhado
  * @property {number} deltaX=0 Variação horizontal da posição do <em>círculo</em>
  * @property {number} deltaY=0 Variação vertical da posição do <em>círculo</em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
  * @property {number} angulo=0 Ângulo de rotação do <em>círculo</em> quando desenhado no <code>canvas</code> &mdash; dadas as características do <em>círculo</em>, esta propriedade é ignorada no seu desenho no <code>canvas</code>
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação vertical do <em>cículo</em>, actuando como a <em>gravidade</em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação horizontal e vertical do <em>círculo</em>
@@ -236,8 +236,8 @@ class Circulo extends Grafico {
  * @property {number} espessura Espessura do contorno do <em>rectângulo</em> &mdash; se a espessura tiver um valor igual ou inferior a zero (<code>0</code>), o contorno não é desenhado
  * @property {number} deltaX=0 Variação horizontal da posição do <em>rectângulo</em>
  * @property {number} deltaY=0 Variação vertical da posição do <em>rectângulo</em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
  * @property {number} angulo=0 Ângulo de rotação do <em>rectângulo</em> quando desenhado no <code>canvas</code> &mdash; a rotação é feita tendo como referência o centro do <em>rectângulo</em>
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação vertical do <em>rectângulo</em>, actuando como a <em>gravidade</em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação horizontal e vertical do <em>rectângulo</em>
@@ -326,8 +326,8 @@ class Rectangulo extends Grafico {
  * @property {number} espessura Espessura do contorno do <em>polígono</em> &mdash; se a espessura tiver um valor igual ou inferior a zero (<code>0</code>), o contorno não é desenhado
  * @property {number} deltaX=0 Variação horizontal da posição do <em>polígono</em>
  * @property {number} deltaY=0 Variação vertical da posição do <em>polígono</em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
  * @property {number} deslocX=0 Deslocamento horizontal do ponto mais à esquerda do polígono até ponto usado para posicionar o <em>polígono</em>, quando se fez o ajuste posicional do polígono &mdash; se o seu valor for zero (<code>0</code>), não foi feito qualquer ajuste
  * @property {number} deslocY=0 Deslocamento vertical do ponto mais à esquerda do polígono até ponto usado para posicionar o <em>polígono</em>, quando se fez o ajuste posicional do polígono &mdash; se o seu valor for zero (<code>0</code>), não foi feito qualquer ajuste
  * @property {number} angulo=0 Ângulo de rotação do <em>polígono</em> quando desenhado no <code>canvas</code> &mdash; a rotação é feita tendo como referência o centro do <em>polígono</em>
@@ -510,8 +510,8 @@ class Poligono extends Grafico {
  * @property {number} base="top" Alinhamento vertical do <em>texto</em>
  * @property {number} deltaX=0 Variação horizontal da posição do <em>texto</em>
  * @property {number} deltaY=0 Variação vertical da posição do <em>texto</em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
  * @property {number} angulo=0 Ângulo de rotação do <em>texto</em> quando desenhado no <code>canvas</code> &mdash; a rotação é feita tendo como referência o centro do <em>texto</em>
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação vertical do <em>texto</em>, actuando como a <em>gravidade</em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação horizontal e vertical do <em>texto</em>
@@ -626,8 +626,8 @@ class Texto extends Grafico {
  * @property {number} altura Altura da <em>imagem</em>
  * @property {number} deltaX=0 Variação horizontal da posição da <em>imagem</em>
  * @property {number} deltaY=0 Variação vertical da posição da <em>imagem</em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
  * @property {number} angulo=0 Ângulo de rotação da <em>imagem</em> quando desenhado no <code>canvas</code> &mdash; a rotação é feita tendo como referência o centro da <em>imagem</em>
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação vertical da <em>imagem</em>, actuando como a <em>gravidade</em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação horizontal e vertical da <em>imagem</em>
@@ -709,15 +709,19 @@ class Imagem extends Grafico {
  * @property {number} x Abscissa para posicionar o <em>sprite</em> no <code>canvas</code>
  * @property {number} y Ordenada para posicionar o <em>sprite</em> no <code>canvas</code>
  * @property {HTMLElement} imagem Elemento HTML que contém o <em>sprite</em>
- * @property {number} fotogramas Número de fotogramas (<em>frames</em>) do <em>sprite</em> 
- * @property {number} iteracoes Número de iterações &mdash; na prática, o número de <em>frames</em> a serem gerados por via do método <code>window.requestAnimationFrame()</code> &mdash; antes de se passar ao fotograma seguinte do <em>sprite</em> 
+ * @property {number} fotogramas Número de fotogramas (<em>frames</em>) do <em>sprite</em>
+ * @property {number} iteracoes Número de iterações &mdash; na prática, o número de <em>frames</em> a serem gerados por via do método <code>window.requestAnimationFrame()</code> &mdash; antes de se passar ao fotograma seguinte do <em>sprite</em>
+ * @property {number} contador=0 Número que vai registando o número de vezes que o <em>sprite</em> foi desenhado, sendo necessário para controlar a transição entre fotogramas de fotogramas
+ * @property {number} animado=true Indicação de que o <em>sprite</em> deve ser desenhado <em>animado</em> no <code>canvas</code>, quando chamado o método <code>desenha(tela)</code>; caso contrário, ficará parado num dos fotogramas
+ * @property {number} indiceFotograma=0 Índice do fotograma a ser mostrado num dado momento; varia, de acordo como o número de <em>iterações</em> definido, entre zero (<code>0</code>) e o número de fotogramas existentes (<em>exclusive</em>)
+ * @property {number} indiceTira=0 Índice da tira de fotogramas a ser mostrada num dado momento; varia entre zero (<code>0</code>) e o número de tiras existentes (<em>exclusive</em>)
  * @property {number} tiras=1 Número de tiras existentes no <em>sprite</em>
  * @property {number} largura Largura de um <em>fotograma</em> do <em>sprite</em>
  * @property {number} altura Altura de um <em>fotograma</em> do <em>sprite</em>
  * @property {number} deltaX=0 Variação horizontal da posição do <em>sprite</em>
  * @property {number} deltaY=0 Variação vertical da posição do <em>sprite</em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
  * @property {number} angulo=0 Ângulo de rotação do <em>sprite</em> quando desenhado no <code>canvas</code> &mdash; a rotação é feita tendo como referência o centro do <em>sprite</em>
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação vertical do <em>sprite</em>, actuando como a <em>gravidade</em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação horizontal e vertical do <em>sprite</em>
@@ -730,8 +734,8 @@ class Imagem extends Grafico {
    * @param {number} x Abscissa para posicionar o <em>sprite</em> no <code>canvas</code>
    * @param {number} y Ordenada para posicionar o <em>sprite</em> no <code>canvas</code>
    * @param {HTMLElement} imagem Elemento HTML que contém o <em>sprite</em>
-   * @param {number} fotogramas Número de fotogramas (<em>frames</em>) do <em>sprite</em> 
-   * @param {number} iteracoes Número de iterações &mdash; na prática, o número de <em>frames</em> a serem gerados por via do método <code>window.requestAnimationFrame()</code> &mdash; antes de se passar ao fotograma seguinte do <em>sprite</em> 
+   * @param {number} fotogramas Número de fotogramas (<em>frames</em>) do <em>sprite</em>
+   * @param {number} iteracoes Número de iterações &mdash; na prática, o número de <em>frames</em> a serem gerados por via do método <code>window.requestAnimationFrame()</code> &mdash; antes de se passar ao fotograma seguinte do <em>sprite</em>
    * @param {number} tiras=1 Número de tiras existentes no <em>sprite</em>
    */
   constructor(x, y, imagem, fotogramas, iteracoes, tiras = 1) {
@@ -739,7 +743,7 @@ class Imagem extends Grafico {
     this.fotogramas = fotogramas;
     this.iteracoes = iteracoes;
     this.contador = 0;
-    this.animada = true;
+    this.animado = true;
     this.indiceFotograma = 0;
     this.indiceTira = 0;
     this.tiras = tiras;
@@ -781,7 +785,7 @@ class Imagem extends Grafico {
       else {
         contexto.drawImage(this.imagem, this.indiceFotograma * this.largura, this.indiceTira * this.altura, this.largura, this.altura, Math.floor(this.x), Math.floor(this.y), this.largura, this.altura);
       }
-      if ((this.animada) || (this.indiceFotograma > 0)) {
+      if ((this.animado) || (this.indiceFotograma > 0)) {
         if (this.contador % this.iteracoes == 0) {
           this.indiceFotograma++;
           if (this.indiceFotograma >= this.fotogramas) {
@@ -809,8 +813,8 @@ class Imagem extends Grafico {
  * @property {number} altura Altura do <em>filme</em> (<em>vídeo</em>)
  * @property {number} deltaX=0 Variação horizontal da posição do <em>filme</em>
  * @property {number} deltaY=0 Variação vertical da posição do <em>filme</em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usado, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
+ * @property {number} distX=0 Distância horizontal até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato
+ * @property {number} distY=0 Distância vertical até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato
  * @property {number} angulo=0 Ângulo de rotação do <em>filme</em> quando desenhado no <code>canvas</code> &mdash; a rotação é feita tendo como referência o centro do <em>filme</em>
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação vertical do <em>filme</em>, actuando como a <em>gravidade</em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação horizontal e vertical do <em>filme</em>
@@ -875,7 +879,7 @@ class Imagem extends Grafico {
 
 /**
  * Esta função desenha um <em>gráfico</em> ou percorre um <em>array</em> de <em>gráficos</em> (instâncias ou objectos de subclasses da classe <code>Grafico</code>) e desenha-os no <code>canvas</code> especificado. A função funciona de forma recursiva, pelo que o <em>array</em> pode conter, ele próprio, também <em>arrays</em> em qualquer das suas posições.
- * @param {Grafico} graficos Um <em>array</em> de <em>gráficos</em> ou mesmo apenas um único <em>gráfico</em> 
+ * @param {Grafico} graficos Um <em>array</em> de <em>gráficos</em> ou mesmo apenas um único <em>gráfico</em>
  * @param {Tela} tela O <code>canvas</code> onde vão ser desenhados os <em>gráficos</em>
  */
 function desenhaGraficos(graficos, tela) {
