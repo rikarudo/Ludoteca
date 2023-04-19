@@ -24,12 +24,6 @@
         var continua;
         var contador;
         var fundo;
-
-        var racioX;
-        var racioY;
-
-        var ratoX;
-        var ratoY;
         //...
 
         function inicia() {
@@ -40,15 +34,12 @@
 
             fundo = new Rectangulo(0, 0, tela.largura, tela.altura, "lightgray");
             //...
-            ratoX = 0;
-            ratoY = 0;
 
-            racioX = tela.largura / tela.larguraFinal;
-            racioY = tela.altura / tela.alturaFinal;
-            //...
-            tela.elemento.onmousedown = processaBotaoPremido;
-            tela.elemento.onmouseup = processaBotaoLibertado;
-            tela.elemento.onmousemove = processaMovimento;
+            tela.processaRatoDescido = processaRatoDescido;
+            tela.processaRatoSubido = processaRatoSubido;
+            tela.processaRatoMovido = processaRatoMovido;
+            tela.processaTeclaDescida = processaTeclaDescida;
+            tela.processaTeclaSubida = processaTeclaSubida;
         }
 
         function desenha() {
@@ -62,49 +53,50 @@
             }
         }
 
-        function processaBotaoPremido(rato) {
-            ratoX = Math.floor(rato.offsetX * racioX);
-            ratoY = Math.floor(rato.offsetY * racioY);
+
+        function processaRatoDescido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
         }
 
-        function processaMovimento(rato) {
-            ratoX = Math.floor(rato.offsetX * racioX);
-            ratoY = Math.floor(rato.offsetY * racioY);
-        }
-
-        function processaBotaoLibertado(rato) {
-            ratoX = Math.floor(rato.offsetX * racioX);
-            ratoY = Math.floor(rato.offsetY * racioY);
+        function processaRatoSubido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
         }
 
-        function processaTeclaPremida(tecla) {
-            if (tecla.code == "Space") {        // barra de espaços
+        function processaRatoMovido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaTeclaDescida() {
+            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
+            if (tela.codigoTecla == "Space") {        // barra de espaços
                 //...
             }
-            if (tecla.code == "ArrowLeft") {    // esquerda
+            if (tela.codigoTecla == "ArrowLeft") {    // esquerda
                 //...
             }
-            if (tecla.code == "ArrowUp") {      // cima
+            if (tela.codigoTecla == "ArrowUp") {      // cima
                 //...
             }
-            if (tecla.code == "ArrowRight") {   // direita
+            if (tela.codigoTecla == "ArrowRight") {   // direita
                 //...
             }
-            if (tecla.code == "ArrowDown") {    // baixo
+            if (tela.codigoTecla == "ArrowDown") {    // baixo
                 //...
             }
         }
 
-        function processaTeclaLibertada(tecla) {
-            if (tecla.code == "Space") {
+        function processaTeclaSubida() {
+            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
+            if (tela.codigoTecla == "Space") {
                 //...
             }
-            if ((tecla.code == "ArrowLeft") || (tecla.code == "ArrowRight")) {
+            if ((tela.codigoTecla == "ArrowLeft") || (tela.codigoTecla == "ArrowRight")) {
                 //...
             }
-            if ((tecla.code == "ArrowUp") || (tecla.code == "ArrowDown")) {
+            if ((tela.codigoTecla == "ArrowUp") || (tela.codigoTecla == "ArrowDown")) {
                 //...
             }
         }
@@ -113,8 +105,6 @@
             inicia();
             desenha();
         }
-        window.onkeydown = processaTeclaPremida;
-        window.onkeyup = processaTeclaLibertada;
     </script>
 </head>
 

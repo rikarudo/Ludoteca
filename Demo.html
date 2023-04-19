@@ -24,18 +24,15 @@
         var continua;
         var contador;
         var fundo;
-
-        var racioX;
-        var racioY;
-
-        var ratoX;
-        var ratoY;
+        //...
 
         var imagemAnimada;
         var imagemFilme;
         var coordenadas;
         var pentagono;
+        var triangulo;
         var quadrado;
+        var losango;
         var circulo;
         var imagem;
         var teclas;
@@ -53,41 +50,47 @@
 
             fundo = new Rectangulo(0, 0, tela.largura, tela.altura, "lightblue");
 
-            imagemAnimada = new ImagemAnimada(500, 200, document.getElementById("imagemAnimada"), 6, 10);
+            imagemAnimada = new ImagemAnimada(500, 250, document.getElementById("imagemAnimada"), 6, 10);
 
-            filme = new Filme(document.getElementById("video"));
+            filme = new Filme(document.getElementById("filme"));
             imagemFilme = new ImagemFilme(50, 50, filme);
 
             coordenadas = new Texto(5, 5, "(x, y)");
-            var verticesPentagono = new Array();
-            for (var i = 0; i < 5; i++) {
-                verticesPentagono.push({ x: 100 * Math.cos(2 * Math.PI * i / 5 + Math.PI), y: 100 * Math.sin(2 * Math.PI * i / 5 + Math.PI) });
+
+            var verticesPentagono = new Array(5);
+            for (var i = 0; i < verticesPentagono.length; i++) {
+                verticesPentagono[i] = { x: 100 * Math.cos(2 * Math.PI * i / verticesPentagono.length + Math.PI), y: 100 * Math.sin(2 * Math.PI * i / verticesPentagono.length + Math.PI) };
             }
             pentagono = new Poligono(200, 300, verticesPentagono, "orange", "red", 5);
 
+            var verticesTriangulo = new Array(3);
+            for (var i = 0; i < verticesTriangulo.length; i++) {
+                verticesTriangulo[i] = { x: 75 * Math.cos(2 * Math.PI * i / verticesTriangulo.length + Math.PI), y: 75 * Math.sin(2 * Math.PI * i / verticesTriangulo.length + Math.PI) };
+            }
+            triangulo = new Poligono(600, 100, verticesTriangulo, "white", "brown", 5);
+
             quadrado = new Rectangulo(400, 400, 100, 100, "green");
 
-            circulo = new Circulo(500, 100, 50, null, "black", 5);
+            losango = new Rectangulo(50, 350, 100, 100, "yellow", "pink", 3);
+            losango.rotacao = true;
+            losango.angulo = 45;
+
+            circulo = new Circulo(450, 100, 50, null, "black", 5);
 
             imagem = new Imagem(100, 500, document.getElementById("imagem"));
 
             teclas = new Texto(650, 550, "Teclas...");
 
-            texto = new Texto(50, 25, "Isto é um teste com vários gráficos e alguns eventos do rato e do teclado...", "navy");
+            texto = new Texto(25, 25, "Isto é um teste com vários gráficos e alguns eventos do rato e do teclado...", "navy");
 
             som = new Som(document.getElementById("som"));
             //...
 
-            ratoX = 0;
-            ratoY = 0;
-
-            racioX = tela.largura / tela.larguraFinal;
-            racioY = tela.altura / tela.alturaFinal;
-            //...
-
-            tela.elemento.onmousedown = processaBotaoPremido;
-            tela.elemento.onmouseup = processaBotaoLibertado;
-            tela.elemento.onmousemove = processaMovimento;
+            tela.processaRatoDescido = processaRatoDescido;
+            tela.processaRatoSubido = processaRatoSubido;
+            tela.processaRatoMovido = processaRatoMovido;
+            tela.processaTeclaDescida = processaTeclaDescida;
+            tela.processaTeclaSubida = processaTeclaSubida;
         }
 
         function desenha() {
@@ -96,21 +99,46 @@
 
             imagemAnimada.desenha(tela);
             imagemFilme.desenha(tela);
-            coordenadas.texto = "(" + ratoX + ", " + ratoY + ")";
+            coordenadas.texto = "(" + tela.ratoX + ", " + tela.ratoY + ")";
             coordenadas.desenha(tela);
             pentagono.rotacao = true;
             pentagono.angulo = contador % 360;
             pentagono.desenha(tela);
+            triangulo.desenha(tela);
+
             quadrado.desenha(tela);
+            losango.desenha(tela);
             if (circulo.seleccionado) {
-                circulo.x = ratoX;
-                circulo.y = ratoY;
+                circulo.x = tela.ratoX;
+                circulo.y = tela.ratoY;
             }
             circulo.desenha(tela);
             imagem.desenha(tela);
             teclas.desenha(tela);
             texto.desenha(tela);
+
+            if (circulo.colide(triangulo)) {
+                triangulo.preenchimento = "gray";
+            }
+            else {
+                triangulo.preenchimento = "white";
+            }
             //...
+
+            if (imagem.contemPonto(tela.ratoX, tela.ratoY) || imagemFilme.contemPonto(tela.ratoX, tela.ratoY) || triangulo.contemPonto(tela.ratoX, tela.ratoY) || losango.contemPonto(tela.ratoX, tela.ratoY) || pentagono.contemPonto(tela.ratoX, tela.ratoY)) {
+                tela.cursor = "pointer";
+            }
+            else if (circulo.contemPonto(tela.ratoX, tela.ratoY || triangulo.contemPonto(tela.ratoX, tela.ratoY))) {
+                tela.cursor = "grab";
+                if (circulo.seleccionado) {
+                    tela.cursor = "grabbing"
+                }
+            }
+            else {
+                tela.cursor = "default";
+            }
+
+
 
             if (continua) {
                 contador++;
@@ -118,91 +146,89 @@
             }
         }
 
-        function processaBotaoPremido(rato) {
-            ratoX = Math.floor(rato.offsetX * racioX);
-            ratoY = Math.floor(rato.offsetY * racioY);
-
-            if (imagem.contemPonto(ratoX, ratoY)) {
+        function processaRatoDescido() {
+            if (imagem.contemPonto(tela.ratoX, tela.ratoY)) {
                 som.reproduz(true);
-                tela.elemento.style.cursor = "grabbing";
             }
-            if (imagemFilme.contemPonto(ratoX, ratoY)) {
+            if (imagemFilme.contemPonto(tela.ratoX, tela.ratoY)) {
                 filme.reproduz();
-                tela.elemento.style.cursor = "grabbing";
             }
-            if (circulo.contemPonto(ratoX, ratoY)) {
+            if (circulo.contemPonto(tela.ratoX, tela.ratoY)) {
                 circulo.seleccionado = true;
-                circulo.distX = circulo.x - ratoX;
-                circulo.distY = circulo.y - ratoY;
-                tela.elemento.style.cursor = "grabbing";
+                circulo.distX = circulo.x - tela.ratoX;
+                circulo.distY = circulo.y - tela.ratoY;
+                tela.cursor = "grabbing";
+                circulo.contorno = "yellow";
             }
             //...
         }
 
-        function processaMovimento(rato) {
-            ratoX = Math.floor(rato.offsetX * racioX);
-            ratoY = Math.floor(rato.offsetY * racioY);
-
-            if (imagem.contemPonto(ratoX, ratoY) || imagemFilme.contemPonto(ratoX, ratoY) || circulo.contemPonto(ratoX, ratoY)) {
-                tela.elemento.style.cursor = "grab";
+        function processaRatoMovido() {
+            if (imagem.contemPonto(tela.ratoX, tela.ratoY) || imagemFilme.contemPonto(tela.ratoX, tela.ratoY) || triangulo.contemPonto(tela.ratoX, tela.ratoY) || losango.contemPonto(tela.ratoX, tela.ratoY)) {
+                tela.cursor = "pointer";
+            }
+            else if (circulo.contemPonto(tela.ratoX, tela.ratoY || triangulo.contemPonto(tela.ratoX, tela.ratoY))) {
+                tela.cursor = "grab";
+                if (circulo.seleccionado) {
+                    tela.cursor = "grabbing"
+                }
             }
             else {
-                tela.elemento.style.cursor = "default";
+                tela.cursor = "default";
             }
+
             //...
         }
 
-        function processaBotaoLibertado(rato) {
-            ratoX = Math.floor(rato.offsetX * racioX);
-            ratoY = Math.floor(rato.offsetY * racioY);
-
-            if (imagem.contemPonto(ratoX, ratoY) || imagemFilme.contemPonto(ratoX, ratoY)) {
-                tela.elemento.style.cursor = "grab";
+        function processaRatoSubido() {
+            if (imagem.contemPonto(tela.ratoX, tela.ratoY) || imagemFilme.contemPonto(tela.ratoX, tela.ratoY)) {
+                telacursor = "pointer";
             }
-            else if (circulo.contemPonto(ratoX, ratoY)) {
+            else if (circulo.contemPonto(tela.ratoX, tela.ratoY)) {
                 circulo.seleccionado = false;
                 circulo.distX = 0;
                 circulo.distY = 0;
+                circulo.contorno = "black";
             }
             else {
-                tela.elemento.style.cursor = "default";
+                tela.cursor = "default";
             }
             //...
         }
 
-        function processaTeclaPremida(tecla) {
-            if (tecla.code == "Space") {        // barra de espaços
-                teclas.texto = tecla.code;
+        function processaTeclaDescida() {
+            if (tela.codigoTecla == "Space") {        // barra de espaços
+                teclas.texto = tela.codigoTecla;
                 //...
             }
-            if (tecla.code == "ArrowLeft") {    // esquerda
-                teclas.texto = tecla.code;
+            if (tela.codigoTecla == "ArrowLeft") {    // esquerda
+                teclas.texto = tela.codigoTecla;
                 //...
             }
-            if (tecla.code == "ArrowUp") {      // cima
-                teclas.texto = tecla.code;
+            if (tela.codigoTecla == "ArrowUp") {      // cima
+                teclas.texto = tela.codigoTecla;
                 //...
             }
-            if (tecla.code == "ArrowRight") {   // direita
-                teclas.texto = tecla.code;
+            if (tela.codigoTecla == "ArrowRight") {   // direita
+                teclas.texto = tela.codigoTecla;
                 //...
             }
-            if (tecla.code == "ArrowDown") {    // baixo
-                teclas.texto = tecla.code;
+            if (tela.codigoTecla == "ArrowDown") {    // baixo
+                teclas.texto = tela.codigoTecla;
                 //...
             }
         }
 
-        function processaTeclaLibertada(tecla) {
-            if (tecla.code == "Space") {
+        function processaTeclaSubida() {
+            if (tela.codigoTecla == "Space") {
                 teclas.texto = "Teclas...";
                 //...
             }
-            if ((tecla.code == "ArrowLeft") || (tecla.code == "ArrowRight")) {
+            if ((tela.codigoTecla == "ArrowLeft") || (tela.codigoTecla == "ArrowRight")) {
                 teclas.texto = "Teclas...";
                 //...
             }
-            if ((tecla.code == "ArrowUp") || (tecla.code == "ArrowDown")) {
+            if ((tela.codigoTecla == "ArrowUp") || (tela.codigoTecla == "ArrowDown")) {
                 teclas.texto = "Teclas...";
                 //...
             }
@@ -212,8 +238,8 @@
             inicia();
             desenha();
         }
-        window.onkeydown = processaTeclaPremida;
-        window.onkeyup = processaTeclaLibertada;
+        //window.onkeydown = processaTeclaPremida;
+       //window.onkeyup = processaTeclaLibertada;
     </script>
 </head>
 
@@ -225,7 +251,7 @@
         <img id="imagemAnimada" src="recursos/spritestrip.png">
         <audio id="som" src="recursos/horn.wav">O seu <em>browser</em> não suporta o elemento
             <code>audio</code>!</audio>
-        <video id="video" src="recursos/buck.mp4">O seu <em>browser</em> não suporta o elemento
+        <video id="filme" src="recursos/buck.mp4">O seu <em>browser</em> não suporta o elemento
             <code>video</code>!</video>
         <!-- ... -->
     </div>

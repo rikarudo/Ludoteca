@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Construtor para criação de novos objectos do tipo <code>texto</code>
+    Construtor para criação de novos objectos do tipo <code>Texto</code>
 </div>
 
 
@@ -223,7 +223,7 @@
                 </td>
             
 
-            <td class="description last">Cor do contorno do <em>texto</em></td>
+            <td class="description last">Cor ou padrão do contorno do <em>texto</em></td>
         </tr>
 
     
@@ -366,7 +366,7 @@
                 </td>
             
 
-            <td class="description last">Cor do preenchimento do <em>texto</em> &mdash; se a cor for especificada como <code>null</code>, o <em>texto</em> não é preenchido</td>
+            <td class="description last">Cor ou padrão do preenchimento do <em>texto</em> &mdash; se for <code>null</code>, o <em>texto</em> não é preenchido</td>
         </tr>
 
     
@@ -393,7 +393,7 @@
                 </td>
             
 
-            <td class="description last">Cor do contorno do <em>texto</em> &mdash; se a cor for especificada como <code>null</code>, o contorno não é desenhado</td>
+            <td class="description last">Cor ou padrão do contorno do <em>texto</em> &mdash; se for <code>null</code>, o contorno não é desenhado</td>
         </tr>
 
     
@@ -479,64 +479,6 @@
             
 
             <td class="description last">Fonte do <em>texto</em></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>alinhamento</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    "left"
-                
-                </td>
-            
-
-            <td class="description last">Alinhamento horizontal do <em>texto</em></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>base</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    "top"
-                
-                </td>
-            
-
-            <td class="description last">Alinhamento vertical do <em>texto</em></td>
         </tr>
 
     
@@ -797,7 +739,7 @@
                 </td>
             
 
-            <td class="description last">Indicação de que o <em>círculo</em> deve rodar, reflectindo o  seu <em>ângulo</em></td>
+            <td class="description last">Indicação de que o <em>texto</em> deve rodar, reflectindo o seu <em>ângulo</em></td>
         </tr>
 
     
@@ -865,7 +807,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line522">line 522</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line678">line 678</a>
     </li></ul></dd>
     
 
@@ -960,6 +902,11 @@
     
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#altura">Grafico#altura</a>
+    </li></ul></dd>
+    
 
     
 
@@ -980,7 +927,238 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line559">line 559</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line713">line 713</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="alturaEnvelope"><span class="type-signature"></span>alturaEnvelope<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Altura do menor <em>rectângulo imaginário</em> que envolva o <em>envelope</em> deste <em>gráfico</em> &mdash; sendo definida pela distância entre o <em>y</em> do ponto mais acima e o <em>y</em> do ponto mais abaixo do <em>envelope</em>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#alturaEnvelope">Grafico#alturaEnvelope</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line201">line 201</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="centroide"><span class="type-signature"></span>centroide<span class="type-signature"> :<a href="global.html#PontoCartesiano">PontoCartesiano</a></span></h4>
+
+
+
+
+<div class="description">
+    Centróide do <em>gráfico</em> considerando os pontos dos seus vértices
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="global.html#PontoCartesiano">PontoCartesiano</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#centroide">Grafico#centroide</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line151">line 151</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="envelope"><span class="type-signature"></span>envelope<span class="type-signature"> :array</span></h4>
+
+
+
+
+<div class="description">
+    Conjunto de pontos que delimitam o <em>gráfico</em>, definindo um <em>envelope</em>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">array</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#envelope">Grafico#envelope</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line161">line 161</a>
     </li></ul></dd>
     
 
@@ -1032,6 +1210,11 @@
     
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#largura">Grafico#largura</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1052,7 +1235,84 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line548">line 548</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line702">line 702</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="larguraEnvelope"><span class="type-signature"></span>larguraEnvelope<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Largura do menor <em>rectângulo imaginário</em> que envolva o <em>envelope</em> deste <em>gráfico</em> &mdash; sendo definida pela distância entre o <em>x</em>  do ponto mais à esquerda e o <em>x</em> do ponto mais à direita do <em>envelope</em>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#larguraEnvelope">Grafico#larguraEnvelope</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line187">line 187</a>
     </li></ul></dd>
     
 
@@ -1080,7 +1340,7 @@
     
 
     
-    <h4 class="name" id="colide"><span class="type-signature"></span>colide<span class="signature">(outro)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="colide"><span class="type-signature"></span>colide<span class="signature">(outro, reposicionamento, afastamento)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
     
 
     
@@ -1088,7 +1348,7 @@
 
 
 <div class="description">
-    Este método encontra-se implementado na superclasse <code>Grafico</code>, assumindo que todas as formas definidas nas suas subclasses são limitadas, de um modo genérico, por um rectângulo imaginário que engloba a totalidade do <em>gráfico</em>. <em>Se este método, tal como se encontra definido, não for o mais apropriado para uma dada subclasse, pode ser sempre redefinido (<em>overrided</em>) nessa mesma subclasse.</em>
+    Este método verifica se existe uma colisão entre <em>este gráfico</em> e <em>outro</em>. Tal acontece quando um dos pontos de um <em>gráfico</em> se encontra contido na área de <em>outro</em>. Para o efeito, são usados os pontos que definem o <em>envelope</em> de cada <em>gráfico</em>. Este método também permite, caso se verifique a colisão, reposicionar <em>este gráfico</em>, deixando-o encostado (ou próximo disso, consoante o <em>afastamento</em>) ao <em>outro</em>, evitando a sobreposição de ambos. O <em>reposicionamento</em> depende da posição imediatamente anterior <em>deste gráfico</em> em relação ao <em>outro</em>. <em>[Neste momento, o reposicionamento ainda só funciona devidamente com movimentos definidos pelo <code>deltaX</code>, pelo <code>deltaY</code> e pela <code>gravidade</code>. Note-se também que as colisões são testadas em toda a área do gráfico, e não apenas em áreas específicas, como acontece no caso das caixas de colisão (<em>hitboxes</em>), que ainda não se encontra implementadas.]</em>
 </div>
 
 
@@ -1113,6 +1373,8 @@
 
         
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -1139,8 +1401,70 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">Outro <em>gráfico</em> para verificar se existe alguma colisão entre <em>esse</em> e <em>este</em></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>reposicionamento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">Indicação de que este <em>gráfico</em> deve ser reposicionado (ou não) quando colide com o outro</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>afastamento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Afastamento a aplicar entre os dois <em>gráficos</em> no reposicionamento; idealmente, este deve ser compreendido entre zero (<code>0</code>) e um valor inferior aos valores de quaisquer deslocamentos horizontais e verticais</td>
         </tr>
 
     
@@ -1186,7 +1510,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line54">line 54</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line58">line 58</a>
     </li></ul></dd>
     
 
@@ -1215,7 +1539,7 @@
 
         
 <div class="param-desc">
-    Se houver colisão, <code>true</code>; senão, <code>false</code>
+    Se houver colisão, <code>true</code>, ou, no caso de se aplicar resposicionamento, <code>1</code>, <code>2</code>, <code>3</code> ou <code>4</code>, correspondentes às posições <em>cima</em>, <em>baixo</em>, <em>esquerda</em> e <em>direita</em>, respectivamente, e <code>0</code>, se não tiver sido aplicado; senão, <code>false</code>
 </div>
 
 
@@ -1252,7 +1576,7 @@
 
 
 <div class="description">
-    Este método verifica se um dado <em>ponto</em> está contido na área de <em>rectângulo</em> que envolva o <em>texto</em>, definito pelo <em>ponto</em> que posiciona o texto e pela largura e pela altura do texto. Tal acontece quando o <em>x</em> do ponto se encontra compreendido entre o <em>x</em> do <em>rectângulo</em> e <em>x</em> mais a <em>largura</em> do <em>rectângulo</em>, e o <em>y</em> do ponto se encontra compreendido entre o <em>y</em> do <em>rectângulo</em> e <em>y</em> mais a <em>altura</em> do <em>rectângulo</em>.
+    Este método verifica se um dado <em>ponto</em> está contido na área do <em>envelope</em> <em>gráfico</em>, assumindo-se que o <em>gráfico</em> é um <em>polígono</em>. Assim, tal acontece quando um segmento de recta com início no ponto especificado intersecta um número ímpar de arestas do <em>polígono</em>.
 </div>
 
 
@@ -1304,7 +1628,7 @@
 
             
 
-            <td class="description last">Abscissa do ponto a testar se está contido neste <em>texto</em></td>
+            <td class="description last">Abscissa do ponto a testar se está contido neste <em>gráfico</em></td>
         </tr>
 
     
@@ -1327,7 +1651,7 @@
 
             
 
-            <td class="description last">Ordenada do ponto a testar se está contido neste <em>texto</em></td>
+            <td class="description last">Ordenada do ponto a testar se está contido neste <em>gráfico</em></td>
         </tr>
 
     
@@ -1373,7 +1697,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line569">line 569</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line116">line 116</a>
     </li></ul></dd>
     
 
@@ -1402,7 +1726,7 @@
 
         
 <div class="param-desc">
-    Se o ponto estiver contido neste <em>texto</em>, <code>true</code>; senão, <code>false</code>
+    Se o ponto estiver contido neste <em>gráfico</em>, <code>true</code>; senão, <code>false</code>
 </div>
 
 
@@ -1439,7 +1763,7 @@
 
 
 <div class="description">
-    Este método mais não faz que chamar o método <code>contemPonto(x, y)</code> para cada um dos pontos do <em>array</em>, verificando se algum deles se encontra dentro do <em>gráfico</em>.
+    Este método mais não faz que chamar o método <code>contemPonto(x, y)</code> para cada um dos pontos de um <em>array</em>, verificando se algum deles se encontra dentro da área do <em>gráfico</em>.
 </div>
 
 
@@ -1537,7 +1861,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line109">line 109</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line101">line 101</a>
     </li></ul></dd>
     
 
@@ -1603,7 +1927,7 @@
 
 
 <div class="description">
-    Este método desenha uma linha de <em>texto</em> no <code>canvas</code>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo de um <em>rectângulo</em> imaginário que contenha o <em>texto</em>, assumindo um alinhamento horizontal à esquerda e verticalmente ao topo. Alterações no alinhamento implicarão uma outra referência no posicionamento.
+    Este método desenha uma linha de <em>texto</em> no <code>canvas</code>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo de um <em>rectângulo imaginário</em> que contenha o <em>texto</em>.
 </div>
 
 
@@ -1701,7 +2025,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line577">line 577</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line721">line 721</a>
     </li></ul></dd>
     
 
@@ -1726,205 +2050,6 @@
 
 
 
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="reposicionaContra"><span class="type-signature"></span>reposicionaContra<span class="signature">(outro, afastamento)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Este método testa a colisão entre <em>este objecto gráfico</em> e <em>outro objecto gráfico</em> e, quando tal se verifica, reposiciona <em>este objecto gráfico</em>, deixando-o encostado (ou próximo disso, consoante o <em>afastamento</em>) ao <em>outro</em>, evitando a sobreposição de ambos. O reposicionamento depende da posição imediatamente anterior <em>deste objecto gráfico</em> em relação ao <em>outro</em>. <em>Neste momento, ainda só funciona devidamente com movimentos definidos pelo <code>deltaX</code>, pelo <code>deltaY</code> e pela <code>gravidade</code>.</em>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>outro</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Grafico.html">Grafico</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">Outro <em>gráfico</em> para verificar se existe alguma colisão entre <em>esse</em> e <em>este</em>, efectuando o subsequente reposicionamento <em>deste</em></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>afastamento</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    0
-                
-                </td>
-            
-
-            <td class="description last">Afastamento a aplicar entre os dois <em>objectos gráficos</em> no reposicionamento; idealmente, este deve ser compreendido entre zero (<code>0</code>) e um valor inferior aos valores de quaisquer deslocamentos horizontais e verticais</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Grafico.html#reposicionaContra">Grafico#reposicionaContra</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line64">line 64</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Se houver colisão e o correspondente reposicionamento, <code>true</code>; senão, <code>false</code>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">boolean</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -1946,13 +2071,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li></ul><h3>Global</h3><ul><li><a href="global.html#desenhaGraficos">desenhaGraficos</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li><li><a href="Utilitarios.html">Utilitarios</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Tue Jun 21 2022 16:50:57 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Apr 17 2023 22:33:08 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
