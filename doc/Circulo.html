@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Circulo<span class="signature">(x, y, raio, preenchimento, contorno, espessura)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Circulo<span class="signature">(x, y, raio, preenchimento<span class="signature-attributes">opt</span>, contorno<span class="signature-attributes">opt</span>, espessura<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">A classe <code>Circulo</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>círculos</em>. Num nível básico, um <em>círculo</em> é definido por um <em>ponto</em> central e por um <em>raio</em>. Contudo, para que exista uniformidade no posicionamento das formas representadas pelas várias subclasses de <code>Grafico</code>, os círculos são também posicionados usando o canto superior esquerdo (de um <em>quadrado imaginário</em> que o contenha), em vez do seu centro &mdash; assim, o <em>raio</em> é somado ao <em>x</em> e ao <em>y</em> para fazer as devidas compensações de posicionamento, determinando o <em>centro</em>.</div>
         
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="Circulo"><span class="type-signature"></span>new Circulo<span class="signature">(x, y, raio, preenchimento, contorno, espessura)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Circulo"><span class="type-signature"></span>new Circulo<span class="signature">(x, y, raio, preenchimento<span class="signature-attributes">opt</span>, contorno<span class="signature-attributes">opt</span>, espessura<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -77,6 +77,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
         <th>Default</th>
@@ -103,6 +105,14 @@
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -131,6 +141,14 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
                 <td class="default">
@@ -157,6 +175,14 @@
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -185,11 +211,21 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
                 <td class="default">
                 
-                    "black"
+                    'black'
                 
                 </td>
             
@@ -214,11 +250,21 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
                 <td class="default">
                 
-                    "black"
+                    'black'
                 
                 </td>
             
@@ -242,6 +288,16 @@
             
             </td>
 
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -447,7 +503,7 @@
                 </td>
             
 
-            <td class="description last">Espessura do contorno do <em>círculo</em> &mdash; se a espessura tiver um valor igual ou inferior a zero (<code>0</code>), o contorno não é desenhado</td>
+            <td class="description last">Espessura do contorno do <em>círculo</em> &mdash; se a <em>espessura</em> tiver um valor igual ou inferior a zero (<code>0</code>), o contorno não é desenhado</td>
         </tr>
 
     
@@ -534,7 +590,7 @@
                 </td>
             
 
-            <td class="description last">Distância horizontal até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>x</em> em relação à posição <em>x</em> do cursor do rato</td>
+            <td class="description last">Distância horizontal do <em>círculo</em> até um dado ponto</td>
         </tr>
 
     
@@ -563,36 +619,7 @@
                 </td>
             
 
-            <td class="description last">Distância vertical até um dado ponto &mdash; pode ser usada, por exemplo, para guardar o <em>offset</em> do <em>y</em> em relação à posição <em>y</em> do cursor do rato</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>angulo</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    0
-                
-                </td>
-            
-
-            <td class="description last">Ângulo de rotação do <em>círculo</em> quando desenhado no <code>canvas</code> &mdash; dadas as características do <em>círculo</em>, esta propriedade é ignorada no seu desenho no <code>canvas</code></td>
+            <td class="description last">Distância vertical do <em>círculo</em> até um dado ponto</td>
         </tr>
 
     
@@ -657,6 +684,151 @@
 
         <tr>
             
+                <td class="name"><code>anguloRotacao</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Ângulo de rotação do <em>círculo</em> quando desenhado no <code>canvas</code>, compreendido entre <code>0</code> e <code>360</code> &mdash; a rotação é feita tendo como referência o centro do <em>círculo</em></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>deltaRotacao</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Variação do ângulo de rotação do <em>círculo</em></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>anguloGravidade</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Ângulo cujo co-seno afecta a aplicação do sentido da <em>gravidade</em> ao <em>círculo</em>, compreendido entre <code>0</code> e <code>180</code></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>deltaGravidade</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Variação do ângulo aplicado à <em>gravidade</em></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opacidade</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    1.0
+                
+                </td>
+            
+
+            <td class="description last">Valor da opacidade do <em>círculo</em> &mdash; pode variar entre <code>0.0</code> (completamente transparente) e <code>1.0</code> (completamente opaco), com os valores fora desse intervalo a serem ignorados (mantendo-se o valor anteriormente definido)</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>activo</code></td>
             
 
@@ -679,36 +851,7 @@
                 </td>
             
 
-            <td class="description last">Indicação de que o <em>círculo</em> deve testar colisões, quando chamado o método <code>colide(outro)</code></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>rotacao</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
-
-            <td class="description last">Indicação de que o <em>círculo</em> deve rodar, reflectindo o seu <em>ângulo</em> &mdash; dadas as características do <em>círculo</em>, esta propriedade é ignorada no seu desenho no <code>canvas</code></td>
+            <td class="description last">Indicação de que o <em>círculo</em> deve testar colisões, quando chamado o método <code>colide()</code></td>
         </tr>
 
     
@@ -737,7 +880,36 @@
                 </td>
             
 
-            <td class="description last">Indicação de que o <em>círculo</em> deve ser desenhado no <code>canvas</code>, quando chamado o método <code>desenha(tela)</code></td>
+            <td class="description last">Indicação de que o <em>círculo</em> deve ser desenhado no <code>canvas</code>, quando chamado o método <code>desenha()</code></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>capturado</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Indicação de que o <em>círculo</em> deve ficar <em>preso</em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas, quando chamado o método <code>desenha()</code></td>
         </tr>
 
     
@@ -776,7 +948,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line243">line 243</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line452">line 452</a>
     </li></ul></dd>
     
 
@@ -896,7 +1068,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line285">line 285</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line495">line 495</a>
     </li></ul></dd>
     
 
@@ -973,7 +1145,238 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line201">line 201</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line296">line 296</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="anguloGravidade"><span class="type-signature"></span>anguloGravidade<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Ângulo cujo co-seno afecta a aplicação do sentido da <em>gravidade</em> ao <em>gráfico</em>, compreendido entre <code>0</code> e <code>180</code> <em>[obtenção]</em>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#anguloGravidade">Grafico#anguloGravidade</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line190">line 190</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="anguloRotacao"><span class="type-signature"></span>anguloRotacao<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Ângulo de rotação do <em>gráfico</em>, compreendido entre <code>0</code> e <code>360</code> <em>[obtenção]</em>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#anguloRotacao">Grafico#anguloRotacao</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line212">line 212</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="BAIXO"><span class="type-signature">(constant) </span>BAIXO<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Constante que representa um <em>reposicionamento</em> em <em>baixo</em> &mdash; usada no método <code>colide()</code>, com <code>reposicionamento=true</code>, da classe <code>Grafico</code> e respectivas subcasses
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#BAIXO">Grafico#BAIXO</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line337">line 337</a>
     </li></ul></dd>
     
 
@@ -1050,7 +1453,161 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line151">line 151</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line246">line 246</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CIMA"><span class="type-signature">(constant) </span>CIMA<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Constante que representa um <em>reposicionamento</em> em <em>cima</em> &mdash; usada no método <code>colide()</code>, com <code>reposicionamento=true</code>, da classe <code>Grafico</code> e respectivas subcasses
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#CIMA">Grafico#CIMA</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line329">line 329</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="DIREITA"><span class="type-signature">(constant) </span>DIREITA<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Constante que representa um <em>reposicionamento</em> à <em>direita</em> &mdash; usada no método <code>colide()</code>, com <code>reposicionamento=true</code>, da classe <code>Grafico</code> e respectivas subcasses
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#DIREITA">Grafico#DIREITA</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line353">line 353</a>
     </li></ul></dd>
     
 
@@ -1127,7 +1684,161 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line265">line 265</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line475">line 475</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="ESQUERDA"><span class="type-signature">(constant) </span>ESQUERDA<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Constante que representa um <em>reposicionamento</em> à <em>esquerda</em> &mdash; usada no método <code>colide()</code>, com <code>reposicionamento=true</code>, da classe <code>Grafico</code> e respectivas subcasses
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#ESQUERDA">Grafico#ESQUERDA</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line345">line 345</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="FALSO"><span class="type-signature">(constant) </span>FALSO<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Constante que representa a ausência de <em>reposicionamento</em> &mdash; usada no método <code>colide()</code>, com <code>reposicionamento=true</code>, da classe <code>Grafico</code> e respectivas subcasses
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#FALSO">Grafico#FALSO</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line321">line 321</a>
     </li></ul></dd>
     
 
@@ -1204,7 +1915,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line277">line 277</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line487">line 487</a>
     </li></ul></dd>
     
 
@@ -1281,7 +1992,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line187">line 187</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line282">line 282</a>
     </li></ul></dd>
     
 
@@ -1309,7 +2020,7 @@
     
 
     
-    <h4 class="name" id="colide"><span class="type-signature"></span>colide<span class="signature">(outro, reposicionamento, afastamento)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="captura"><span class="type-signature"></span>captura<span class="signature">(ratoX, ratoY)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1317,7 +2028,7 @@
 
 
 <div class="description">
-    Este método verifica se existe uma colisão entre <em>este gráfico</em> e <em>outro</em>. Tal acontece quando um dos pontos de um <em>gráfico</em> se encontra contido na área de <em>outro</em>. Para o efeito, são usados os pontos que definem o <em>envelope</em> de cada <em>gráfico</em>. Este método também permite, caso se verifique a colisão, reposicionar <em>este gráfico</em>, deixando-o encostado (ou próximo disso, consoante o <em>afastamento</em>) ao <em>outro</em>, evitando a sobreposição de ambos. O <em>reposicionamento</em> depende da posição imediatamente anterior <em>deste gráfico</em> em relação ao <em>outro</em>. <em>[Neste momento, o reposicionamento ainda só funciona devidamente com movimentos definidos pelo <code>deltaX</code>, pelo <code>deltaY</code> e pela <code>gravidade</code>. Note-se também que as colisões são testadas em toda a área do gráfico, e não apenas em áreas específicas, como acontece no caso das caixas de colisão (<em>hitboxes</em>), que ainda não se encontra implementadas.]</em>
+    Este método faz com que o <em>gráfico</em> fique <em>preso</em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas.
 </div>
 
 
@@ -1340,6 +2051,173 @@
 
         <th>Type</th>
 
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ratoX</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Abscissa das coordenados do rato, que o <em>gráfico</em> irá seguir e adoptar (fazendo as necessários compensações posicionais)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ratoY</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Ordenada das coordenados do rato, que o <em>gráfico</em> irá seguir e adoptar (fazendo as necessários compensações posicionais)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#captura">Grafico#captura</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line157">line 157</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="colide"><span class="type-signature"></span>colide<span class="signature">(outro, reposicionamento<span class="signature-attributes">opt</span>, afastamento<span class="signature-attributes">opt</span>, saltos<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Este método verifica se existe uma colisão entre <em>este gráfico</em> e <em>outro</em>. Tal acontece quando um dos pontos de um <em>gráfico</em> se encontra contido na área de <em>outro</em>. Para o efeito, são usados os pontos que definem o <em>envelope</em> de cada <em>gráfico</em>. Este método também permite, caso se verifique a colisão, reposicionar <em>este gráfico</em>, deixando-o encostado (ou próximo disso, consoante o valor do <em>afastamento</em>) ao <em>outro</em>, evitando a sobreposição de ambos. O <em>reposicionamento</em> depende da posição imediatamente anterior <em>deste gráfico</em> em relação ao <em>outro</em>. <em>[Neste momento, o reposicionamento ainda só funciona devidamente com movimentos definidos pelo <code>deltaX</code>, pelo <code>deltaY</code> e pela <code>gravidade</code>.]</em>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
         
 
         
@@ -1368,6 +2246,14 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
                 <td class="default">
@@ -1394,6 +2280,16 @@
             
             </td>
 
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -1424,6 +2320,16 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
                 <td class="default">
@@ -1434,6 +2340,45 @@
             
 
             <td class="description last">Afastamento a aplicar entre os dois <em>gráficos</em> no reposicionamento; idealmente, este deve ser compreendido entre zero (<code>0</code>) e um valor inferior aos valores de quaisquer deslocamentos horizontais e verticais</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>saltos</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Número de <em>saltos</em> (omissões de iterações ou <em>frames</em>) em chamadas consecutivas a este método &mdash; pode ser útil definir um número de <em>saltos</em> superior a zero (<code>0</code>) em situações com verificações de colisões entre muitos <em>gráficos</em> em simultâneo, de forma a diminuir a exigência computacional; se <code>reposicionamento=true</code>, este parâmetro é ignorado, não havendo <em>saltos</em>, de modo a que o <em>reposicionamento</em> seja correctamente efectuado</td>
         </tr>
 
     
@@ -1479,7 +2424,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line58">line 58</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -1508,7 +2453,7 @@
 
         
 <div class="param-desc">
-    Se houver colisão, <code>true</code>, ou, no caso de se aplicar resposicionamento, <code>1</code>, <code>2</code>, <code>3</code> ou <code>4</code>, correspondentes às posições <em>cima</em>, <em>baixo</em>, <em>esquerda</em> e <em>direita</em>, respectivamente, e <code>0</code>, se não tiver sido aplicado; senão, <code>false</code>
+    Se houver colisão, <code>true</code>, ou, no caso de se aplicar resposicionamento, <code>1</code>, <code>2</code>, <code>3</code> ou <code>4</code>, correspondentes às posições <em>cima</em>, <em>baixo</em>, <em>esquerda</em> e <em>direita</em>, respectivamente, e <code>0</code>, se não tiver sido aplicado &mdash; valores também representados, respectivamente pelas constantes <code>Grafico.CIMA</code>, <code>Grafico.BAIXO</code>, <code>Grafico.ESQUERDA</code>, <code>Grafico.DIREITA</code> e <code>Grafico.FALSO</code>; senão, <code>false</code>
 </div>
 
 
@@ -1666,7 +2611,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line295">line 295</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line505">line 505</a>
     </li></ul></dd>
     
 
@@ -1830,7 +2775,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line101">line 101</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line122">line 122</a>
     </li></ul></dd>
     
 
@@ -1994,7 +2939,286 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line303">line 303</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line513">line 513</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="inverteGravidade"><span class="type-signature"></span>inverteGravidade<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Este método inverte o sentido da força da gravidade aplicada sobre o <em>gráfico</em>, contanto esta seja diferente de zero, pondo o valor interno de <code>anguloGravidade</code>, cujo co-seno é usado, em <code>180</code>. Se <code>deltaGravidade</code> estiver definido (e for negativo), a inversão será temporária, voltando-se ao sentido inicialmente definido.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#inverteGravidade">Grafico#inverteGravidade</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line175">line 175</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="liberta"><span class="type-signature"></span>liberta<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Este método faz com que o <em>gráfico</em> deixe de ficar <em>preso</em> às coordenadas do rato.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#liberta">Grafico#liberta</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line166">line 166</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="repoeGravidade"><span class="type-signature"></span>repoeGravidade<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Este método repõe o sentido inicial da força da gravidade aplicada sobre o <em>gráfico</em>, contanto esta seja diferente de zero, pondo o valor interno de <code>anguloGravidade</code>, cujo co-seno é usado, de volta a <code>0</code>.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#repoeGravidade">Grafico#repoeGravidade</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line182">line 182</a>
     </li></ul></dd>
     
 
@@ -2040,13 +3264,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li><li><a href="Utilitarios.html">Utilitarios</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Cronometro.html">Cronometro</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="Padrao.html">Padrao</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Apr 17 2023 22:33:08 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri May 10 2024 15:15:00 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

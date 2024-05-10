@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Apples &amp; Oranges</title>
+    <style>
+        #recursos {
+            display: none;
+        }
+
+        #tela {
+            display: block;
+            /*
+            width: 100vw;
+            height: 100vh;
+            */
+        }
+    </style>
+    <script src="../Ludoteca.js"></script>
+    <script>
+        var tela;
+        var contexto;
+        var continua;
+        var contador;
+        var fundo;
+        //...
+        var laranjas, macas;
+        var cestoLaranjas, cestoMacas;
+        var faixaLaranja, faixaMaca;
+        var frutaTodaNosCestos;
+
+        function inicia() {
+            tela = new Tela(document.getElementById("tela"));
+            contexto = tela.contexto;
+            continua = true;
+            contador = 0;
+            //...
+            fundo = new Rectangulo(0, 0, tela.largura, tela.altura, "lightgray");
+
+            frutaTodaNosCestos = false;
+
+            laranjas = new Array(5);
+            for (var i = 0; i < laranjas.length; i++) {
+                laranjas[i] = new Imagem(Math.floor(Math.random() * (tela.largura - 64)), Math.floor(Math.random() * (tela.altura - 64)), document.getElementById("laranja"));
+            }
+
+            macas = new Array(5);
+            for (var i = 0; i < macas.length; i++) {
+                macas[i] = new Imagem(Math.floor(Math.random() * (tela.largura - 64)), Math.floor(Math.random() * (tela.altura - 64)), document.getElementById("maca"));
+            }
+
+            cestoLaranjas = new Imagem(tela.largura * 0.1, tela.altura * 0.5, document.getElementById("cesto"));
+            cestoMacas = new Imagem(tela.largura * 0.9 - 256, tela.altura * 0.5, document.getElementById("cesto"));
+
+            faixaLaranja = new Rectangulo(tela.largura * 0.1, tela.altura * 0.85, 256, 64, "orange");
+            faixaMaca = new Rectangulo(tela.largura * 0.9 - 256, tela.altura * 0.85, 256, 64, "red");
+
+            //...
+            tela.processaRatoDescido = processaRatoDescido;
+            tela.processaRatoSubido = processaRatoSubido;
+            tela.processaRatoMovido = processaRatoMovido;
+            tela.processaTeclaDescida = processaTeclaDescida;
+            tela.processaTeclaSubida = processaTeclaSubida;
+        }
+
+        function desenha() {
+            contexto.clearRect(0, 0, tela.largura, tela.altura);
+
+            if (frutaTodaNosCestos) {
+                fundo.preenchimento = "green";
+            }
+            else {
+                fundo.preenchimento = "lightgray";
+            }
+
+            fundo.desenha(tela);
+
+            faixaLaranja.desenha(tela);
+            cestoLaranjas.desenha(tela);
+            faixaMaca.desenha(tela);
+            cestoMacas.desenha(tela);
+
+            Grafico.desenhaGraficos(laranjas, tela);
+            Grafico.desenhaGraficos(macas, tela);
+
+            //...
+            if (continua) {
+                contador++;
+                window.requestAnimationFrame(desenha);
+            }
+        }
+
+        function processaRatoDescido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+            tela.cursor = "pointer";
+            for (var i = 0; i < laranjas.length; i++) {
+                if (laranjas[i].contemPonto(tela.ratoX, tela.ratoY)) {
+                    laranjas[i].captura(tela.ratoX, tela.ratoY);
+                    tela.cursor = "grabbing";
+                    break;
+                }
+            }
+            for (var i = 0; i < macas.length; i++) {
+                if (macas[i].contemPonto(tela.ratoX, tela.ratoY)) {
+                    macas[i].captura(tela.ratoX, tela.ratoY);
+                    tela.cursor = "grabbing";
+                    break;
+                }
+            }
+        }
+
+        function processaRatoSubido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+            frutaTodaNosCestos = true;
+            tela.cursor = "pointer";
+            for (var i = 0; i < laranjas.length; i++) {
+                if (laranjas[i].contemPonto(tela.ratoX, tela.ratoY)) {
+                laranjas[i].liberta();
+                tela.cursor = "grab";
+                }
+                if (!laranjas[i].colide(cestoLaranjas)) {
+                    frutaTodaNosCestos = false;
+                }
+            
+        }
+            for (var i = 0; i < macas.length; i++) {
+                if (macas[i].contemPonto(tela.ratoX, tela.ratoY)) {
+                macas[i].liberta();
+                tela.cursor = "grab";
+                }
+                if (!macas[i].colide(cestoMacas)) {
+                    frutaTodaNosCestos = false;
+                }
+            
+        }
+    }
+
+        function processaRatoMovido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+            tela.cursor = "pointer";
+            for (var i = 0; i < laranjas.length; i++) {
+                if (laranjas[i].capturado) {
+                    tela.cursor = "grabbing";
+                }
+                else if (laranjas[i].contemPonto(tela.ratoX, tela.ratoY)) {
+                    tela.cursor = "grab";
+                }
+            }
+            for (var i = 0; i < macas.length; i++) {
+                if (macas[i].capturado) {
+                    tela.cursor = "grabbing";
+                }
+                else if (macas[i].contemPonto(tela.ratoX, tela.ratoY)) {
+                    tela.cursor = "grab";
+                }
+            }
+        }
+
+        function processaTeclaDescida() {
+            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
+            if (tela.codigoTecla == "Space") {        // barra de espaços
+                //...
+            }
+            if (tela.codigoTecla == "ArrowLeft") {    // esquerda
+                //...
+            }
+            if (tela.codigoTecla == "ArrowUp") {      // cima
+                //...
+            }
+            if (tela.codigoTecla == "ArrowRight") {   // direita
+                //...
+            }
+            if (tela.codigoTecla == "ArrowDown") {    // baixo
+                //...
+            }
+        }
+
+        function processaTeclaSubida() {
+            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
+            if (tela.codigoTecla == "Space") {
+                //...
+            }
+            if ((tela.codigoTecla == "ArrowLeft") || (tela.codigoTecla == "ArrowRight")) {
+                //...
+            }
+            if ((tela.codigoTecla == "ArrowUp") || (tela.codigoTecla == "ArrowDown")) {
+                //...
+            }
+        }
+
+        window.onload = function () {
+            inicia();
+            desenha();
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="tela" width="800" height="600">O seu <em>browser</em> não suporta o elemento
+        <code>canvas</code>!</canvas>
+    <div id="recursos">
+        <img id="maca" src="recursos/small_apple.png">
+        <img id="laranja" src="recursos/small_orange.png">
+        <img id="cesto" src="recursos/small_basket.png">
+        <!-- ... -->
+    </div>
+</body>
+
+</html>

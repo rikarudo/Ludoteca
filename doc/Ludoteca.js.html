@@ -27,34 +27,43 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @file Biblioteca de classes que representam os tipos mais comuns de &lt;em>gráficos&lt;/em> a desenhar num &lt;code>canvas&lt;/code> e também o próprio &lt;code>canvas&lt;/code>, bem como os elementos &lt;code>audio&lt;/code> e &lt;code>video&lt;/code>. O propósito desta biblioteca é facilitar o desenvolvimento de jogos e outras aplicações multimédia num contexto académico, gerando-se algum nível de abstracção relativamente a alguns pormenores do código. Abordam-se apenas os tipos mais frequentes de gráficos e de elementos acessórios, evitando, quando possível, complexidade desnecessária.
- * @version 0.9.3
+ * @file Biblioteca de classes que representam os tipos mais comuns de &lt;em>gráficos&lt;/em> a desenhar num &lt;code>canvas&lt;/code> e também o próprio &lt;code>canvas&lt;/code>, bem como os elementos &lt;code>audio&lt;/code> e &lt;code>video&lt;/code>. O propósito desta biblioteca é facilitar o desenvolvimento de jogos e outras aplicações multimédia num contexto académico, gerando-se algum nível de abstracção relativamente a pormenores de implementação no código. Abordam-se apenas os tipos mais frequentes de gráficos e de elementos acessórios, evitando, quando possível, complexidade desnecessária.
+ * @version 0.9.4
  * @author Ricardo Rodrigues
- * @date 2023-04-17
- * @copyright Ricardo Rodrigues (2021, 2022, 2023)
+ * @date 2024-05-10
+ * @copyright Ricardo Rodrigues (2021, 2022, 2023, 2024)
  */
 
 //
 
 /**
  * @class
- * @classdesc A classe &lt;code>Grafico&lt;/code> é, para todos os efeitos, uma classe &lt;em>abstracta&lt;/em>, um esqueleto, servindo apenas de base para as subclasses de &lt;code>Grafico&lt;/code>.
+ * @abstract
+ * @classdesc A classe &lt;code>Grafico&lt;/code> é, para todos os efeitos, uma classe &lt;em>abstracta&lt;/em>, um esqueleto, servindo apenas de base (i.e., superclasse) para as subclasses de &lt;code>Grafico&lt;/code>.
  * @property {number} x Abscissa para posicionar o &lt;em>gráfico&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {number} y Ordenada para posicionar o &lt;em>gráfico&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>gráfico&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>gráfico&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} angulo=0 Ângulo de rotação do &lt;em>gráfico&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>gráfico&lt;/em>
+ * @property {number} distX=0 Distância horizontal do &lt;em>gráfico&lt;/em> até um dado ponto
+ * @property {number} distY=0 Distância vertical do &lt;em>gráfico&lt;/em> até um dado ponto
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>gráfico&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>gráfico&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>gráfico&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
- * @property {boolean} rotacao=false Indicação de que o &lt;em>gráfico&lt;/em> deve rodar, reflectindo o seu &lt;em>ângulo&lt;/em>
- * @property {boolean} visivel=true Indicação de que o &lt;em>gráfico&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
+ * @property {number} anguloRotacao=0 Ângulo de rotação do &lt;em>gráfico&lt;/em> quando desenhado no &lt;code>canvas&lt;/code>, compreendido entre &lt;code>0&lt;/code> e &lt;code>360&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>gráfico&lt;/em>
+ * @property {number} deltaRotacao=0 Variação do ângulo de rotação do &lt;em>gráfico&lt;/em>
+ * @property {number} anguloGravidade=0 Ângulo cujo co-seno afecta a aplicação do sentido da &lt;em>gravidade&lt;/em> ao &lt;em>gráfico&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>180&lt;/code>
+ * @property {number} deltaGravidade=0 Variação do ângulo aplicado à &lt;em>gravidade&lt;/em>
+ * @property {number} opacidade=1.0 Valor da opacidade do &lt;em>gráfico&lt;/em> &amp;mdash; pode variar entre &lt;code>0.0&lt;/code> (completamente transparente) e &lt;code>1.0&lt;/code> (completamente opaco), com os valores fora desse intervalo a serem ignorados (mantendo-se o valor anteriormente definido)
+ * @property {boolean} activo=true Indicação de que o &lt;em>gráfico&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide()&lt;/code>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>gráfico&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha()&lt;/code>
+ * @property {boolean} capturado=false Indicação de que o &lt;em>gráfico&lt;/em> deve ficar &lt;em>preso&lt;/em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas, quando chamado o método &lt;code>desenha()&lt;/code>
  */
 class Grafico {
+  #anguloGravidade;
+  #anguloRotacao;
+  #contador;
+
   /**
-   * Construtor da classe &lt;code>Grafico&lt;/code>. &lt;em>Este construtor não deve ser usado directamente. Se tal acontecer, é gerada uma excepção (&lt;code>TypeError&lt;/code>).&lt;/em>
+   * Construtor da classe &lt;code>Grafico&lt;/code> &amp;mdash; &lt;em>este construtor não deve ser usado directamente; se tal acontecer, é gerada uma excepção (&lt;code>TypeError&lt;/code>)&lt;/em>
    * @param {number} x Abscissa para posicionar o &lt;em>gráfico&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {number} y Ordenada para posicionar o &lt;em>gráfico&lt;/em> no &lt;code>canvas&lt;/code>
    */
@@ -65,59 +74,71 @@ class Grafico {
     this.deltaY = 0;
     this.distX = 0;
     this.distY = 0;
-    this.angulo = 0;
     this.gravidade = 0;
     this.velocidade = 0;
+    this.#anguloRotacao = 0;
+    this.deltaRotacao = 0;
+    this.#anguloGravidade = 0;
+    this.deltaGravidade = 0;
     this.activo = true;
-    this.rotacao = false;
     this.visivel = true;
-    if (this.constructor.name == "Grafico") {
-      throw new TypeError("A classe abstracta 'Grafico' não pode ser instanciada directamente, devendo ser implementada através de subclasses (que poderão então ser instanciadas).");
+    this.capturado = false;
+    this.opacidade = 1.0;
+    this.#contador = 0;
+    if (this.constructor.name == 'Grafico') {
+      throw new TypeError('A classe abstracta "Grafico" não pode ser instanciada directamente, devendo ser implementada através de subclasses (que poderão então ser instanciadas).');
     }
   }
 
   /**
-   * Este método verifica se existe uma colisão entre &lt;em>este gráfico&lt;/em> e &lt;em>outro&lt;/em>. Tal acontece quando um dos pontos de um &lt;em>gráfico&lt;/em> se encontra contido na área de &lt;em>outro&lt;/em>. Para o efeito, são usados os pontos que definem o &lt;em>envelope&lt;/em> de cada &lt;em>gráfico&lt;/em>. Este método também permite, caso se verifique a colisão, reposicionar &lt;em>este gráfico&lt;/em>, deixando-o encostado (ou próximo disso, consoante o &lt;em>afastamento&lt;/em>) ao &lt;em>outro&lt;/em>, evitando a sobreposição de ambos. O &lt;em>reposicionamento&lt;/em> depende da posição imediatamente anterior &lt;em>deste gráfico&lt;/em> em relação ao &lt;em>outro&lt;/em>. &lt;em>[Neste momento, o reposicionamento ainda só funciona devidamente com movimentos definidos pelo &lt;code>deltaX&lt;/code>, pelo &lt;code>deltaY&lt;/code> e pela &lt;code>gravidade&lt;/code>. Note-se também que as colisões são testadas em toda a área do gráfico, e não apenas em áreas específicas, como acontece no caso das caixas de colisão (&lt;em>hitboxes&lt;/em>), que ainda não se encontra implementadas.]&lt;/em>
+   * Este método verifica se existe uma colisão entre &lt;em>este gráfico&lt;/em> e &lt;em>outro&lt;/em>. Tal acontece quando um dos pontos de um &lt;em>gráfico&lt;/em> se encontra contido na área de &lt;em>outro&lt;/em>. Para o efeito, são usados os pontos que definem o &lt;em>envelope&lt;/em> de cada &lt;em>gráfico&lt;/em>. Este método também permite, caso se verifique a colisão, reposicionar &lt;em>este gráfico&lt;/em>, deixando-o encostado (ou próximo disso, consoante o valor do &lt;em>afastamento&lt;/em>) ao &lt;em>outro&lt;/em>, evitando a sobreposição de ambos. O &lt;em>reposicionamento&lt;/em> depende da posição imediatamente anterior &lt;em>deste gráfico&lt;/em> em relação ao &lt;em>outro&lt;/em>. &lt;em>[Neste momento, o reposicionamento ainda só funciona devidamente com movimentos definidos pelo &lt;code>deltaX&lt;/code>, pelo &lt;code>deltaY&lt;/code> e pela &lt;code>gravidade&lt;/code>.]&lt;/em>
    * @param {Grafico} outro Outro &lt;em>gráfico&lt;/em> para verificar se existe alguma colisão entre &lt;em>esse&lt;/em> e &lt;em>este&lt;/em>
-   * @param {boolean} reposicionamento=true Indicação de que este &lt;em>gráfico&lt;/em> deve ser reposicionado (ou não) quando colide com o outro
-   * @param {number} afastamento=0 Afastamento a aplicar entre os dois &lt;em>gráficos&lt;/em> no reposicionamento; idealmente, este deve ser compreendido entre zero (&lt;code>0&lt;/code>) e um valor inferior aos valores de quaisquer deslocamentos horizontais e verticais
-   * @returns {boolean} Se houver colisão, &lt;code>true&lt;/code>, ou, no caso de se aplicar resposicionamento, &lt;code>1&lt;/code>, &lt;code>2&lt;/code>, &lt;code>3&lt;/code> ou &lt;code>4&lt;/code>, correspondentes às posições &lt;em>cima&lt;/em>, &lt;em>baixo&lt;/em>, &lt;em>esquerda&lt;/em> e &lt;em>direita&lt;/em>, respectivamente, e &lt;code>0&lt;/code>, se não tiver sido aplicado; senão, &lt;code>false&lt;/code>
+   * @param {boolean} [reposicionamento=true] Indicação de que este &lt;em>gráfico&lt;/em> deve ser reposicionado (ou não) quando colide com o outro
+   * @param {number} [afastamento=0] Afastamento a aplicar entre os dois &lt;em>gráficos&lt;/em> no reposicionamento; idealmente, este deve ser compreendido entre zero (&lt;code>0&lt;/code>) e um valor inferior aos valores de quaisquer deslocamentos horizontais e verticais
+   * @param {number} [saltos=0] Número de &lt;em>saltos&lt;/em> (omissões de iterações ou &lt;em>frames&lt;/em>) em chamadas consecutivas a este método &amp;mdash; pode ser útil definir um número de &lt;em>saltos&lt;/em> superior a zero (&lt;code>0&lt;/code>) em situações com verificações de colisões entre muitos &lt;em>gráficos&lt;/em> em simultâneo, de forma a diminuir a exigência computacional; se &lt;code>reposicionamento=true&lt;/code>, este parâmetro é ignorado, não havendo &lt;em>saltos&lt;/em>, de modo a que o &lt;em>reposicionamento&lt;/em> seja correctamente efectuado
+   * @returns {boolean} Se houver colisão, &lt;code>true&lt;/code>, ou, no caso de se aplicar resposicionamento, &lt;code>1&lt;/code>, &lt;code>2&lt;/code>, &lt;code>3&lt;/code> ou &lt;code>4&lt;/code>, correspondentes às posições &lt;em>cima&lt;/em>, &lt;em>baixo&lt;/em>, &lt;em>esquerda&lt;/em> e &lt;em>direita&lt;/em>, respectivamente, e &lt;code>0&lt;/code>, se não tiver sido aplicado &amp;mdash; valores também representados, respectivamente pelas constantes &lt;code>Grafico.CIMA&lt;/code>, &lt;code>Grafico.BAIXO&lt;/code>, &lt;code>Grafico.ESQUERDA&lt;/code>, &lt;code>Grafico.DIREITA&lt;/code> e &lt;code>Grafico.FALSO&lt;/code>; senão, &lt;code>false&lt;/code>
    */
-  colide(outro, reposicionamento = false, afastamento = 0) {
-    if (!reposicionamento) {
-      return (this.activo &amp;&amp; outro.activo &amp;&amp; (this.contemPontos(outro.envelope) || outro.contemPontos(this.envelope)));
-    }
-    else {
-      if (this.activo &amp;&amp; outro.activo &amp;&amp; (this.contemPontos(outro.envelope) || outro.contemPontos(this.envelope))) {
-        var posicao = Utilitarios.FALSO;
-        // posicão anterior: em cima
-        if (this.y + this.alturaEnvelope - Math.abs(this.deltaY + this.gravidade) &lt;= outro.y) {
-          this.y = outro.y - this.alturaEnvelope - afastamento;
-          posicao = Utilitarios.CIMA;
-        }
-        // posicão anterior: em baixo
-        else if (this.y - outro.alturaEnvelope + Math.abs(this.deltaY + this.gravidade) >= outro.y) {
-          this.y = outro.y + outro.alturaEnvelope + afastamento;
-          posicao = Utilitarios.BAIXO;
-        }
-        // posicão anterior: à esquerda
-        else if (this.x + this.larguraEnvelope - Math.abs(this.deltaX) &lt;= outro.x) {
-          this.x = outro.x - this.larguraEnvelope - afastamento;
-          posicao = Utilitarios.ESQUERDA;
-        }
-        // posicão anterior: à direita
-        else if (this.x - outro.larguraEnvelope + Math.abs(this.deltaX) >= outro.x) {
-          this.x = outro.x + outro.larguraEnvelope + afastamento;
-          posicao = Utilitarios.DIREITA;
-        }
-        else {
-          posicao = Utilitarios.FALSO;
-        }
-        return posicao;
+  colide(outro, reposicionamento = false, afastamento = 0, saltos = 0) {
+    this.#contador++;
+    if (reposicionamento || (this.#contador % (saltos + 1)) == 0) {
+      if (!reposicionamento) {
+        return (this.activo &amp;&amp; outro.activo &amp;&amp; (this.contemPontos(outro.envelope) || outro.contemPontos(this.envelope)));
       }
       else {
-        return false;
+        if (this.activo &amp;&amp; outro.activo &amp;&amp; (this.contemPontos(outro.envelope) || outro.contemPontos(this.envelope))) {
+          var posicao = Grafico.FALSO;
+          // posicão anterior: em cima
+          if (this.y + this.alturaEnvelope - Math.abs(this.deltaY + this.gravidade) &lt;= outro.y) {
+            this.y = outro.y - this.alturaEnvelope - afastamento;
+            posicao = Grafico.CIMA;
+          }
+          // posicão anterior: em baixo
+          else if (this.y - outro.alturaEnvelope + Math.abs(this.deltaY + this.gravidade) >= outro.y) {
+            this.y = outro.y + outro.alturaEnvelope + afastamento;
+            posicao = Grafico.BAIXO;
+          }
+          // posicão anterior: à esquerda
+          else if (this.x + this.larguraEnvelope - Math.abs(this.deltaX) &lt;= outro.x) {
+            this.x = outro.x - this.larguraEnvelope - afastamento;
+            posicao = Grafico.ESQUERDA;
+          }
+          // posicão anterior: à direita
+          else if (this.x - outro.larguraEnvelope + Math.abs(this.deltaX) >= outro.x) {
+            this.x = outro.x + outro.larguraEnvelope + afastamento;
+            posicao = Grafico.DIREITA;
+          }
+          else {
+            posicao = Grafico.FALSO;
+          }
+          return posicao;
+        }
+        else {
+          return false;
+        }
       }
+    }
+    else {
+      return false;
     }
   }
 
@@ -157,19 +178,93 @@ class Grafico {
   }
 
   /**
+   * Este método faz com que o &lt;em>gráfico&lt;/em> fique &lt;em>preso&lt;/em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas.
+   * @param {number} ratoX Abscissa das coordenados do rato, que o &lt;em>gráfico&lt;/em> irá seguir e adoptar (fazendo as necessários compensações posicionais)
+   * @param {number} ratoY Ordenada das coordenados do rato, que o &lt;em>gráfico&lt;/em> irá seguir e adoptar (fazendo as necessários compensações posicionais)
+   */
+  captura(ratoX, ratoY) {
+    this.capturado = true;
+    this.distX = this.x - ratoX;
+    this.distY = this.y - ratoY;
+  }
+
+  /**
+   * Este método faz com que o &lt;em>gráfico&lt;/em> deixe de ficar &lt;em>preso&lt;/em> às coordenadas do rato.
+   */
+  liberta() {
+    this.capturado = false;
+    this.distX = 0;
+    this.distY = 0;
+  }
+
+  /**
+   * Este método inverte o sentido da força da gravidade aplicada sobre o &lt;em>gráfico&lt;/em>, contanto esta seja diferente de zero, pondo o valor interno de &lt;code>anguloGravidade&lt;/code>, cujo co-seno é usado, em &lt;code>180&lt;/code>. Se &lt;code>deltaGravidade&lt;/code> estiver definido (e for negativo), a inversão será temporária, voltando-se ao sentido inicialmente definido.
+   */
+  inverteGravidade() {
+    this.anguloGravidade = 180;
+  }
+
+  /**
+   * Este método repõe o sentido inicial da força da gravidade aplicada sobre o &lt;em>gráfico&lt;/em>, contanto esta seja diferente de zero, pondo o valor interno de &lt;code>anguloGravidade&lt;/code>, cujo co-seno é usado, de volta a &lt;code>0&lt;/code>.
+   */
+  repoeGravidade() {
+    this.anguloGravidade = 0;
+  }
+
+  /**
+   * Ângulo cujo co-seno afecta a aplicação do sentido da &lt;em>gravidade&lt;/em> ao &lt;em>gráfico&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>180&lt;/code> &lt;em>[obtenção]&lt;/em>
+   * @type {number}
+   */
+  get anguloGravidade() {
+    return this.#anguloGravidade;
+  }
+
+  /**
+   * Ângulo cujo co-seno afecta a aplicação do sentido da &lt;em>gravidade&lt;/em> ao &lt;em>gráfico&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>180&lt;/code> &lt;em>[atribuição]&lt;/em>, se o valor do ângulo atribuído estiver fora deste intervalo, é usado o valor &lt;code>0&lt;/code>, caso este seja inferior, ou o valor &lt;code>180&lt;/code>, caso ester seja superior
+   * @type {number}
+   */
+  set anguloGravidade(valor) {
+    this.#anguloGravidade = valor;
+    if (this.#anguloGravidade &lt; 0) {
+      this.#anguloGravidade = 0;
+    }
+    else if (this.#anguloGravidade > 180) {
+      this.#anguloGravidade = 180;
+    }
+  }
+
+  /**
+   * Ângulo de rotação do &lt;em>gráfico&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>360&lt;/code> &lt;em>[obtenção]&lt;/em>
+   * @type {number}
+   */
+  get anguloRotacao() {
+    return this.#anguloRotacao;
+  }
+
+  /**
+   * Ângulo de rotação do &lt;em>gráfico&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>360&lt;/code> &lt;em>[atribuição]&lt;/em>; independentemente do valor do ângulo atribuído, é sempre usado o &lt;em>resto&lt;/em> da sua divisão por &lt;code>360&lt;/code>
+   * @type {number}
+   */
+  set anguloRotacao(angulo) {
+    this.#anguloRotacao = angulo % 360;
+  }
+
+  /**
    * Largura do menor &lt;em>rectângulo imaginário&lt;/em> que envolva o &lt;em>gráfico&lt;/em>
+   * @abstract
    * @type {number}
    */
   get largura() {
-    throw new Error("O método &lt;em>getter&lt;/em> 'largura()' tem de ser implementado nas subclasses da classe 'Grafico'.");
+    throw new Error('O método &lt;em>getter&lt;/em> "largura()" tem de ser implementado nas subclasses da classe "Grafico".');
   }
 
   /**
    * Altura do menor &lt;em>rectângulo imaginário&lt;/em> que envolva o &lt;em>gráfico&lt;/em>
+   * @abstract
    * @type {number}
    */
   get altura() {
-    throw new Error("O método &lt;em>getter&lt;/em> 'altura()' tem de ser implementado nas subclasses da classe 'Grafico'.");
+    throw new Error('O método &lt;em>getter&lt;/em> "altura()" tem de ser implementado nas subclasses da classe "Grafico".');
   }
 
   /**
@@ -189,14 +284,14 @@ class Grafico {
   get envelope() {
     var verticesCartesianos = [{ x: 0, y: 0 }, { x: this.largura, y: 0 }, { x: this.largura, y: this.altura }, { x: 0, y: this.altura }];
     // para evitar processamento desnecessário, só se faz a criação do envelope com base na conversão das coordenadas cartesianas dos vertices em coordenadas polares e destas novamente em coordenadas cartesianas quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer conversão
-    if (this.rotacao &amp;&amp; this.angulo != 0) {
+    if (this.anguloRotacao != 0) {
       var verticesPolares = new Array(verticesCartesianos.length);
       for (var i = 0; i &lt; verticesPolares.length; i++) {
-        verticesPolares[i] = Utilitarios.calculaCoordenadasPolares(verticesCartesianos[i].x - this.centroide.x, verticesCartesianos[i].y - this.centroide.y);
+        verticesPolares[i] = Grafico.calculaCoordenadasPolares(verticesCartesianos[i].x - this.centroide.x, verticesCartesianos[i].y - this.centroide.y);
       }
       var envelope = new Array(verticesPolares.length);
       for (var i = 0; i &lt; envelope.length; i++) {
-        envelope[i] = { x: Utilitarios.calculaCoordenadasCartesianas(verticesPolares[i].distancia, verticesPolares[i].angulo + this.angulo).x + this.centroide.x + this.x, y: Utilitarios.calculaCoordenadasCartesianas(verticesPolares[i].distancia, verticesPolares[i].angulo + this.angulo).y + this.centroide.y + this.y };
+        envelope[i] = { x: Grafico.calculaCoordenadasCartesianas(verticesPolares[i].distancia, verticesPolares[i].angulo + this.anguloRotacao).x + this.centroide.x + this.x, y: Grafico.calculaCoordenadasCartesianas(verticesPolares[i].distancia, verticesPolares[i].angulo + this.anguloRotacao).y + this.centroide.y + this.y };
       }
     }
     else {
@@ -238,10 +333,120 @@ class Grafico {
 
   /**
    * &lt;em>Este método deve ser implementado nas subclasses de &lt;code>Grafico&lt;/code>, respeitando as especificidades de cada forma representada nelas. Se tal não acontecer, é gerada uma excepção (&lt;code>Error&lt;/code>).&lt;/em>
+   * @abstract
    * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhado o &lt;em>gráfico&lt;/em>
    */
   desenha(tela) {
-    throw new Error("O método 'desenha(tela)' tem de ser implementado nas subclasses da classe 'Grafico'.");
+    throw new Error('O método "desenha(tela)" tem de ser implementado nas subclasses da classe "Grafico".');
+  }
+
+  /** 
+   * Constante que representa a ausência de &lt;em>reposicionamento&lt;/em> &amp;mdash; usada no método &lt;code>colide()&lt;/code>, com &lt;code>reposicionamento=true&lt;/code>, da classe &lt;code>Grafico&lt;/code> e respectivas subcasses
+   *  @constant
+   *  @type {number}
+   *  @default
+   */
+  static FALSO = 0;
+
+  /** 
+   * Constante que representa um &lt;em>reposicionamento&lt;/em> em &lt;em>cima&lt;/em> &amp;mdash; usada no método &lt;code>colide()&lt;/code>, com &lt;code>reposicionamento=true&lt;/code>, da classe &lt;code>Grafico&lt;/code> e respectivas subcasses
+   *  @constant
+   *  @type {number}
+   *  @default
+   */
+  static CIMA = 1;
+
+  /** 
+   * Constante que representa um &lt;em>reposicionamento&lt;/em> em &lt;em>baixo&lt;/em> &amp;mdash; usada no método &lt;code>colide()&lt;/code>, com &lt;code>reposicionamento=true&lt;/code>, da classe &lt;code>Grafico&lt;/code> e respectivas subcasses
+   *  @constant
+   *  @type {number}
+   *  @default
+   */
+  static BAIXO = 2;
+
+  /** 
+   * Constante que representa um &lt;em>reposicionamento&lt;/em> à &lt;em>esquerda&lt;/em> &amp;mdash; usada no método &lt;code>colide()&lt;/code>, com &lt;code>reposicionamento=true&lt;/code>, da classe &lt;code>Grafico&lt;/code> e respectivas subcasses
+   *  @constant
+   *  @type {number}
+   *  @default
+   */
+  static ESQUERDA = 3;
+
+  /** 
+   * Constante que representa um &lt;em>reposicionamento&lt;/em> à &lt;em>direita&lt;/em> &amp;mdash; usada no método &lt;code>colide()&lt;/code>, com &lt;code>reposicionamento=true&lt;/code>, da classe &lt;code>Grafico&lt;/code> e respectivas subcasses
+   *  @constant
+   *  @type {number}
+   *  @default
+   */
+  static DIREITA = 4;
+
+  /**
+   * @typedef {Object} PontoPolar
+   * @property {number} distancia Distância radial do ponto
+   * @property {number} angulo Ângulo polar do ponto
+   */
+
+  /**
+   * Este método cálcula as coordenadas polares de um dado ponto cartesiano, devolvendo o &lt;em>ângulo polar&lt;/em> e a &lt;em>distância radial&lt;/em>.
+   * @param {number} x Abscissa do ponto cartesiano
+   * @param {number} y Ordenada do ponto cartesiano
+   * @returns {PontoPolar} Coordenadas polares (&lt;em>distância&lt;/em>, &lt;em>ângulo&lt;/em>) do ponto
+   */
+  static calculaCoordenadasPolares(x, y) {
+    var distancia = Math.hypot(x, y);
+    var angulo = null;
+    if (x > 0) {
+      angulo = Math.atan(y / x) * 180 / Math.PI;
+    }
+    else if (x &lt; 0 &amp;&amp; y >= 0) {
+      angulo = (Math.atan(y / x) + Math.PI) * 180 / Math.PI;
+    }
+    else if (x &lt; 0 &amp;&amp; y &lt; 0) {
+      angulo = (Math.atan(y / x) - Math.PI) * 180 / Math.PI;
+    }
+    else if (x == 0 &amp;&amp; y > 0) {
+      angulo = (Math.PI / 2) * 180 / Math.PI;
+    }
+    else if (x &lt; 0 &amp;&amp; y &lt; 0) {
+      angulo = -(Math.PI / 2) * 180 / Math.PI;
+    }
+    else if (x == 0 &amp;&amp; y == 0) {
+      angulo = null;
+    }
+    return { distancia: distancia, angulo: angulo };
+  }
+
+  /**
+   * @typedef {Object} PontoCartesiano
+   * @property {number} x Abscissa do ponto cartesiano
+   * @property {number} y Ordenada do ponto cartesiano
+   */
+
+  /**
+   * Este método cálcula as coordenadas cartesianas de um dado ponto polar, devolvendo o &lt;em>x&lt;/em> e o &lt;em>y&lt;/em>.
+   * @param {number} distancia Distância radial do ponto
+   * @param {number} angulo Ângulo polar do ponto
+   * @returns {PontoCartesiano} Coordenadas cartesianas (&lt;em>x&lt;/em>, &lt;em>y&lt;/em>) do ponto
+   */
+  static calculaCoordenadasCartesianas(distancia, angulo) {
+    var x = distancia * Math.cos(angulo * Math.PI / 180);
+    var y = distancia * Math.sin(angulo * Math.PI / 180);
+    return { x: x, y: y };
+  }
+
+  /**
+   * Este método desenha um &lt;em>gráfico&lt;/em>, ou percorre um &lt;em>array&lt;/em> de &lt;em>gráficos&lt;/em> (instâncias ou objectos de subclasses da classe &lt;code>Grafico&lt;/code>) e desenha-os, no &lt;code>canvas&lt;/code> especificado. O método funciona de forma recursiva, pelo que o &lt;em>array&lt;/em> pode conter, ele próprio, também &lt;em>arrays&lt;/em> em qualquer das suas posições.
+   * @param {Grafico} graficos Um &lt;em>array&lt;/em> de &lt;em>gráficos&lt;/em> ou mesmo apenas um único &lt;em>gráfico&lt;/em>
+   * @param {Tela} tela O &lt;code>canvas&lt;/code> onde vão ser desenhados os &lt;em>gráficos&lt;/em>
+   */
+  static desenhaGraficos(graficos, tela) {
+    for (var i = 0; i &lt; graficos.length; i++) {
+      if (Array.isArray(graficos[i])) {
+        this.desenhaGraficos(graficos[i], tela);
+      } else {
+        graficos[i].desenha(tela);
+      }
+    }
   }
 }
 
@@ -256,29 +461,34 @@ class Grafico {
  * @property {number} raio Raio do &lt;em>círculo&lt;/em>
  * @property {string} preenchimento Cor ou padrão do preenchimento &lt;em>círculo&lt;/em> &amp;mdash; se for &lt;code>null&lt;/code>, o &lt;em>círculo&lt;/em> não é preenchido
  * @property {string} contorno Cor ou padrão do contorno do &lt;em>círculo&lt;/em> &amp;mdash; se for &lt;code>null&lt;/code>, o contorno não é desenhado
- * @property {number} espessura Espessura do contorno do &lt;em>círculo&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
+ * @property {number} espessura Espessura do contorno do &lt;em>círculo&lt;/em> &amp;mdash; se a &lt;em>espessura&lt;/em> tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>círculo&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>círculo&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} angulo=0 Ângulo de rotação do &lt;em>círculo&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; dadas as características do &lt;em>círculo&lt;/em>, esta propriedade é ignorada no seu desenho no &lt;code>canvas&lt;/code>
+ * @property {number} distX=0 Distância horizontal do &lt;em>círculo&lt;/em> até um dado ponto
+ * @property {number} distY=0 Distância vertical do &lt;em>círculo&lt;/em> até um dado ponto
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>cículo&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>círculo&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>círculo&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
- * @property {boolean} rotacao=false Indicação de que o &lt;em>círculo&lt;/em> deve rodar, reflectindo o seu &lt;em>ângulo&lt;/em> &amp;mdash; dadas as características do &lt;em>círculo&lt;/em>, esta propriedade é ignorada no seu desenho no &lt;code>canvas&lt;/code>
- * @property {boolean} visivel=true Indicação de que o &lt;em>círculo&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
+ * @property {number} anguloRotacao=0 Ângulo de rotação do &lt;em>círculo&lt;/em> quando desenhado no &lt;code>canvas&lt;/code>, compreendido entre &lt;code>0&lt;/code> e &lt;code>360&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>círculo&lt;/em>
+ * @property {number} deltaRotacao=0 Variação do ângulo de rotação do &lt;em>círculo&lt;/em>
+ * @property {number} anguloGravidade=0 Ângulo cujo co-seno afecta a aplicação do sentido da &lt;em>gravidade&lt;/em> ao &lt;em>círculo&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>180&lt;/code>
+ * @property {number} deltaGravidade=0 Variação do ângulo aplicado à &lt;em>gravidade&lt;/em>
+ * @property {number} opacidade=1.0 Valor da opacidade do &lt;em>círculo&lt;/em> &amp;mdash; pode variar entre &lt;code>0.0&lt;/code> (completamente transparente) e &lt;code>1.0&lt;/code> (completamente opaco), com os valores fora desse intervalo a serem ignorados (mantendo-se o valor anteriormente definido)
+ * @property {boolean} activo=true Indicação de que o &lt;em>círculo&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide()&lt;/code>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>círculo&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha()&lt;/code>
+ * @property {boolean} capturado=false Indicação de que o &lt;em>círculo&lt;/em> deve ficar &lt;em>preso&lt;/em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas, quando chamado o método &lt;code>desenha()&lt;/code>
  */
 class Circulo extends Grafico {
+
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>Círculo&lt;/code>
    * @param {number} x Abscissa para posicionar o &lt;em>círculo&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {number} y Ordenada para posicionar o &lt;em>círculo&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {number} raio Raio do &lt;em>círculo&lt;/em>
-   * @param {string} preenchimento="black" Cor ou padrão do preenchimento do &lt;em>círculo&lt;/em>
-   * @param {string} contorno="black" Cor ou padrão do contorno do &lt;em>círculo&lt;/em>
-   * @param {number} espessura=0 Espessura do contorno do &lt;em>círculo&lt;/em>
+   * @param {string} [preenchimento='black'] Cor ou padrão do preenchimento do &lt;em>círculo&lt;/em>
+   * @param {string} [contorno='black'] Cor ou padrão do contorno do &lt;em>círculo&lt;/em>
+   * @param {number} [espessura=0] Espessura do contorno do &lt;em>círculo&lt;/em>
    */
-  constructor(x, y, raio, preenchimento = "black", contorno = "black", espessura = 0) {
+  constructor(x, y, raio, preenchimento = 'black', contorno = 'black', espessura = 0) {
     super(x, y);
     this.raio = raio;
     this.preenchimento = preenchimento;
@@ -293,7 +503,7 @@ class Circulo extends Grafico {
   get envelope() {
     var envelope = new Array(36);
     for (var i = 0; i &lt; envelope.length; i++) {
-      envelope[i] = { x: this.raio + this.raio * Math.cos(2 * Math.PI * i / envelope.length + Math.PI) + this.x, y: this.raio + this.raio * Math.sin(2 * Math.PI * i / envelope.length + Math.PI) + this.y };
+      envelope[i] = { x: Math.floor(this.raio + this.raio * Math.cos(2 * Math.PI * i / envelope.length + Math.PI) + this.x), y: Math.floor(this.raio + this.raio * Math.sin(2 * Math.PI * i / envelope.length + Math.PI) + this.y) };
     }
     return envelope;
   }
@@ -329,26 +539,23 @@ class Circulo extends Grafico {
    * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhado o &lt;em>círculo&lt;/em>
    */
   desenha(tela) {
-    this.x += this.distX;
-    this.y += this.distY;
+    if (this.capturado) {
+      this.x = tela.ratoX + this.distX;
+      this.y = tela.ratoY + this.distY;
+    }
     if (this.visivel) {
       var contexto = tela.contexto;
       contexto.save();
+      contexto.translate(Math.floor(this.x + this.centroide.x), Math.floor(this.y + this.centroide.y));
+      contexto.rotate(this.anguloRotacao * Math.PI / 180);
       contexto.beginPath();
-      // para evitar processamento desnecessário, só se faz a translação e a rotação do canvas quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao &amp;&amp; this.angulo != 0) {
-        contexto.translate(Math.floor(this.x + this.centroide.x), Math.floor(this.y + this.centroide.y));
-        contexto.rotate(this.angulo * Math.PI / 180);
-        contexto.arc(Math.floor(-this.centroide.x + this.raio), Math.floor(-this.centroide.y + this.raio), this.raio, 0, Math.PI * 2);
-      }
-      else {
-        contexto.arc(Math.floor(this.x + this.raio), Math.floor(this.y + this.raio), this.raio, 0, Math.PI * 2);
-      }
-      contexto.arc(Math.floor(this.x + this.raio), Math.floor(this.y + this.raio), this.raio, 0, Math.PI * 2);
+      contexto.arc(Math.floor(-this.centroide.x + this.raio), Math.floor(-this.centroide.y + this.raio), this.raio, 0, Math.PI * 2);
       contexto.closePath();
+      contexto.translate(Math.floor(-this.centroide.x), Math.floor(-this.centroide.y));
       contexto.fillStyle = this.preenchimento;
       contexto.strokeStyle = this.contorno;
       contexto.lineWidth = this.espessura;
+      contexto.globalAlpha = this.opacidade;
       if (this.preenchimento != null) {
         contexto.fill();
       }
@@ -357,8 +564,10 @@ class Circulo extends Grafico {
       }
       contexto.restore();
     }
-    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
-    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
+    this.anguloRotacao += this.deltaRotacao;
+    this.anguloGravidade += this.deltaGravidade;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.anguloRotacao * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.anguloRotacao * Math.PI / 180) + this.gravidade * Math.cos(this.anguloGravidade * Math.PI / 180);
   }
 }
 
@@ -372,18 +581,22 @@ class Circulo extends Grafico {
  * @property {number} y Ordenada para posicionar o &lt;em>rectângulo&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {string} preenchimento Cor ou padrão do preenchimento &lt;em>rectângulo&lt;/em> &amp;mdash; se for &lt;code>null&lt;/code>, o &lt;em>rectângulo&lt;/em> não é preenchido
  * @property {string} contorno Cor ou padrão do contorno do &lt;em>rectângulo&lt;/em> &amp;mdash; se for &lt;code>null&lt;/code>, o contorno não é desenhado
- * @property {number} espessura Espessura do contorno do &lt;em>rectângulo&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
+ * @property {number} espessura Espessura do contorno do &lt;em>rectângulo&lt;/em> &amp;mdash; se a &lt;em>espessura&lt;/em> tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>rectângulo&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>rectângulo&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} angulo=0 Ângulo de rotação do &lt;em>rectângulo&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>rectângulo&lt;/em>
+ * @property {number} distX=0 Distância horizontal do &lt;em>rectângulo&lt;/em> até um dado ponto
+ * @property {number} distY=0 Distância vertical do &lt;em>rectângulo&lt;/em> até um dado ponto
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>rectângulo&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>rectângulo&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>rectângulo&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
- * @property {boolean} rotacao=false Indicação de que o &lt;em>rectângulo&lt;/em> deve rodar, reflectindo o seu &lt;em>ângulo&lt;/em>
- * @property {boolean} visivel=true Indicação de que o &lt;em>rectângulo&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
-  */
+ * @property {number} anguloRotacao=0 Ângulo de rotação do &lt;em>rectângulo&lt;/em> quando desenhado no &lt;code>canvas&lt;/code>, compreendido entre &lt;code>0&lt;/code> e &lt;code>360&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>rectângulo&lt;/em>
+ * @property {number} deltaRotacao=0 Variação do ângulo de rotação do &lt;em>rectângulo&lt;/em>
+ * @property {number} anguloGravidade=0 Ângulo cujo co-seno afecta a aplicação do sentido da &lt;em>gravidade&lt;/em> ao &lt;em>rectângulo&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>180&lt;/code>
+ * @property {number} deltaGravidade=0 Variação do ângulo aplicado à &lt;em>gravidade&lt;/em>
+ * @property {number} opacidade=1.0 Valor da opacidade do &lt;em>rectângulo&lt;/em> &amp;mdash; pode variar entre &lt;code>0.0&lt;/code> (completamente transparente) e &lt;code>1.0&lt;/code> (completamente opaco), com os valores fora desse intervalo a serem ignorados (mantendo-se o valor anteriormente definido)
+ * @property {boolean} activo=true Indicação de que o &lt;em>rectângulo&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide()&lt;/code>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>rectângulo&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha()&lt;/code>
+ * @property {boolean} capturado=false Indicação de que o &lt;em>rectângulo&lt;/em> deve ficar &lt;em>preso&lt;/em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas, quando chamado o método &lt;code>desenha()&lt;/code>
+ */
 class Rectangulo extends Grafico {
   #largura;
   #altura;
@@ -394,11 +607,11 @@ class Rectangulo extends Grafico {
    * @param {number} y Ordenada para posicionar o &lt;em>rectângulo&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {number} largura Largura do &lt;em>rectângulo&lt;/em>
    * @param {number} altura Altura do &lt;em>rectângulo&lt;/em>
-   * @param {string} preenchimento="black" Cor ou padrão do preenchimento do &lt;em>rectângulo&lt;/em>
-   * @param {string} contorno="black" Cor ou padrão do contorno do &lt;em>rectângulo&lt;/em>
-   * @param {number} espessura=0 Espessura do contorno do &lt;em>rectângulo&lt;/em>
+   * @param {string} [preenchimento='black'] Cor ou padrão do preenchimento do &lt;em>rectângulo&lt;/em>
+   * @param {string} [contorno='black'] Cor ou padrão do contorno do &lt;em>rectângulo&lt;/em>
+   * @param {number} [espessura=0] Espessura do contorno do &lt;em>rectângulo&lt;/em>
    */
-  constructor(x, y, largura, altura, preenchimento = "black", contorno = "black", espessura = 0) {
+  constructor(x, y, largura, altura, preenchimento = 'black', contorno = 'black', espessura = 0) {
     super(x, y);
     this.#largura = largura;
     this.#altura = altura;
@@ -408,7 +621,7 @@ class Rectangulo extends Grafico {
   }
 
   /**
-   * Largura do &lt;em>rectângulo&lt;/em> &lt;em>[definição]&lt;/em>
+   * Largura do &lt;em>rectângulo&lt;/em> &lt;em>[atribuição]&lt;/em>
    * @type {number}
    */
   set largura(largura) {
@@ -424,7 +637,7 @@ class Rectangulo extends Grafico {
   }
 
   /**
-   * Altura do &lt;em>rectângulo&lt;/em> &lt;em>[definição]&lt;/em>
+   * Altura do &lt;em>rectângulo&lt;/em> &lt;em>[atribuição]&lt;/em>
    * @type {number}
    */
   set altura(altura) {
@@ -444,25 +657,23 @@ class Rectangulo extends Grafico {
    * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhado o &lt;em>rectângulo&lt;/em>
    */
   desenha(tela) {
-    this.x += this.distX;
-    this.y += this.distY;
+    if (this.capturado) {
+      this.x = tela.ratoX + this.distX;
+      this.y = tela.ratoY + this.distY;
+    }
     if (this.visivel) {
       var contexto = tela.contexto;
       contexto.save();
+      contexto.translate(Math.floor(this.x + this.centroide.x), Math.floor(this.y + this.centroide.y));
+      contexto.rotate(this.anguloRotacao * Math.PI / 180);
       contexto.beginPath();
-      // para evitar processamento desnecessário, só se faz a translação e a rotação do canvas quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao &amp;&amp; this.angulo != 0) {
-        contexto.translate(Math.floor(this.x + this.centroide.x), Math.floor(this.y + this.centroide.y));
-        contexto.rotate(this.angulo * Math.PI / 180);
-        contexto.rect(Math.floor(-this.centroide.x), Math.floor(-this.centroide.y), this.largura, this.altura);
-      }
-      else {
-        contexto.rect(Math.floor(this.x), Math.floor(this.y), this.largura, this.altura);
-      }
+      contexto.rect(Math.floor(-this.centroide.x), Math.floor(-this.centroide.y), this.largura, this.altura);
       contexto.closePath();
+      contexto.translate(Math.floor(-this.centroide.x), Math.floor(-this.centroide.y));
       contexto.fillStyle = this.preenchimento;
       contexto.strokeStyle = this.contorno;
       contexto.lineWidth = this.espessura;
+      contexto.globalAlpha = this.opacidade;
       if (this.preenchimento != null) {
         contexto.fill();
       }
@@ -471,8 +682,10 @@ class Rectangulo extends Grafico {
       }
       contexto.restore();
     }
-    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
-    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
+    this.anguloRotacao += this.deltaRotacao;
+    this.anguloGravidade += this.deltaGravidade;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.anguloRotacao * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.anguloRotacao * Math.PI / 180) + this.gravidade * Math.cos(this.anguloGravidade * Math.PI / 180);
   }
 }
 
@@ -487,42 +700,46 @@ class Rectangulo extends Grafico {
  * @property {array} vertices Conjunto de pontos com os vários vértices do &lt;em>polígono&lt;/em>
  * @property {string} preenchimento Cor ou padrão do preenchimento &lt;em>polígono&lt;/em> &amp;mdash; se for &lt;code>null&lt;/code>, o &lt;em>polígono&lt;/em> não é preenchido
  * @property {string} contorno Cor ou padrão do contorno do &lt;em>polígono&lt;/em> &amp;mdash; se for &lt;code>null&lt;/code>, o contorno não é desenhado
- * @property {number} espessura Espessura do contorno do &lt;em>polígono&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
+ * @property {number} espessura Espessura do contorno do &lt;em>polígono&lt;/em> &amp;mdash; se a &lt;em>espessura&lt;/em> tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>polígono&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>polígono&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
+ * @property {number} distX=0 Distância horizontal do &lt;em>polígono&lt;/em> até um dado ponto
+ * @property {number} distY=0 Distância vertical do &lt;em>polígono&lt;/em> até um dado ponto
  * @property {number} deslocX=0 Deslocamento horizontal do ponto mais à esquerda do polígono até ponto usado para posicionar o &lt;em>polígono&lt;/em>, quando se fez o ajuste posicional do polígono &amp;mdash; se o seu valor for zero (&lt;code>0&lt;/code>), não foi feito qualquer ajuste
  * @property {number} deslocY=0 Deslocamento vertical do ponto mais à esquerda do polígono até ponto usado para posicionar o &lt;em>polígono&lt;/em>, quando se fez o ajuste posicional do polígono &amp;mdash; se o seu valor for zero (&lt;code>0&lt;/code>), não foi feito qualquer ajuste
- * @property {number} angulo=0 Ângulo de rotação do &lt;em>polígono&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>polígono&lt;/em>
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>polígono&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>polígono&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>polígono&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
- * @property {boolean} rotacao=false Indicação de que o &lt;em>polígono&lt;/em> deve rodar, reflectindo o seu &lt;em>ângulo&lt;/em>
- * @property {boolean} visivel=true Indicação de que o &lt;em>polígono&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
+ * @property {number} anguloRotacao=0 Ângulo de rotação do &lt;em>polígono&lt;/em> quando desenhado no &lt;code>canvas&lt;/code>, compreendido entre &lt;code>0&lt;/code> e &lt;code>360&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>polígono&lt;/em>
+ * @property {number} deltaRotacao=0 Variação do ângulo de rotação do &lt;em>polígono&lt;/em>
+ * @property {number} anguloGravidade=0 Ângulo cujo co-seno afecta a aplicação do sentido da &lt;em>gravidade&lt;/em> ao &lt;em>polígono&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>180&lt;/code>
+ * @property {number} deltaGravidade=0 Variação do ângulo aplicado à &lt;em>gravidade&lt;/em>
+ * @property {number} opacidade=1.0 Valor da opacidade do &lt;em>polígono&lt;/em> &amp;mdash; pode variar entre &lt;code>0.0&lt;/code> (completamente transparente) e &lt;code>1.0&lt;/code> (completamente opaco), com os valores fora desse intervalo a serem ignorados (mantendo-se o valor anteriormente definido)
+ * @property {boolean} activo=true Indicação de que o &lt;em>polígono&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide()&lt;/code>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>polígono&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha()&lt;/code>
+ * @property {boolean} capturado=false Indicação de que o &lt;em>polígono&lt;/em> deve ficar &lt;em>preso&lt;/em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas, quando chamado o método &lt;code>desenha()&lt;/code>
  */
 class Poligono extends Grafico {
-  #justo;
   #vertices;
+  #justo;
 
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>Poligono&lt;/code>
    * @param {number} x Abscissa para posicionar o &lt;em>polígono&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {number} y Ordenada para posicionar o &lt;em>polígono&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {array} vertices Conjunto de pontos com os vários vértices do &lt;em>polígono&lt;/em>
-   * @param {string} preenchimento="black" Cor ou padrão do preenchimento do &lt;em>polígono&lt;/em>
-   * @param {string} contorno="black" Cor ou padrão do contorno do &lt;em>polígono&lt;/em>
-   * @param {number} espessura=0 Espessura do contorno do &lt;em>polígono&lt;/em>
-   * @param {boolean} justo=true Indicação de que o &lt;em>polígono&lt;/em> deve ser reposicionado de forma a ficar &lt;em>encostado&lt;/em> ao ponto usado para definir o seu posicionamento no &lt;code>canvas&lt;/code>
+   * @param {string} [preenchimento='black'] Cor ou padrão do preenchimento do &lt;em>polígono&lt;/em>
+   * @param {string} [contorno='black]' Cor ou padrão do contorno do &lt;em>polígono&lt;/em>
+   * @param {number} [espessura=0] Espessura do contorno do &lt;em>polígono&lt;/em>
+   * @param {boolean} [justo=true] Indicação de que o &lt;em>polígono&lt;/em> deve ser reposicionado de forma a ficar &lt;em>encostado&lt;/em> ao ponto usado para definir o seu posicionamento no &lt;code>canvas&lt;/code>
    */
-  constructor(x, y, vertices, preenchimento = "black", contorno = "black", espessura = 0, justo = true) {
+  constructor(x, y, vertices, preenchimento = 'black', contorno = 'black', espessura = 0, justo = true) {
     super(x, y);
     this.#vertices = vertices;
     this.preenchimento = preenchimento;
     this.contorno = contorno;
     this.espessura = espessura;
     this.#justo = justo;
-    //se ajuste for verdadeiro (true), todo os pontos são alterados de forma a que o polígono seja "encostado" à origem -- o ponto (x, y) do polígono
+    //se ajuste for verdadeiro (true), todo os pontos são alterados de forma a que o polígono seja 'encostado' à origem -- o ponto (x, y) do polígono
     if (this.#justo) {
       this.#ajusta();
     }
@@ -536,11 +753,11 @@ class Poligono extends Grafico {
     var verticesCartesianos = this.#vertices;
     var verticesPolares = new Array(verticesCartesianos.length);
     for (var i = 0; i &lt; verticesPolares.length; i++) {
-      verticesPolares[i] = Utilitarios.calculaCoordenadasPolares(this.#vertices[i].x - this.centroide.x, this.#vertices[i].y - this.centroide.y);
+      verticesPolares[i] = Grafico.calculaCoordenadasPolares(this.#vertices[i].x - this.centroide.x, this.#vertices[i].y - this.centroide.y);
     }
     var envelope = new Array(verticesPolares.length);
     for (var i = 0; i &lt; envelope.length; i++) {
-      envelope[i] = { x: Utilitarios.calculaCoordenadasCartesianas(verticesPolares[i].distancia, verticesPolares[i].angulo + this.angulo).x + this.centroide.x + this.x, y: Utilitarios.calculaCoordenadasCartesianas(verticesPolares[i].distancia, verticesPolares[i].angulo + this.angulo).y + this.centroide.y + this.y };
+      envelope[i] = { x: Grafico.calculaCoordenadasCartesianas(verticesPolares[i].distancia, verticesPolares[i].angulo + this.anguloRotacao).x + this.centroide.x + this.x, y: Grafico.calculaCoordenadasCartesianas(verticesPolares[i].distancia, verticesPolares[i].angulo + this.anguloRotacao).y + this.centroide.y + this.y };
 
     }
     return envelope;
@@ -563,7 +780,7 @@ class Poligono extends Grafico {
   }
 
   /**
-   * Conjunto de pontos com os vários vértices do &lt;em>polígono&lt;/em> &lt;em>[definição]&lt;/em>
+   * Conjunto de pontos com os vários vértices do &lt;em>polígono&lt;/em> &lt;em>[atribuição]&lt;/em>
    * @type {array}
    */
   set vertices(vertices) {
@@ -633,39 +850,30 @@ class Poligono extends Grafico {
    * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhado o &lt;em>polígono&lt;/em>
    */
   desenha(tela) {
-    this.x += this.distX;
-    this.y += this.distY;
+    if (this.capturado) {
+      this.x = tela.ratoX + this.distX;
+      this.y = tela.ratoY + this.distY;
+    }
     if (this.visivel) {
       var contexto = tela.contexto;
       contexto.save();
+      contexto.translate(Math.floor(this.x + this.centroide.x), Math.floor(this.y + this.centroide.y));
+      contexto.rotate(this.anguloRotacao * Math.PI / 180);
       contexto.beginPath()
-      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao &amp;&amp; this.angulo != 0) {
-        contexto.translate(Math.floor(this.x + this.centroide.x), Math.floor(this.y + this.centroide.y));
-        contexto.rotate(this.angulo * Math.PI / 180);
-        for (var i = 0; i &lt; this.#vertices.length; i++) {
-          if (i == 0) {
-            contexto.moveTo(Math.floor(this.#vertices[i].x - this.centroide.x), Math.floor(this.#vertices[i].y - this.centroide.y));
-          }
-          else {
-            contexto.lineTo(Math.floor(this.#vertices[i].x - this.centroide.x), Math.floor(this.#vertices[i].y - this.centroide.y));
-          }
+      for (var i = 0; i &lt; this.#vertices.length; i++) {
+        if (i == 0) {
+          contexto.moveTo(Math.floor(this.#vertices[i].x - this.centroide.x), Math.floor(this.#vertices[i].y - this.centroide.y));
         }
-      }
-      else {
-        for (var i = 0; i &lt; this.#vertices.length; i++) {
-          if (i == 0) {
-            contexto.moveTo(Math.floor(this.#vertices[i].x + this.x), Math.floor(this.#vertices[i].y + this.y));
-          }
-          else {
-            contexto.lineTo(Math.floor(this.#vertices[i].x + this.x), Math.floor(this.#vertices[i].y + this.y));
-          }
+        else {
+          contexto.lineTo(Math.floor(this.#vertices[i].x - this.centroide.x), Math.floor(this.#vertices[i].y - this.centroide.y));
         }
       }
       contexto.closePath();
+      contexto.translate(Math.floor(-this.centroide.x), Math.floor(-this.centroide.y));
       contexto.fillStyle = this.preenchimento;
       contexto.strokeStyle = this.contorno;
       contexto.lineWidth = this.espessura;
+      contexto.globalAlpha = this.opacidade;
       if (this.preenchimento != null) {
         contexto.fill();
       }
@@ -674,8 +882,10 @@ class Poligono extends Grafico {
       }
       contexto.restore();
     }
-    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
-    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
+    this.anguloRotacao += this.deltaRotacao;
+    this.anguloGravidade += this.deltaGravidade;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.anguloRotacao * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.anguloRotacao * Math.PI / 180) + this.gravidade * Math.cos(this.anguloGravidade * Math.PI / 180);
   }
 }
 
@@ -689,38 +899,43 @@ class Poligono extends Grafico {
  * @property {number} y Ordenada para posicionar o &lt;em>texto&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {string} preenchimento Cor ou padrão do preenchimento do &lt;em>texto&lt;/em> &amp;mdash; se for &lt;code>null&lt;/code>, o &lt;em>texto&lt;/em> não é preenchido
  * @property {string} contorno Cor ou padrão do contorno do &lt;em>texto&lt;/em> &amp;mdash; se for &lt;code>null&lt;/code>, o contorno não é desenhado
- * @property {number} espessura Espessura do contorno do &lt;em>texto&lt;/em> &amp;mdash; se a espessura tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
+ * @property {number} espessura Espessura do contorno do &lt;em>texto&lt;/em> &amp;mdash; se a &lt;em>espessura&lt;/em> tiver um valor igual ou inferior a zero (&lt;code>0&lt;/code>), o contorno não é desenhado
  * @property {number} tamanho=16 Tamanho do &lt;em>texto&lt;/em> em pontos (&lt;code>pt&lt;/code)
- * @property {number} fonte="sans-serif" Fonte do &lt;em>texto&lt;/em>
+ * @property {number} fonte='sans-serif' Fonte do &lt;em>texto&lt;/em>
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>texto&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>texto&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} angulo=0 Ângulo de rotação do &lt;em>texto&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>texto&lt;/em>
+ * @property {number} distX=0 Distância horizontal do &lt;em>texto&lt;/em> até um dado ponto
+ * @property {number} distY=0 Distância vertical do &lt;em>texto&lt;/em> até um dado ponto
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>texto&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>texto&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>texto&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
- * @property {boolean} rotacao=false Indicação de que o &lt;em>texto&lt;/em> deve rodar, reflectindo o seu &lt;em>ângulo&lt;/em>
- * @property {boolean} visivel=true Indicação de que o &lt;em>texto&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
+ * @property {number} anguloRotacao=0 Ângulo de rotação do &lt;em>texto&lt;/em> quando desenhado no &lt;code>canvas&lt;/code>, compreendido entre &lt;code>0&lt;/code> e &lt;code>360&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>texto&lt;/em>
+ * @property {number} deltaRotacao=0 Variação do ângulo de rotação do &lt;em>texto&lt;/em>
+ * @property {number} anguloGravidade=0 Ângulo cujo co-seno afecta a aplicação do sentido da &lt;em>gravidade&lt;/em> ao &lt;em>texto&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>180&lt;/code>
+ * @property {number} deltaGravidade=0 Variação do ângulo aplicado à &lt;em>gravidade&lt;/em>
+ * @property {number} opacidade=1.0 Valor da opacidade do &lt;em>texto&lt;/em> &amp;mdash; pode variar entre &lt;code>0.0&lt;/code> (completamente transparente) e &lt;code>1.0&lt;/code> (completamente opaco), com os valores fora desse intervalo a serem ignorados (mantendo-se o valor anteriormente definido)
+ * @property {boolean} activo=true Indicação de que o &lt;em>texto&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide()&lt;/code>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>texto&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha()&lt;/code>
+ * @property {boolean} capturado=false Indicação de que o &lt;em>texto&lt;/em> deve ficar &lt;em>preso&lt;/em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas, quando chamado o método &lt;code>desenha()&lt;/code>
  */
 class Texto extends Grafico {
+
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>Texto&lt;/code>
    * @param {number} x Abscissa para posicionar o &lt;em>texto&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {number} y Ordenada para posicionar o &lt;em>texto&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {string} texto Conteúdo de &lt;em>texto&lt;/em> a desenhar no &lt;code>canvas&lt;/code>
-   * @param {string} preenchimento="black" Cor do preenchimento do &lt;em>texto&lt;/em>
-   * @param {string} contorno="black" Cor ou padrão do contorno do &lt;em>texto&lt;/em>
-   * @param {number} espessura=0 Espessura do contorno do &lt;em>texto&lt;/em>
+   * @param {string} [preenchimento='black'] Cor do preenchimento do &lt;em>texto&lt;/em>
+   * @param {string} [contorno='black'] Cor ou padrão do contorno do &lt;em>texto&lt;/em>
+   * @param {number} [espessura=0] Espessura do contorno do &lt;em>texto&lt;/em>
    */
-  constructor(x, y, texto, preenchimento = "black", contorno = "black", espessura = 0) {
+  constructor(x, y, texto, preenchimento = 'black', contorno = 'black', espessura = 0) {
     super(x, y);
     this.texto = texto;
     this.preenchimento = preenchimento;
     this.contorno = contorno;
     this.espessura = espessura;
     this.tamanho = 16;
-    this.fonte = "sans-serif";
+    this.fonte = 'sans-serif';
   }
 
   /**
@@ -728,9 +943,9 @@ class Texto extends Grafico {
    * @type {number}
    */
   get largura() {
-    var tela = document.createElement("canvas");
-    var contexto = tela.getContext("2d");
-    contexto.font = this.tamanho + "px " + this.fonte;
+    var tela = document.createElement('canvas');
+    var contexto = tela.getContext('2d');
+    contexto.font = this.tamanho + 'px ' + this.fonte;
     return Math.floor(contexto.measureText(this.texto).width);
   }
 
@@ -747,40 +962,34 @@ class Texto extends Grafico {
    * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhado o &lt;em>texto&lt;/em>
    */
   desenha(tela) {
-    this.x += this.distX;
-    this.y += this.distY;
+    if (this.capturado) {
+      this.x = tela.ratoX + this.distX;
+      this.y = tela.ratoY + this.distY;
+    }
     if (this.visivel) {
       var contexto = tela.contexto;
       contexto.save();
       contexto.fillStyle = this.preenchimento;
       contexto.strokeStyle = this.contorno;
       contexto.lineWidth = this.espessura;
-      contexto.textBaseline = "top";
-      contexto.font = this.tamanho + "px " + this.fonte;
+      contexto.globalAlpha = this.opacidade;
+      contexto.textBaseline = 'top';
+      contexto.font = this.tamanho + 'px ' + this.fonte;
       contexto.fillStyle = this.preenchimento;
-      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao &amp;&amp; this.angulo != 0) {
-        contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
-        contexto.rotate(this.angulo * Math.PI / 180);
-        if (this.preenchimento != null) {
-          contexto.fillText(this.texto, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
-        }
-        if ((this.contorno != null) &amp;&amp; (this.espessura > 0)) {
-          contexto.strokeText(this.texto, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
-        }
+      contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
+      contexto.rotate(this.anguloRotacao * Math.PI / 180);
+      if (this.preenchimento != null) {
+        contexto.fillText(this.texto, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
       }
-      else {
-        if (this.preenchimento != null) {
-          contexto.fillText(this.texto, Math.floor(this.x), Math.floor(this.y));
-        }
-        if ((this.contorno != null) &amp;&amp; (this.espessura > 0)) {
-          contexto.strokeText(this.texto, Math.floor(this.x), Math.floor(this.y));
-        }
+      if ((this.contorno != null) &amp;&amp; (this.espessura > 0)) {
+        contexto.strokeText(this.texto, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
       }
       contexto.restore();
     }
-    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
-    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
+    this.anguloRotacao += this.deltaRotacao;
+    this.anguloGravidade += this.deltaGravidade;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.anguloRotacao * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.anguloRotacao * Math.PI / 180) + this.gravidade * Math.cos(this.anguloGravidade * Math.PI / 180);
   }
 }
 
@@ -797,17 +1006,21 @@ class Texto extends Grafico {
  * @property {number} altura Altura da &lt;em>imagem&lt;/em>
  * @property {number} deltaX=0 Variação horizontal da posição da &lt;em>imagem&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição da &lt;em>imagem&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} angulo=0 Ângulo de rotação da &lt;em>imagem&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro da &lt;em>imagem&lt;/em>
+ * @property {number} distX=0 Distância horizontal da &lt;em>imagem&lt;/em> até um dado ponto
+ * @property {number} distY=0 Distância vertical da &lt;em>imagem&lt;/em> até um dado ponto
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical da &lt;em>imagem&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
- * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical da &lt;em>imagem&lt;/em>
-tendo como referência o centro da &lt;em>imagem&lt;/em>
- * @property {boolean} activo=true Indicação de que a &lt;em>imagem&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
- * @property {boolean} rotacao=false Indicação de que a &lt;em>imagem&lt;/em> deve rodar, reflectindo o seu &lt;em>ângulo&lt;/em>
- * @property {boolean} visivel=true Indicação de que a &lt;em>imagem&lt;/em> deve ser desenhada no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
-  */
+ * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical da &lt;em>imagem&lt;/em> tendo como referência o centro da &lt;em>imagem&lt;/em>
+ * @property {number} anguloRotacao=0 Ângulo de rotação da &lt;em>imagem&lt;/em> quando desenhado no &lt;code>canvas&lt;/code>, compreendido entre &lt;code>0&lt;/code> e &lt;code>360&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro da &lt;em>imagem&lt;/em>
+ * @property {number} deltaRotacao=0 Variação do ângulo de rotação da &lt;em>imagem&lt;/em>
+ * @property {number} anguloGravidade=0 Ângulo cujo co-seno afecta a aplicação do sentido da &lt;em>gravidade&lt;/em> à &lt;em>imagem&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>180&lt;/code>
+ * @property {number} deltaGravidade=0 Variação do ângulo aplicado à &lt;em>gravidade&lt;/em>
+ * @property {number} opacidade=1.0 Valor da opacidade da &lt;em>imagem&lt;/em> &amp;mdash; pode variar entre &lt;code>0.0&lt;/code> (completamente transparente) e &lt;code>1.0&lt;/code> (completamente opaco), com os valores fora desse intervalo a serem ignorados (mantendo-se o valor anteriormente definido)
+ * @property {boolean} activo=true Indicação de que a &lt;em>imagem&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide()&lt;/code>
+ * @property {boolean} visivel=true Indicação de que a &lt;em>imagem&lt;/em> deve ser desenhada no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha()&lt;/code>
+ * @property {boolean} capturado=false Indicação de que a &lt;em>imagem&lt;/em> deve ficar &lt;em>preso&lt;/em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas, quando chamado o método &lt;code>desenha()&lt;/code>
+ */
 class Imagem extends Grafico {
+
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>Imagem&lt;/code>
    * @param {number} x Abscissa para posicionar a &lt;em>imagem&lt;/em> no &lt;code>canvas&lt;/code>
@@ -817,6 +1030,9 @@ class Imagem extends Grafico {
   constructor(x, y, imagem) {
     super(x, y);
     this.imagem = imagem;
+    if (imagem == null || imagem == undefined) {
+      throw new TypeMismatchError('A "imagem" passada como argumento no construtor da classe "Imagem" (ou das suas subclasses) é nula ou não está definida.');
+    }
   }
 
   /**
@@ -840,24 +1056,23 @@ class Imagem extends Grafico {
    * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhada a &lt;em>imagem&lt;/em>
    */
   desenha(tela) {
-    this.x += this.distX;
-    this.y += this.distY;
+    if (this.capturado) {
+      this.x = tela.ratoX + this.distX;
+      this.y = tela.ratoY + this.distY;
+    }
     if (this.visivel) {
       var contexto = tela.contexto;
-      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao &amp;&amp; this.angulo != 0) {
-        contexto.save();
-        contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
-        contexto.rotate(this.angulo * Math.PI / 180);
-        contexto.drawImage(this.imagem, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
-        contexto.restore();
-      }
-      else {
-        contexto.drawImage(this.imagem, Math.floor(this.x), Math.floor(this.y));
-      }
+      contexto.save();
+      contexto.globalAlpha = this.opacidade;
+      contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
+      contexto.rotate(this.anguloRotacao * Math.PI / 180);
+      contexto.drawImage(this.imagem, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
+      contexto.restore();
     }
-    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
-    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
+    this.anguloRotacao += this.deltaRotacao;
+    this.anguloGravidade += this.deltaGravidade;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.anguloRotacao * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.anguloRotacao * Math.PI / 180) + this.gravidade * Math.cos(this.anguloGravidade * Math.PI / 180);
   }
 }
 
@@ -871,9 +1086,8 @@ class Imagem extends Grafico {
  * @property {number} y Ordenada para posicionar o &lt;em>sprite&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {HTMLElement} imagem Elemento HTML que contém o &lt;em>sprite&lt;/em>
  * @property {number} fotogramas Número de fotogramas (&lt;em>frames&lt;/em>) do &lt;em>sprite&lt;/em>
- * @property {number} iteracoes Número de iterações &amp;mdash; na prática, o número de &lt;em>frames&lt;/em> a serem gerados por via do método &lt;code>window.requestAnimationFrame()&lt;/code> &amp;mdash; antes de se passar ao fotograma seguinte do &lt;em>sprite&lt;/em>
- * @property {number} contador=0 Número que vai registando o número de vezes que o &lt;em>sprite&lt;/em> foi desenhado, sendo necessário para controlar a transição entre fotogramas de fotogramas
- * @property {number} animado=true Indicação de que o &lt;em>sprite&lt;/em> deve ser desenhado &lt;em>animado&lt;/em> no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>; caso contrário, ficará parado num dos fotogramas
+ * @property {number} iteracoes Número de iterações &amp;mdash; na prática, o número de &lt;em>frames&lt;/em> ou de chamadas ao método &lt;code>desenha()&lt;/code> &amp;mdash; antes de se passar ao fotograma seguinte do &lt;em>sprite&lt;/em>
+ * @property {number} animado=true Indicação de que o &lt;em>sprite&lt;/em> deve ser desenhado &lt;em>animado&lt;/em> no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha()&lt;/code>; caso contrário, ficará parado num dos fotogramas
  * @property {number} indiceFotograma=0 Índice do fotograma a ser mostrado num dado momento; varia, de acordo como o número de &lt;em>iterações&lt;/em> definido, entre zero (&lt;code>0&lt;/code>) e o número de fotogramas existentes (&lt;em>exclusive&lt;/em>)
  * @property {number} indiceTira=0 Índice da tira de fotogramas a ser mostrada num dado momento; varia entre zero (&lt;code>0&lt;/code>) e o número de tiras existentes (&lt;em>exclusive&lt;/em>)
  * @property {number} tiras=1 Número de tiras existentes no &lt;em>sprite&lt;/em>
@@ -881,31 +1095,36 @@ class Imagem extends Grafico {
  * @property {number} altura Altura de um &lt;em>fotograma&lt;/em> do &lt;em>sprite&lt;/em>
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>sprite&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>sprite&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} angulo=0 Ângulo de rotação do &lt;em>sprite&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>sprite&lt;/em>
+ * @property {number} distX=0 Distância horizontal do &lt;em>sprite&lt;/em> até um dado ponto
+ * @property {number} distY=0 Distância vertical do &lt;em>sprite&lt;/em> até um dado ponto
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>sprite&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>sprite&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>sprite&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
- * @property {boolean} rotacao=false Indicação de que o &lt;em>sprite&lt;/em> deve rodar, reflectindo o seu &lt;em>ângulo&lt;/em>
- * @property {boolean} visivel=true Indicação de que o &lt;em>sprite&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
-*/
+ * @property {number} anguloRotacao=0 Ângulo de rotação do &lt;em>sprite&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> , compreendido entre &lt;code>0&lt;/code> e &lt;code>360&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>sprite&lt;/em>
+ * @property {number} deltaRotacao=0 Variação do ângulo de rotação do &lt;em>sprite&lt;/em>
+ * @property {number} anguloGravidade=0 Ângulo cujo co-seno afecta a aplicação do sentido da &lt;em>gravidade&lt;/em> ao &lt;em>sprite&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>180&lt;/code>
+ * @property {number} deltaGravidade=0 Variação do ângulo aplicado à &lt;em>gravidade&lt;/em>
+ * @property {number} opacidade=1.0 Valor da opacidade do &lt;em>sprite&lt;/em> &amp;mdash; pode variar entre &lt;code>0.0&lt;/code> (completamente transparente) e &lt;code>1.0&lt;/code> (completamente opaco), com os valores fora desse intervalo a serem ignorados (mantendo-se o valor anteriormente definido)
+ * @property {boolean} activo=true Indicação de que o &lt;em>sprite&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide()&lt;/code>
+ * @property {boolean} visivel=true Indicação de que o &lt;em>sprite&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha()&lt;/code>
+ * @property {boolean} capturado=false Indicação de que o &lt;em>sprite&lt;/em> deve ficar &lt;em>preso&lt;/em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas, quando chamado o método &lt;code>desenha()&lt;/code>
+ */
 class ImagemAnimada extends Grafico {
+  #contador;
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>ImagemAnimada&lt;/code>
    * @param {number} x Abscissa para posicionar o &lt;em>sprite&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {number} y Ordenada para posicionar o &lt;em>sprite&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {HTMLElement} imagem Elemento HTML que contém o &lt;em>sprite&lt;/em>
    * @param {number} fotogramas Número de fotogramas (&lt;em>frames&lt;/em>) do &lt;em>sprite&lt;/em>
-   * @param {number} iteracoes Número de iterações &amp;mdash; na prática, o número de &lt;em>frames&lt;/em> a serem gerados por via do método &lt;code>window.requestAnimationFrame()&lt;/code> &amp;mdash; antes de se passar ao fotograma seguinte do &lt;em>sprite&lt;/em>
-   * @param {number} tiras=1 Número de tiras existentes no &lt;em>sprite&lt;/em>
+   * @param {number} iteracoes Número de iterações &amp;mdash; na prática, o número de &lt;em>frames&lt;/em> ou de chamadas ao método &lt;code>desenha()&lt;/code> &amp;mdash; antes de se passar ao fotograma seguinte do &lt;em>sprite&lt;/em>
+   * @param {number} [tiras=1] Número de tiras existentes no &lt;em>sprite&lt;/em>
    */
   constructor(x, y, imagem, fotogramas, iteracoes, tiras = 1) {
     super(x, y);
     this.imagem = imagem;
     this.fotogramas = fotogramas;
     this.iteracoes = iteracoes;
-    this.contador = 0;
+    this.#contador = 0;
     this.animado = true;
     this.indiceFotograma = 0;
     this.indiceTira = 0;
@@ -933,33 +1152,32 @@ class ImagemAnimada extends Grafico {
    * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhada a &lt;em>imagem animada&lt;/em>
    */
   desenha(tela) {
-    this.x += this.distX;
-    this.y += this.distY;
+    if (this.capturado) {
+      this.x = tela.ratoX + this.distX;
+      this.y = tela.ratoY + this.distY;
+    }
     if (this.visivel) {
       var contexto = tela.contexto;
-      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao &amp;&amp; this.angulo != 0) {
-        contexto.save();
-        contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
-        contexto.rotate(this.angulo * Math.PI / 180);
-        contexto.drawImage(this.imagem, this.indiceFotograma * this.largura, this.indiceTira * this.altura, this.largura, this.altura, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5), this.largura, this.altura);
-        contexto.restore();
-      }
-      else {
-        contexto.drawImage(this.imagem, this.indiceFotograma * this.largura, this.indiceTira * this.altura, this.largura, this.altura, Math.floor(this.x), Math.floor(this.y), this.largura, this.altura);
-      }
+      contexto.save();
+      contexto.globalAlpha = this.opacidade;
+      contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
+      contexto.rotate(this.anguloRotacao * Math.PI / 180);
+      contexto.drawImage(this.imagem, this.indiceFotograma * this.largura, this.indiceTira * this.altura, this.largura, this.altura, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5), this.largura, this.altura);
       if ((this.animado) || (this.indiceFotograma > 0)) {
-        if (this.contador % this.iteracoes == 0) {
+        if (this.#contador % this.iteracoes == 0) {
           this.indiceFotograma++;
           if (this.indiceFotograma >= this.fotogramas) {
             this.indiceFotograma = 0;
           }
         }
-        this.contador++;
+        this.#contador++;
       }
+      contexto.restore();
     }
-    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
-    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
+    this.anguloRotacao += this.deltaRotacao;
+    this.anguloGravidade += this.deltaGravidade;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.anguloRotacao * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.anguloRotacao * Math.PI / 180) + this.gravidade * Math.cos(this.anguloGravidade * Math.PI / 180);
   }
 }
 
@@ -971,26 +1189,31 @@ class ImagemAnimada extends Grafico {
  * @classdesc A classe &lt;code>ImagemFilme&lt;/code> é uma subclasse de &lt;code>Grafico&lt;/code>, servindo para representar &lt;em>filmes&lt;/em> (&lt;em>videos&lt;/em>) de forma embutida no &lt;code>canvas&lt;/code>. Num nível básico, uma &lt;em>imagem de filme&lt;/em> é definida por um &lt;em>ponto&lt;/em>, correspondente, regra geral, ao seu canto superior esquerdo e pela própria imagem &amp;mdash; isto é, o filme.
  * @property {number} x Abscissa para posicionar o &lt;em>filme&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {number} y Ordenada para posicionar o &lt;em>filme&lt;/em> no &lt;code>canvas&lt;/code>
- * @property {Filme} filme Objecto de &lt;em>vídeo&lt;/em> a ser desenhado no &lt;code>canvas&lt;/code>
+ * @property {HTMLElement} filme Objecto de &lt;em>vídeo&lt;/em> a ser desenhado no &lt;code>canvas&lt;/code>
  * @property {number} y Ordenada para posicionar o &lt;em>filme&lt;/em> no &lt;code>canvas&lt;/code>
  * @property {number} altura Altura do &lt;em>filme&lt;/em> (&lt;em>vídeo&lt;/em>)
  * @property {number} deltaX=0 Variação horizontal da posição do &lt;em>filme&lt;/em>
  * @property {number} deltaY=0 Variação vertical da posição do &lt;em>filme&lt;/em>
- * @property {number} distX=0 Distância horizontal até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>x&lt;/em> em relação à posição &lt;em>x&lt;/em> do cursor do rato
- * @property {number} distY=0 Distância vertical até um dado ponto &amp;mdash; pode ser usada, por exemplo, para guardar o &lt;em>offset&lt;/em> do &lt;em>y&lt;/em> em relação à posição &lt;em>y&lt;/em> do cursor do rato
- * @property {number} angulo=0 Ângulo de rotação do &lt;em>filme&lt;/em> quando desenhado no &lt;code>canvas&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>filme&lt;/em>
+ * @property {number} distX=0 Distância horizontal do &lt;em>filme&lt;/em> até um dado ponto
+ * @property {number} distY=0 Distância vertical do &lt;em>filme&lt;/em> até um dado ponto
  * @property {number} gravidade=0 Força que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação vertical do &lt;em>filme&lt;/em>, actuando como a &lt;em>gravidade&lt;/em>
  * @property {number} velocidade=0 Velocidade que, quando usada em conjunto com o &lt;em>ângulo&lt;/em>, pode ser utilizada para definir a variação horizontal e vertical do &lt;em>filme&lt;/em>
- * @property {boolean} activo=true Indicação de que o &lt;em>filme&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide(outro)&lt;/code>
- * @property {boolean} rotacao=false Indicação de que o &lt;em>filme&lt;/em> deve rodar, reflectindo o seu &lt;em>ângulo&lt;/em>
- * @property {boolean} visivel=true Indicação de que o &lt;em>filme&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha(tela)&lt;/code>
-*/
+ * @property {number} anguloRotacao=0 Ângulo de rotação do &lt;em>filme&lt;/em> quando desenhado no &lt;code>canvas&lt;/code>, compreendido entre &lt;code>0&lt;/code> e &lt;code>360&lt;/code> &amp;mdash; a rotação é feita tendo como referência o centro do &lt;em>filme&lt;/em>
+ * @property {number} deltaRotacao=0 Variação do ângulo de rotação do &lt;em>filme&lt;/em>
+ * @property {number} anguloGravidade=0 Ângulo cujo co-seno afecta a aplicação do sentido da &lt;em>gravidade&lt;/em> ao &lt;em>filme&lt;/em>, compreendido entre &lt;code>0&lt;/code> e &lt;code>180&lt;/code>
+ * @property {number} deltaGravidade=0 Variação do ângulo aplicado à &lt;em>gravidade&lt;/em>
+ * @property {boolean} activo=true Indicação de que o &lt;em>filme&lt;/em> deve testar colisões, quando chamado o método &lt;code>colide()&lt;/code>
+ * @property {number} opacidade=1.0 Valor da opacidade do &lt;em>filme&lt;/em> &amp;mdash; pode variar entre &lt;code>0.0&lt;/code> (completamente transparente) e &lt;code>1.0&lt;/code> (completamente opaco), com os valores fora desse intervalo a serem ignorados (mantendo-se o valor anteriormente definido)
+ * @property {boolean} visivel=true Indicação de que o &lt;em>filme&lt;/em> deve ser desenhado no &lt;code>canvas&lt;/code>, quando chamado o método &lt;code>desenha()&lt;/code>
+ * @property {boolean} capturado=false Indicação de que o &lt;em>filme&lt;/em> deve ficar &lt;em>preso&lt;/em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas, quando chamado o método &lt;code>desenha()&lt;/code>
+ */
 class ImagemFilme extends Grafico {
+
   /**
    * Construtor para criação de novos objectos do tipo &lt;code>ImagemFilme&lt;/code>
    * @param {number} x Abscissa para posicionar o &lt;em>filme&lt;/em> no &lt;code>canvas&lt;/code>
    * @param {number} y Ordenada para posicionar o &lt;em>filme&lt;/em> no &lt;code>canvas&lt;/code>
-   * @param {Filme} filme Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhada o &lt;em>filme&lt;/em>
+   * @param {Filme} filme Objecto de &lt;em>vídeo&lt;/em> a ser desenhado no &lt;code>canvas&lt;/code>
    */
   constructor(x, y, filme) {
     super(x, y);
@@ -1018,24 +1241,99 @@ class ImagemFilme extends Grafico {
    * @param {Tela} tela Objecto que representa o elemento &lt;code>canvas&lt;/code> onde será desenhada o &lt;em>vídeo&lt;/em>
    */
   desenha(tela) {
-    this.x += this.distX;
-    this.y += this.distY;
+    if (this.capturado) {
+      this.x = tela.ratoX + this.distX;
+      this.y = tela.ratoY + this.distY;
+    }
     if (this.visivel) {
       var contexto = tela.contexto;
-      // para evitar processamento desnecessário, só se faz a translação e a rotação quando o ângulo é diferente de zero (0), já que, quando o ângulo tem esse valor, o resultado é idêntico a quando não se faz qualquer rotação
-      if (this.rotacao &amp;&amp; this.angulo != 0) {
-        contexto.save();
-        contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
-        contexto.rotate(this.angulo * Math.PI / 180);
-        contexto.drawImage(this.filme.elemento, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
-        contexto.restore();
-      }
-      else {
-        contexto.drawImage(this.filme.elemento, Math.floor(this.x), Math.floor(this.y));
-      }
+      contexto.save();
+      contexto.globalAlpha = this.opacidade;
+      contexto.translate(Math.floor(this.x + this.largura * 0.5), Math.floor(this.y + this.altura * 0.5));
+      contexto.rotate(this.anguloRotacao * Math.PI / 180);
+      contexto.drawImage(this.filme.media, Math.floor(-this.largura * 0.5), Math.floor(-this.altura * 0.5));
+      contexto.restore();
     }
-    this.x += this.deltaX + this.velocidade * Math.cos(this.angulo * Math.PI / 180);
-    this.y += this.deltaY + this.velocidade * Math.sin(this.angulo * Math.PI / 180) + this.gravidade * Math.cos(this.angulo * Math.PI / 180);
+    this.anguloRotacao += this.deltaRotacao;
+    this.anguloGravidade += this.deltaGravidade;
+    this.x += this.deltaX + this.velocidade * Math.cos(this.anguloRotacao * Math.PI / 180);
+    this.y += this.deltaY + this.velocidade * Math.sin(this.anguloRotacao * Math.PI / 180) + this.gravidade * Math.cos(this.anguloGravidade * Math.PI / 180);
+  }
+}
+
+//
+
+/**
+ * @class
+ * @classdesc A classe &lt;code>Padrao&lt;/code> é uma classe utilizada para representar a criação de &lt;em>padrões&lt;/em>, que podem ser depois utilizados para preenchimento e contorno de &lt;em>gráficos&lt;/em>.
+ * @property {HTMLElement} imagem Elemento HTML que contém a &lt;em>imagem&lt;/em> a usar no &lt;em>padrão&lt;/em>
+ * @property {String} repeticao Tipo de repetição a aplicar na criação do &lt;em>padrão&lt;/em> (&lt;code>repeat|repeat-x|repeat-y|no-repeat&lt;/code>)
+ */
+class Padrao {
+  #repeticao;
+  #imagem;
+  #padrao;
+
+  /**
+   * Construtor para criação de novos objectos do tipo &lt;code>Padrao&lt;/code>
+   * @param {HTMLElement} imagem Elemento HTML que contém a &lt;em>imagem&lt;/em> a usar no &lt;em>padrão&lt;/em>
+   * @param {String} [repeticao='repeat'] Tipo de repetição a aplicar na criação do &lt;em>padrão&lt;/em> (&lt;code>repeat|repeat-x|repeat-y|no-repeat&lt;/code>)
+   */
+  constructor(imagem, repeticao = 'repeat') {
+    this.#imagem = imagem;
+    this.#repeticao = repeticao;
+    var tela = document.createElement('canvas');
+    var contexto = tela.getContext('2d');
+    this.#padrao = contexto.createPattern(this.#imagem, this.#repeticao);
+    if (imagem == null || imagem == undefined) {
+      throw new TypeMismatchError('A "imagem" passada como argumento no construtor da classe "Padrao" é nula ou não está definida.');
+    }
+  }
+
+  /**
+   * Imagem do &lt;em>padrão&lt;/em> &lt;em>[obtenção]&lt;/em>
+   * @type {HTMLElement}
+   */
+  get imagem() {
+    return this.#imagem;
+  }
+
+  /**
+   * Imagem do &lt;em>padrão&lt;/em> &lt;em>[atribuição]&lt;/em>
+   * @type {HTMLElement}
+   */
+  set imagem(imagem) {
+    this.#imagem = imagem;
+    var tela = document.createElement('canvas');
+    var contexto = tela.getContext('2d');
+    this.#padrao = contexto.createPattern(this.#imagem, this.#repeticao);
+  }
+
+  /**
+   * O &lt;em>padrão&lt;/em> propriamente dito, para ser depois utilizado para preenchimento e contorno de &lt;em>gráficos&lt;/em>
+   * @type {CanvasPattern}
+   */
+  get padrao() {
+    return this.#padrao;
+  }
+
+  /**
+   * O tipo de repetição utilizado na criação do &lt;em>padrão&lt;/em> &lt;em>[obtenção]&lt;/em>
+   * @type {String}
+   */
+  get repeticao() {
+    return this.#repeticao;
+  }
+
+  /**
+   * O tipo de repetição utilizado na criação do &lt;em>padrão&lt;/em> &lt;em>[atribuição]&lt;/em>
+   * @type {String}
+   */
+  set repeticao(repeticao) {
+    this.#repeticao = repeticao;
+    var tela = document.createElement('canvas');
+    var contexto = tela.getContext('2d');
+    this.#padrao = contexto.createPattern(this.#imagem, this.#repeticao);
   }
 }
 
@@ -1051,20 +1349,27 @@ class Tela {
   #ratoY;
 
   /**
-   * Construtor da classe &lt;code>Tela&lt;/code>.
-   * @param {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>canvas&lt;/code> a ser representado
+   *  Construtor para criação de novos objectos do tipo &lt;code>Tela&lt;/code>
+   * @param {HTMLElement} canvas O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>canvas&lt;/code> a ser representado
    */
-  constructor(elemento) {
-    this.elemento = elemento;
+  constructor(canvas) {
+    this.canvas = canvas;
     this.#ratoX = 0;
     this.#ratoY = 0;
     this.codigoTecla = null;
-    this.elemento.onclick = this.#processaRato.bind(this);
-    this.elemento.onmousedown = this.#processaRato.bind(this);
-    this.elemento.onmousemove = this.#processaRato.bind(this);
-    this.elemento.onmouseup = this.#processaRato.bind(this);
+    this.canvas.onclick = this.#processaRato.bind(this);
+    this.canvas.ondblclick = this.#processaRato.bind(this);
+    this.canvas.oncontextmenu = this.#processaRato.bind(this);
+    this.canvas.onmousedown = this.#processaRato.bind(this);
+    this.canvas.onmousemove = this.#processaRato.bind(this);
+    this.canvas.onmouseup = this.#processaRato.bind(this);
+    this.canvas.onmouseenter = this.#processaRato.bind(this);
+    this.canvas.onmouseleave = this.#processaRato.bind(this);
     window.onkeydown = this.#processaTeclado.bind(this);
     window.onkeyup = this.#processaTeclado.bind(this);
+    if (canvas == null || canvas == undefined) {
+      throw new TypeMismatchError('O "canvas" passado como argumento no construtor da classe "Tela" é nulo ou não está definido.');
+    }
   }
 
   #processaRato(evento) {
@@ -1074,6 +1379,12 @@ class Tela {
       case 'click':
         this.processaClique();
         break;
+      case 'dblclick':
+        this.processaDuploClique();
+        break;
+      case 'contextmenu':
+        this.processaMenuContexto();
+        break;
       case 'mousedown':
         this.processaRatoDescido();
         break;
@@ -1082,6 +1393,12 @@ class Tela {
         break;
       case 'mouseup':
         this.processaRatoSubido();
+        break;
+      case 'mouseenter':
+        this.processaRatoDentro();
+        break;
+      case 'mouseleave':
+        this.processaRatoFora();
         break;
       default:
         break;
@@ -1110,10 +1427,28 @@ class Tela {
   processaClique = function () { };
 
   /**
+   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>dblclick&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades &lt;code>ratoX&lt;/code> e &lt;code>ratoY&lt;/code>, associadas às coordenadas do &lt;em>rato&lt;/em> na &lt;em>tela&lt;/em>, já previamente obtidas e prontas a ser usadas
+   * @type {function}
+   */
+  processaDuploClique = function () { };
+
+  /**
+   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>contextmenu&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades &lt;code>ratoX&lt;/code> e &lt;code>ratoY&lt;/code>, associadas às coordenadas do &lt;em>rato&lt;/em> na &lt;em>tela&lt;/em>, já previamente obtidas e prontas a ser usadas
+   * @type {function}
+   */
+  processaMenuContexto = function () { };
+
+  /**
    * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>mousedown&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades &lt;code>ratoX&lt;/code> e &lt;code>ratoY&lt;/code>, associadas às coordenadas do &lt;em>rato&lt;/em> na &lt;em>tela&lt;/em>, já previamente obtidas e prontas a ser usadas
    * @type {function}
    */
   processaRatoDescido = function () { };
+
+  /**
+   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>mousemove&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades &lt;code>ratoX&lt;/code> e &lt;code>ratoY&lt;/code>, associadas às coordenadas do &lt;em>rato&lt;/em> na &lt;em>tela&lt;/em>, já previamente obtidas e prontas a ser usadas
+   * @type {function}
+   */
+  processaRatoMovido = function () { };
 
   /**
    * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>mouseup&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades &lt;code>ratoX&lt;/code> e &lt;code>ratoY&lt;/code>, associadas às coordenadas do &lt;em>rato&lt;/em> na &lt;em>tela&lt;/em>, já previamente obtidas e prontas a ser usadas
@@ -1122,10 +1457,16 @@ class Tela {
   processaRatoSubido = function () { };
 
   /**
-   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>mousemove&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades &lt;code>ratoX&lt;/code> e &lt;code>ratoY&lt;/code>, associadas às coordenadas do &lt;em>rato&lt;/em> na &lt;em>tela&lt;/em>, já previamente obtidas e prontas a ser usadas
+   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>mousenter&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades &lt;code>ratoX&lt;/code> e &lt;code>ratoY&lt;/code>, associadas às coordenadas do &lt;em>rato&lt;/em> na &lt;em>tela&lt;/em>, já previamente obtidas e prontas a ser usadas
    * @type {function}
    */
-  processaRatoMovido = function () { };
+  processaRatoDentro = function () { };
+
+  /**
+   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>mouseleaveß&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades &lt;code>ratoX&lt;/code> e &lt;code>ratoY&lt;/code>, associadas às coordenadas do &lt;em>rato&lt;/em> na &lt;em>tela&lt;/em>, já previamente obtidas e prontas a ser usadas
+   * @type {function}
+   */
+  processaRatoFora = function () { };
 
   /**
    * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>keydown&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, a propriedade &lt;code>codigoTecla&lt;/code>, associada à &lt;em>tecla&lt;/em> seleccionada, já previamente obtida e pronta a ser usada
@@ -1144,15 +1485,15 @@ class Tela {
    * @type {number}
    */
   get contexto() {
-    return this.elemento.getContext("2d");
+    return this.canvas.getContext('2d');
   }
 
   /**
-   * Estilo &lt;code>CSS&lt;/code> do cursor do rato &lt;em>[definição]&lt;/em>
+   * Estilo &lt;code>CSS&lt;/code> do cursor do rato &lt;em>[atribuição]&lt;/em>
    * @type {string}
    */
   set cursor(cursor) {
-    this.elemento.style.cursor = cursor;
+    this.canvas.style.cursor = cursor;
   }
 
   /**
@@ -1160,7 +1501,7 @@ class Tela {
    * @type {string}
    */
   get cursor() {
-    return this.elemento.style.cursor;
+    return this.canvas.style.cursor;
   }
 
   /**
@@ -1168,7 +1509,7 @@ class Tela {
    * @type {number}
    */
   get largura() {
-    return this.elemento.width;
+    return this.canvas.width;
   }
 
   /**
@@ -1176,7 +1517,7 @@ class Tela {
    * @type {number}
    */
   get altura() {
-    return this.elemento.height;
+    return this.canvas.height;
   }
 
   /**
@@ -1184,7 +1525,7 @@ class Tela {
    * @type {number}
    */
   get larguraFinal() {
-    return this.elemento.offsetWidth;
+    return this.canvas.offsetWidth;
   }
 
   /**
@@ -1192,11 +1533,11 @@ class Tela {
    * @type {number}
    */
   get alturaFinal() {
-    return this.elemento.offsetHeight;
+    return this.canvas.offsetHeight;
   }
 
   /**
-   * Abscissa do rato na &lt;em>tela&lt;/em> &lt;em>[definição]&lt;/em>
+   * Abscissa do rato na &lt;em>tela&lt;/em> &lt;em>[atribuição]&lt;/em>
    * @type {number}
    */
   set ratoX(ratoX) {
@@ -1204,7 +1545,7 @@ class Tela {
   }
 
   /**
-   * Ordenada do rato na &lt;em>tela&lt;/em> &lt;em>[definição]&lt;/em>
+   * Ordenada do rato na &lt;em>tela&lt;/em> &lt;em>[atribuição]&lt;/em>
    * @type {number}
    */
   set ratoY(ratoY) {
@@ -1248,27 +1589,99 @@ class Tela {
 
 /**
  * @class
+ * @abstract
  * @classdesc A classe &lt;code>Media&lt;/code> é, na prática, uma classe &lt;em>abstracta&lt;/em>, servindo apenas de base para as subclasses de &lt;code>Media&lt;/code>. Para além disso, funcionará essencialmente como um envelope (&lt;em>wrapper&lt;/em>) para elementos de &lt;code>audio&lt;/code> e de &lt;code>video&lt;/code> em eventuais subclasses.
- * @property {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML a ser representado
+ * @property {HTMLElement} media O &lt;em>elemento&lt;/em> HTML &lt;em>media&lt;/em> a ser representado
  */
 class Media {
+
   /**
-   * Construtor da classe &lt;code>Media&lt;/code>. &lt;em>Este construtor não deve ser usado directamente. Se tal acontecer, é gerada uma excepção (&lt;code>TypeError&lt;/code>).&lt;/em>
-   * @param {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML a ser representado
+   * Construtor da classe &lt;code>Media&lt;/code> &amp;mdash; &lt;em>este construtor não deve ser usado directamente; se tal acontecer, é gerada uma excepção (&lt;code>TypeError&lt;/code>)&lt;/em>
+   * @param {HTMLElement} media O &lt;em>elemento&lt;/em> HTML &lt;em>media&lt;/em> a ser representado
    */
-  constructor(elemento) {
-    this.elemento = elemento;
-    if (this.constructor.name == "Media") {
-      throw new TypeError("A classe abstracta 'Media' não pode ser instanciada directamente, devendo ser implementada através de subclasses (que poderão depois ser instanciadas).");
+  constructor(media) {
+    this.media = media;
+    this.media.onplay = this.#processaMedia.bind(this);
+    this.media.onplaying = this.#processaMedia.bind(this);
+    this.media.onpause = this.#processaMedia.bind(this);
+    this.media.onended = this.#processaMedia.bind(this);
+    this.media.ontimeupdate = this.#processaMedia.bind(this);
+    this.media.onvolumechange = this.#processaMedia.bind(this);
+    if (this.constructor.name == 'Media') {
+      throw new TypeError('A classe abstracta "Media" não pode ser instanciada directamente, devendo ser implementada através de subclasses (que poderão depois ser instanciadas).');
+    }
+    if (media == null || media == undefined) {
+      throw new TypeMismatchError('O elemento "media" passado como argumento no construtor da classe "Media" (ou das suas subclasses) é nulo ou não está definido.');
+    }
+  }
+
+  #processaMedia(evento) {
+    switch (evento.type) {
+      case 'play':
+        this.processaReproducaoIniciada();
+        break;
+      case 'playing':
+        this.processaReproducaoContinuada();
+        break;
+      case 'pause':
+        this.processaReproducaoPausada();
+        break;
+      case 'ended':
+        this.processaReproducaoTerminada();
+        break;
+      case 'timeupdate':
+        this.processaTempoActualizado();
+        break;
+      case 'volumechange':
+        this.processaVolumeAlterado();
+        break;
+      default:
+        break;
     }
   }
 
   /**
-   * Fonte (origem) do elemento multimédia &lt;em>[definição]&lt;/em>
+   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>play&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento
+   * @type {function}
+   */
+  processaReproducaoIniciada = function () { };
+
+  /**
+   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>playing&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento
+   * @type {function}
+   */
+  processaReproducaoContinuada = function () { };
+
+  /**
+   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>pause&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento
+   * @type {function}
+   */
+  processaReproducaoPausada = function () { };
+
+  /**
+   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>ended&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento
+   * @type {function}
+   */
+  processaReproducaoTerminada = function () { };
+
+  /**
+   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>timeupdate&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento
+   * @type {function}
+   */
+  processaTempoActualizado = function () { };
+
+  /**
+   * Propriedade correspondente ao &lt;em>evento&lt;/em> &lt;code>volumechange&lt;/code>, a ser posteriormente definida como uma &lt;em>função&lt;/em> contendo as intruções a executar decorrentes desse evento
+   * @type {function}
+   */
+  processaVolumeAlterado = function () { };
+
+  /**
+   * Fonte (origem) do elemento multimédia &lt;em>[atribuição]&lt;/em>
    * @type {string}
    */
   set fonte(ficheiro) {
-    this.elemento.src = ficheiro;
+    this.media.src = ficheiro;
   }
 
   /**
@@ -1276,7 +1689,7 @@ class Media {
    * @type {string}
    */
   get fonte() {
-    return this.elemento.src;
+    return this.media.src;
   }
 
   /**
@@ -1284,31 +1697,31 @@ class Media {
    * @type {number}
    */
   get duracao() {
-    return this.elemento.duration;
+    return this.media.duration;
   }
 
   /**
-   * Posição de reprodução do elemento multimédia &lt;em>[definição]&lt;/em> &amp;mdash; variando entre zero (&lt;code>0&lt;/code>) e um (&lt;code>1&lt;/code>)
+   * Posição de reprodução do elemento multimédia &lt;em>[atribuição]&lt;/em> &amp;mdash; variando entre zero (&lt;code>0.0&lt;/code>) e um (&lt;code>1.0&lt;/code>)
    * @type {number}
    */
   set volume(volume) {
-    this.elemento.volume = volume;
+    this.media.volume = volume;
   }
 
   /**
-    * Posição de reprodução do elemento multimédia &lt;em>[obtenção]&lt;/em> &amp;mdash; variando entre zero (&lt;code>0&lt;/code>) e um (&lt;code>1&lt;/code>)
+    * Posição de reprodução do elemento multimédia &lt;em>[obtenção]&lt;/em> &amp;mdash; variando entre zero (&lt;code>0.0&lt;/code>) e um (&lt;code>1.0&lt;/code>)
     * @type {number}
     */
   get volume() {
-    return this.elemento.volume;
+    return this.media.volume;
   }
 
   /**
-   * Posição de reprodução do elemento multimédia &lt;em>[definição]&lt;/em>
+   * Posição de reprodução do elemento multimédia &lt;em>[atribuição]&lt;/em>
    * @type {number}
    */
   set posicao(tempo) {
-    this.elemento.currentTime = tempo;
+    this.media.currentTime = tempo;
   }
 
   /**
@@ -1316,7 +1729,7 @@ class Media {
    * @type {number}
    */
   get posicao() {
-    return this.elemento.currentTime;
+    return this.media.currentTime;
   }
 
   /**
@@ -1325,16 +1738,16 @@ class Media {
    */
   reproduz(inicio = false) {
     if (inicio) {
-      this.elemento.currentTime = 0;
+      this.media.currentTime = 0;
     }
-    this.elemento.play();
+    this.media.play();
   }
 
   /**
    * Este método pára a reprodução do elemento multimédia.
    */
   pausa() {
-    this.elemento.pause();
+    this.media.pause();
   }
 
   /**
@@ -1342,7 +1755,7 @@ class Media {
    */
   para() {
     this.pausa();
-    this.elemento.currentTime = 0;
+    this.media.currentTime = 0;
   }
 }
 
@@ -1350,15 +1763,16 @@ class Media {
  * @class
  * @extends Media
  * @classdesc A classe &lt;code>Som&lt;/code> funciona essencialmente como um envelope (&lt;em>wrapper&lt;/em>) para elementos &lt;code>audio&lt;/code>, facilitando a sua criação e também uso de métodos mais comuns para, por exemplo, o controlo da sua reprodução.
- * @property {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>audio&lt;/code> a ser representado
+ * @property {HTMLElement} audio O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>audio&lt;/code> a ser representado
  */
 class Som extends Media {
+
   /**
-   * Construtor da classe &lt;code>Som&lt;/code>
-   * @param {HTMLElement} elemento  O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>audio&lt;/code> a ser representado
+   *  Construtor para criação de novos objectos do tipo &lt;code>Som&lt;/code>
+   * @param {HTMLElement} audio  O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>audio&lt;/code> a ser representado
    */
-  constructor(elemento) {
-    super(elemento);
+  constructor(audio) {
+    super(audio);
   }
 }
 
@@ -1368,15 +1782,17 @@ class Som extends Media {
  * @class
  * @extends Media
  * @classdesc A classe &lt;code>Filme&lt;/code> funciona essencialmente como um envelope (&lt;em>wrapper&lt;/em>) para elementos &lt;code>video&lt;/code>, facilitando a sua criação e também uso de métodos mais comuns para, por exemplo, o controlo da sua reprodução.
- * @property {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>video&lt;/code> a ser representado
+ * @property {HTMLElement} video O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>video&lt;/code> a ser representado
  */
 class Filme extends Media {
+
   /**
-   * Construtor da classe &lt;code>Filme&lt;/code>
-   * @param {HTMLElement} elemento O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>video&lt;/code> a ser representado
+   *  Construtor para criação de novos objectos do tipo &lt;code>Filme&lt;/code>
+   * @param {HTMLElement} video O &lt;em>elemento&lt;/em> HTML do tipo &lt;code>video&lt;/code> a ser representado
    */
-  constructor(elemento) {
-    super(elemento);
+  constructor(video) {
+    super(video);
+    this.video = video;
   }
 
   /**
@@ -1384,7 +1800,7 @@ class Filme extends Media {
    * @type {number}
    */
   get largura() {
-    return this.elemento.videoWidth;
+    return this.video.videoWidth;
   }
 
   /**
@@ -1392,7 +1808,7 @@ class Filme extends Media {
    * @type {number}
    */
   get altura() {
-    return this.elemento.videoHeight;
+    return this.video.videoHeight;
   }
 
   /**
@@ -1400,7 +1816,7 @@ class Filme extends Media {
   * @type {number}
   */
   get larguraFinal() {
-    return this.elemento.offsetWidth;
+    return this.video.offsetWidth;
   }
 
   /**
@@ -1408,130 +1824,110 @@ class Filme extends Media {
    * @type {number}
    */
   get alturaFinal() {
-    return this.elemento.offsetHeight;
+    return this.video.offsetHeight;
   }
 }
 
 //
 
 /**
- * @typedef {Object} PontoPolar
- * @property {number} distancia Distância radial do ponto
- * @property {number} angulo Ângulo polar do ponto
- */
-
-/**
- * @typedef {Object} PontoCartesiano
- * @property {number} x Abscissa do ponto cartesiano
- * @property {number} y Ordenada do ponto cartesiano
- */
-
-//
-
-/**
  * @class
- * @classdesc A classe &lt;code>Utilitarios&lt;/code> serve apenas como agregador de alguns métodos e propriedades estáticos para uso noutras classes ou blocos de código.
- * @hideconstructor
+ * @classdesc A classe &lt;code>Cronometro&lt;/code> é uma classe que permite obter o tempo decorrido entre quaisquer dois momentos no tempo.
  */
-class Utilitarios {
-
-  /** 
-   * Constante que representa a ausência de &lt;em>reposicionamento&lt;/em> &amp;mdash; usada no método &lt;code>colide()&lt;/code>, com &lt;code>reposicionamento = true&lt;/code>, da classe &lt;code>Grafico&lt;/code> e respectivas subcasses
-   *  @constant
-   *  @type {number}
-   *  @default
-   */
-  static FALSO = 0;
-
-  /** 
-   * Constante que representa um &lt;em>reposicionamento&lt;/em> em &lt;em>cima&lt;/em> &amp;mdash; usada no método &lt;code>colide()&lt;/code>, com &lt;code>reposicionamento = true&lt;/code>, da classe &lt;code>Grafico&lt;/code> e respectivas subcasses
-   *  @constant
-   *  @type {number}
-   *  @default
-   */
-  static CIMA = 1;
-
-  /** 
-   * Constante que representa um &lt;em>reposicionamento&lt;/em> em &lt;em>baixo&lt;/em> &amp;mdash; usada no método &lt;code>colide()&lt;/code>, com &lt;code>reposicionamento = true&lt;/code>, da classe &lt;code>Grafico&lt;/code> e respectivas subcasses
-   *  @constant
-   *  @type {number}
-   *  @default
-   */
-  static BAIXO = 2;
-
-  /** 
-   * Constante que representa um &lt;em>reposicionamento&lt;/em> à &lt;em>esquerda&lt;/em> &amp;mdash; usada no método &lt;code>colide()&lt;/code>, com &lt;code>reposicionamento = true&lt;/code>, da classe &lt;code>Grafico&lt;/code> e respectivas subcasses
-   *  @constant
-   *  @type {number}
-   *  @default
-   */
-  static ESQUERDA = 3;
-
-  /** 
-   * Constante que representa um &lt;em>reposicionamento&lt;/em> à &lt;em>direita&lt;/em> &amp;mdash; usada no método &lt;code>colide()&lt;/code>, com &lt;code>reposicionamento = true&lt;/code>, da classe &lt;code>Grafico&lt;/code> e respectivas subcasses
-   *  @constant
-   *  @type {number}
-   *  @default
-   */
-  static DIREITA = 4;
+class Cronometro {
+  #tempoInicial;
+  #tempoReferencia;
+  #tempoDecorrido;
+  #parado;
 
   /**
-   * Este método cálcula as coordenadas polares de um dado ponto cartesiano, devolvendo o &lt;em>ângulo polar&lt;/em> e a &lt;em>distância radial&lt;/em>.
-   * @param {number} x Abscissa do ponto cartesiano
-   * @param {number} y Ordenada do ponto cartesiano
-   * @returns {PontoPolar} Coordenadas polares (&lt;em>distância&lt;/em>, &lt;em>ângulo&lt;/em>) do ponto
+   *  Construtor para criação de novos objectos do tipo &lt;code>Cronometro&lt;/code>
+   * @param {Date} [tempo=Date.now()] O tempo usado como referência na criação do &lt;em>Cronometro&lt;/em> &amp;mdash; quando não definido, usa-se momento da criação do &lt;em>cronometro&lt;/em>
    */
-  static calculaCoordenadasPolares(x, y) {
-    var distancia = Math.hypot(x, y);
-    var angulo = null;
-    if (x > 0) {
-      angulo = Math.atan(y / x) * 180 / Math.PI;
+  constructor(tempo = Date.now()) {
+    this.#tempoInicial = tempo;
+    this.#tempoReferencia = tempo;
+    this.#tempoDecorrido = 0;
+    this.#parado = false;
+    if (tempo == null || tempo == undefined) {
+      throw new TypeMismatchError('O "tempo" passado como argumento no construtor da classe "Cronometro" é nulo ou não está definido.');
     }
-    else if (x &lt; 0 &amp;&amp; y >= 0) {
-      angulo = (Math.atan(y / x) + Math.PI) * 180 / Math.PI;
-    }
-    else if (x &lt; 0 &amp;&amp; y &lt; 0) {
-      angulo = (Math.atan(y / x) - Math.PI) * 180 / Math.PI;
-    }
-    else if (x == 0 &amp;&amp; y > 0) {
-      angulo = (Math.PI / 2) * 180 / Math.PI;
-    }
-    else if (x &lt; 0 &amp;&amp; y &lt; 0) {
-      angulo = -(Math.PI / 2) * 180 / Math.PI;
-    }
-    else if (x == 0 &amp;&amp; y == 0) {
-      angulo = null;
-    }
-    return { distancia: distancia, angulo: angulo };
   }
 
   /**
-   * Este método cálcula as coordenadas cartesianas de um dado ponto polar, devolvendo o &lt;em>x&lt;/em> e o &lt;em>y&lt;/em>.
-   * @param {number} distancia Distância radial do ponto
-   * @param {number} angulo Ângulo polar do ponto
-   * @returns {PontoCartesiano} Coordenadas cartesianas (&lt;em>x&lt;/em>, &lt;em>y&lt;/em>) do ponto
+   * Estado actual do &lt;em>cronometro&lt;/em>: parado (&lt;code>true&lt;/code>) ou a contar o tempo (&lt;code>false&lt;/code>).
    */
-  static calculaCoordenadasCartesianas(distancia, angulo) {
-    var x = distancia * Math.cos(angulo * Math.PI / 180);
-    var y = distancia * Math.sin(angulo * Math.PI / 180);
-    return { x: x, y: y };
+  get parado() {
+    return this.#parado;
   }
 
   /**
-   * Este método desenha um &lt;em>gráfico&lt;/em> ou percorre um &lt;em>array&lt;/em> de &lt;em>gráficos&lt;/em> (instâncias ou objectos de subclasses da classe &lt;code>Grafico&lt;/code>) e desenha-os no &lt;code>canvas&lt;/code> especificado. O método funciona de forma recursiva, pelo que o &lt;em>array&lt;/em> pode conter, ele próprio, também &lt;em>arrays&lt;/em> em qualquer das suas posições.
-   * @param {Grafico} graficos Um &lt;em>array&lt;/em> de &lt;em>gráficos&lt;/em> ou mesmo apenas um único &lt;em>gráfico&lt;/em>
-   * @param {Tela} tela O &lt;code>canvas&lt;/code> onde vão ser desenhados os &lt;em>gráficos&lt;/em>
+   * Tempo (data e hora) correspondente ao momento actual.
+   * @type {number}
    */
-  static desenhaGraficos(graficos, tela) {
-    for (var i = 0; i &lt; graficos.length; i++) {
-      if (Array.isArray(graficos[i])) {
-        desenhaGraficos(graficos[i], tela);
-      } else {
-        graficos[i].desenha(tela);
-      }
+  get tempoActual() {
+    return Date.now();
+  }
+
+  /**
+   * Tempo (data e hora) correspondente ao momento em que o &lt;em>cronómetro&lt;/em> foi criado ou reiniciado.
+   * @type {number}
+   */
+  get tempoInicial() {
+    return this.#tempoInicial;
+  }
+
+  /**
+   * Tempo decorrido, em milissegundos, deste que o &lt;em>cronómetro&lt;/em> foi criado ou reiniciado. Se este estiver pausado, o tempo decorrido mantém-se inalterado enquanto essa situação se verificar.
+   * @type {number}
+   */
+  get tempoDecorrido() {
+    if (!this.#parado) {
+      this.#tempoDecorrido = this.tempoActual - this.#tempoReferencia;
+    }
+    else {
+      this.#tempoReferencia = this.tempoActual - this.#tempoDecorrido;
+    }
+    return this.#tempoDecorrido;
+  }
+
+  /**
+   * Tempo, em milissegundos, durante o qual o &lt;em>cronómetro&lt;/em> esteve parado.
+   * @type {number}
+   */
+  get tempoParado() {
+    return Date.now() - this.tempoInicial - this.tempoDecorrido;
+  }
+
+  /**
+   * Este método faz com que o &lt;em>cronómetro&lt;/em> volte a contar o tempo decorrido desde que foi criado ou reiniciado, deixando de contrar o tempo durante o qual esteve parado.
+   */
+  continua() {
+    this.#parado = false;
+  }
+
+  /**
+   * Este método faz com que o &lt;em>cronómetro&lt;/em> pare de contar o tempo decorrido desde que foi criado ou reiniciado, passando a contar o tempo durante o qual está parado.
+   */
+  para() {
+    this.#parado = true;
+  }
+
+  /**
+   * Este método faz com que o &lt;em>cronómetro&lt;/em> seja reiniciado, passando a usar um novo tempo inicial, pondo o tempo decorrido e o parado a zeros.
+   * @param {Date} [tempo=Date.now()] O tempo usado como referência na reiniação do &lt;em>Cronometro&lt;/em> &amp;mdash; quando não definido, usa-se momento da reiniciação do &lt;em>cronometro&lt;/em>
+   */
+  reinicia(tempo = Date.now()) {
+    this.#tempoInicial = tempo;
+    this.#tempoReferencia = tempo;
+    this.#tempoDecorrido = 0;
+    this.#parado = false;
+    if (tempo == null || tempo == undefined) {
+      throw new TypeMismatchError('O "tempo" passado como argumento no construtor da classe "Cronometro" é nulo ou não está definido.');
     }
   }
-}</code></pre>
+}
+</code></pre>
         </article>
     </section>
 
@@ -1541,13 +1937,13 @@ class Utilitarios {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li><li><a href="Utilitarios.html">Utilitarios</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Cronometro.html">Cronometro</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="Padrao.html">Padrao</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Apr 17 2023 22:33:08 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri May 10 2024 15:15:00 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

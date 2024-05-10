@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Simple Mario</title>
+    <style>
+        #recursos {
+            display: none;
+        }
+
+        #tela {
+            display: block;
+            /*
+            width: 100vw;
+            height: 100vh;
+            */
+        }
+    </style>
+    <script src="../Ludoteca.js"></script>
+    <script>
+        var tela;
+        var contexto;
+        var continua;
+        var contador;
+        var fundo;
+
+        var racioX;
+        var racioY;
+
+        var ratoX;
+        var ratoY;
+
+        var mario;
+        var cenario;
+        var obstaculos;
+
+        var delta;
+
+        var margemEsq, margemDir;
+        var limiteEsq, limiteDir;
+
+        var goombas;
+
+        var moedas;
+        var somMoeda;
+        var pontos;
+        var pontuacao;
+
+        var peach;
+        var som_peach;
+        var chao;
+        //...
+
+        function inicia() {
+            tela = new Tela(document.getElementById("tela"));
+            contexto = tela.contexto;
+            continua = true;
+            contador = 0;
+
+            pontos = 0;
+
+            fundo = new Rectangulo(0, 0, tela.largura, tela.altura, "lightgray");
+
+            mario = new Rectangulo(tela.largura * 0.5, 0, 25, 75, "red");
+            mario.gravidade = 5;
+            mario.deltaGravidade = -2.25;
+
+            peach = new Rectangulo(3000, tela.altura - 175, 50, 75, "magenta");
+
+            chao = new Padrao(document.getElementById("chao"));
+
+            goombas = new Array();
+            goombas.push(new Rectangulo(900, tela.altura - 150, 50, 50, "saddlebrown"));
+            goombas.push(new Rectangulo(1000, tela.altura - 150, 50, 50, "saddlebrown"));
+
+
+            obstaculos = new Array();
+            // chão
+            obstaculos.push(new Rectangulo(0, tela.altura - 100, 500, 100, chao.padrao));
+            obstaculos.push(new Rectangulo(600, tela.altura - 100, 700, 100, chao.padrao));
+            obstaculos.push(new Rectangulo(1400, tela.altura - 100, 1800, 100, chao.padrao));
+
+            // tubos
+            obstaculos.push(new Rectangulo(700, tela.altura - 200, 100, 100, "green"));
+            obstaculos.push(new Rectangulo(1100, tela.altura - 200, 100, 100, "green"));
+            obstaculos.push(new Rectangulo(1500, tela.altura - 200, 100, 100, "green"));
+
+            // degraus
+            obstaculos.push(new Rectangulo(2500, tela.altura - 175, 75, 75, "tan"));
+            obstaculos.push(new Rectangulo(2575, tela.altura - 250, 75, 150, "tan"));
+            obstaculos.push(new Rectangulo(2650, tela.altura - 325, 75, 225, "tan"));
+            obstaculos.push(new Rectangulo(2725, tela.altura - 400, 75, 300, "tan"));
+
+            // limites do cenário
+            limiteEsq = new Rectangulo(-20, 0, 20, tela.altura, "black");
+            obstaculos.push(limiteEsq);
+            // limite do cenário: 3200
+            limiteDir = new Rectangulo(3200, 0, 20, tela.altura, "black");
+            obstaculos.push(limiteDir);
+
+            cenario = new Array();
+            // adiciona todos os obstáculos ao cenário
+            for (var i = 0; i < obstaculos.length; i++) {
+                cenario.push(obstaculos[i]);
+            }
+
+            // adicionar os goombas ao cenário
+            for (var i = 0; i < goombas.length; i++) {
+                goombas[i].deltaX = 1;
+                goombas[i].gravidade = 5;
+                cenario.push(goombas[i]);
+            }
+
+            moedas = new Array();
+            moedas.push(new Circulo(1700, tela.altura - 300, 25, "orange"));
+            moedas.push(new Circulo(1800, tela.altura - 300, 25, "orange"));
+            moedas.push(new Circulo(1900, tela.altura - 300, 25, "orange"));
+            moedas.push(new Circulo(2000, tela.altura - 300, 25, "orange"));
+
+            // adicionar as moedas ao cenario
+            for (var i = 0; i < moedas.length; i++) {
+                cenario.push(moedas[i]);
+            }
+
+            somMoeda = new Som(document.getElementById("som_moeda"));
+            somPeach = new Som(document.getElementById("som_peach"));
+
+            pontuacao = new Texto(25, 25, pontos, "navy", "white", 2);
+            pontuacao.tamanho = 64;
+
+            cenario.push(peach);
+
+            delta = 5;
+            // propriedade criada no momento (isto é, não existia na classe Rectangulo)
+            mario.salto = false;
+
+            // margens do cenário
+            margemEsq = 200;
+            margemDir = tela.largura - 200 - mario.largura;
+
+            //...
+            tela.processaRatoDescido = processaRatoDescido;
+            tela.processaRatoSubido = processaRatoSubido;
+            tela.processaRatoMovido = processaRatoMovido;
+            tela.processaTeclaDescida = processaTeclaDescida;
+            tela.processaTeclaSubida = processaTeclaSubida;
+        }
+
+        function desenha() {
+            contexto.clearRect(0, 0, tela.largura, tela.altura);
+            fundo.desenha(tela);
+
+            if (mario.colide(peach)) {
+                pontos += 400;
+                somPeach.reproduz(true);
+                continua = false;
+            }
+
+            Grafico.desenhaGraficos(cenario, tela);
+
+            if (mario.x < margemEsq) {
+                if (limiteEsq.x + limiteEsq.largura < 0) {
+                    mario.x = margemEsq;
+                    for (var i = 0; i < cenario.length; i++) {
+                        cenario[i].x += -mario.deltaX;
+                    }
+                }
+            }
+
+            if (mario.x > margemDir) {
+                if (limiteDir.x > tela.largura) {
+                    mario.x = margemDir;
+                    for (var i = 0; i < cenario.length; i++) {
+                        cenario[i].x += -mario.deltaX;
+                    }
+                }
+            }
+
+            if (mario.y > tela.altura) {
+                mario.y = 0;
+            }
+
+            mario.salto = false;
+            mario.desenha(tela);
+
+            for (var i = 0; i < obstaculos.length; i++) {
+                var posicaoMario = mario.colide(obstaculos[i], true);
+                if (posicaoMario == Grafico.CIMA) {
+                    mario.salto = true;
+                    mario.repoeGravidade();
+                }
+                else if (posicaoMario == Grafico.BAIXO) {
+                    mario.repoeGravidade();
+                }
+                else if (posicaoMario == Grafico.ESQUERDA) {
+                    // ...
+                }
+                else if (posicaoMario == Grafico.DIREITA) {
+                    // 
+                }
+                else {
+                    // ...
+                }
+            }
+
+            for (var i = 0; i < goombas.length; i++) {
+                var posicaoMario = mario.colide(goombas[i], true);
+                if (posicaoMario == Grafico.CIMA) {
+                    goombas.splice(i, 1);
+                    pontos += 100;
+                }
+                else if (posicaoMario == Grafico.BAIXO) {
+                    mario.y = 0;
+                }
+                else if (posicaoMario == Grafico.ESQUERDA) {
+                    mario.y = 0;
+                }
+                else if (posicaoMario == Grafico.DIREITA) {
+                    mario.y = 0;
+                }
+                else {
+                    // ...
+                }
+            }
+
+            for (var i = 0; i < obstaculos.length; i++) {
+                for (var j = 0; j < goombas.length; j++) {
+                    var posicaoGoomba = goombas[j].colide(obstaculos[i], true);
+                    if (posicaoGoomba == Grafico.CIMA) {
+                        // ...
+                    }
+                    else if (posicaoGoomba == Grafico.BAIXO) {
+                        // ...
+                    }
+                    else if (posicaoGoomba == Grafico.ESQUERDA) {
+                        goombas[j].deltaX *= -1;
+                        // ...
+                    }
+                    else if (posicaoGoomba == Grafico.DIREITA) {
+                        goombas[j].deltaX *= -1;
+                        // ...
+                    }
+                    else {
+                        // ...
+                    }
+                }
+            }
+
+            // colisões com as moedas
+            for (var i = 0; i < moedas.length; i++) {
+                if (mario.colide(moedas[i])) {
+                    moedas[i].visivel = false;
+                    moedas[i].activo = false;
+                    somMoeda.reproduz(true);
+                    pontos += 100;
+                }
+            }
+
+            pontuacao.texto = pontos;
+            pontuacao.desenha(tela);
+
+            //...
+
+            if (continua) {
+                contador++;
+                window.requestAnimationFrame(desenha);
+            }
+        }
+
+        function processaRatoDescido() {
+            //...
+        }
+
+        function processaRatoMovido() {
+            // ...
+        }
+
+        function processaRatoSubido() {
+            //...
+        }
+
+        function processaTeclaDescida() {
+            if (tela.codigoTecla == "Space") {        // barra de espaços
+                if (mario.salto) {
+                    mario.inverteGravidade();
+                    mario.salto = false;
+                }
+                //...
+            }
+            if (tela.codigoTecla == "ArrowLeft") {    // esquerda
+                mario.deltaX = -delta;
+                //...
+            }
+            if (tela.codigoTecla == "ArrowUp") {      // cima
+                //...
+            }
+            if (tela.codigoTecla == "ArrowRight") {   // direita
+                mario.deltaX = delta;
+                //...
+            }
+            if (tela.codigoTecla == "ArrowDown") {    // baixo
+                //...
+            }
+        }
+
+        function processaTeclaSubida() {
+            if (tela.codigoTecla == "Space") {
+                //...
+            }
+            if ((tela.codigoTecla == "ArrowLeft") || (tela.codigoTecla == "ArrowRight")) {
+                mario.deltaX = 0;
+                //...
+            }
+            if ((tela.codigoTecla == "ArrowUp") || (tela.codigoTecla == "ArrowDown")) {
+                //...
+            }
+        }
+
+        window.onload = function () {
+            inicia();
+            desenha();
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="tela" width="800" height="600">O seu <em>browser</em> não suporta o elemento
+        <code>canvas</code>!</canvas>
+    <div id="recursos">
+        <audio id="som_moeda" src="recursos/smw_coin.wav" type="audio/wav">O seu <em>browser</em> não suporta o elemento
+            <code>audio</code>!</audio>
+        <audio id="som_peach" src="recursos/smw_castle_clear.wav" type="audio/wav">O seu <em>browser</em> não suporta o
+            elemento
+            <code>audio</code>!</audio>
+        <img id="chao" src="recursos/smw_ground.png">
+        <!-- https://themushroomkingdom.net/media/smw/wav -->
+        <!-- ... -->
+    </div>
+</body>
+
+</html>

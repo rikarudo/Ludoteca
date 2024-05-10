@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Space Shooter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap');
+
+        #recursos {
+            display: none;
+        }
+
+        #tela {
+            display: block;
+            /*
+            width: 100vw;
+            height: 100vh;
+            */
+        }
+    </style>
+    <script src="../Ludoteca.js"></script>
+    <script>
+        var tela;
+        var contexto;
+        var continua;
+        var contador;
+        var fundo;
+        //...
+        var estrelas, inimigos, tiros, tirosInimigos, rebentamentos;
+        var disparo, explosao;
+        var estrela;
+        var nave;
+
+        var tempo;
+        var cronometro;
+
+        var pontos;
+        var pontuacao;
+
+        function inicia() {
+            tela = new Tela(document.getElementById("tela"));
+            contexto = tela.contexto;
+            continua = true;
+            contador = 0;
+
+            fundo = new Rectangulo(0, 0, tela.largura, tela.altura, "black");
+            //...
+
+            cronometro = new Cronometro();
+            tempo = new Texto(10, 10, "T: " + cronometro.tempoDecorrido, "white", "black", 1);
+            tempo.tamanho = 32;
+
+            pontos = 0;
+            pontuacao = new Texto(10, 50, "P: " + pontos, "white", "black", 1);
+            pontuacao.tamanho = 32;
+
+            disparo = new Som(document.getElementById("disparo"));
+            explosao = new Som(document.getElementById("explosao"));
+
+            estrelas = new Array(25);
+            for (var i = 0; i < estrelas.length; i++) {
+                var estrela = new Imagem(0, 0, document.getElementById("estrela"));
+                estrela.x = Math.floor(Math.random() * (tela.largura - estrela.largura));
+                estrela.y = Math.floor(Math.random() * (tela.altura - estrela.altura));
+                estrela.deltaY = 0.5;
+                estrelas[i] = estrela;
+            }
+
+            inimigos = new Array(15);
+            for (var i = 0; i < inimigos.length; i++) {
+                var inimigo = new Imagem(0, 0, document.getElementById("inimigo"));
+                inimigo.x = Math.floor(Math.random() * (tela.largura - inimigo.largura));
+                inimigo.y = -Math.floor(Math.random() * (2 * tela.altura - inimigo.altura));
+                inimigo.deltaY = 1;
+                inimigos[i] = inimigo;
+            }
+
+            tiros = new Array();
+            tirosInimigos = new Array();
+            rebentamentos = new Array();
+
+            nave = new Imagem(0, 0, document.getElementById("nave"));
+            nave.x = tela.largura * 0.5 - nave.largura * 0.5;
+            nave.y = tela.altura - nave.altura * 1.1;
+            //...
+            tela.processaClique = processaClique;
+            tela.processaRatoDescido = processaRatoDescido;
+            tela.processaRatoSubido = processaRatoSubido;
+            tela.processaRatoMovido = processaRatoMovido;
+            tela.processaTeclaDescida = processaTeclaDescida;
+            tela.processaTeclaSubida = processaTeclaSubida;
+        }
+
+        function desenha() {
+            contexto.clearRect(0, 0, tela.largura, tela.altura);
+            fundo.desenha(tela);
+            //...
+            for (var i = 0; i < estrelas.length; i++) {
+                estrelas[i].desenha(tela);
+                if (estrelas[i].y > tela.altura) {
+                    estrelas[i].x = Math.floor(Math.random() * (tela.largura - estrelas[i].largura));
+                    estrelas[i].y = -Math.floor(Math.random() * 2 * tela.altura) - estrelas[i].altura;
+                }
+            }
+
+            for (var i = 0; i < inimigos.length; i++) {
+                inimigos[i].desenha(tela);
+                if (inimigos[i].y > tela.altura) {
+                    inimigos[i].x = Math.floor(Math.random() * (tela.largura - inimigos[i].largura));
+                    inimigos[i].y = -Math.floor(Math.random() * 2 * tela.altura) - inimigos[i].altura;
+                    inimigos[i].visivel = true;
+                    inimigos[i].activo = true;
+                }
+
+                for (var j = 0; j < tiros.length; j++) {
+                    if (inimigos[i].colide(tiros[j], false, 0, 4)) {
+                        inimigos[i].visivel = false;
+                        inimigos[i].activo = false;
+                        tiros[j].visivel = false;
+                        tiros[j].activo = false;
+                        var rebentamento = new Imagem(0, 0, document.getElementById("rebentamento"));
+                        rebentamento.x = inimigos[i].x + inimigos[i].largura * 0.5 - rebentamento.largura * 0.5;
+                        rebentamento.y = inimigos[i].y + inimigos[i].altura * 0.5 - rebentamento.altura * 0.5;
+                        rebentamento.contador = 60; // atributo acrescentado ad hoc ao objecto (sem existir na classe)
+                        rebentamento.deltaY = inimigos[i].deltaY;
+                        rebentamentos.push(rebentamento);
+                        explosao.reproduz(true);
+                        pontos += 100;
+                    }
+                }
+
+                if (inimigos[i].y > 0 && inimigos[i].visivel && inimigos[i].activo) {
+                    if (Math.random() < 0.00125) {
+                        var tiroInimigo = new Imagem(0, 0, document.getElementById("tiroInimigo"));
+                        tiroInimigo.x = inimigos[i].x + inimigos[i].largura * 0.5 - tiroInimigo.largura * 0.5;
+                        tiroInimigo.y = inimigos[i].y + inimigos[i].altura;
+                        tiroInimigo.deltaY = 2;
+                        tirosInimigos.push(tiroInimigo);
+                    }
+                }
+            }
+
+            for (var i = 0; i < rebentamentos.length; i++) {
+                rebentamentos[i].desenha(tela);
+                rebentamentos[i].contador--;
+                if (rebentamentos[i].contador <= 0) {
+                    rebentamentos.splice(i, 1);
+                }
+            }
+
+            for (var i = 0; i < tiros.length; i++) {
+                tiros[i].desenha(tela);
+                if (tiros[i].y + tiros[i].altura < 0) {
+                    tiros.splice(i, 1);
+                }
+            }
+
+            for (var i = 0; i < tirosInimigos.length; i++) {
+                tirosInimigos[i].desenha(tela);
+                if (tirosInimigos[i].colide(nave, false, 0, 4)) {
+                    explosao.reproduz(true);
+                    continua = false;
+                }
+                if (tirosInimigos[i].y > tela.altura) {
+                    tirosInimigos.splice(i, 1);
+                }
+            }
+
+            tempo.texto = "T: " + (60 - Math.floor(cronometro.tempoDecorrido / 10) / 100).toFixed(2);
+            tempo.fonte = "Kode Mono";
+            tempo.desenha(tela);
+
+            pontuacao.texto = "P: " + pontos;
+            pontuacao.fonte = "Kode Mono";
+            pontuacao.desenha(tela);
+
+            if (cronometro.tempoDecorrido > 60000) { // 1 minuto
+                continua = false;
+            }
+
+            if (nave.x < 0) {
+                nave.x = 0;
+            }
+            if (nave.x + nave.largura > tela.largura) {
+                nave.x = tela.largura - nave.largura;
+            }
+            nave.desenha(tela);
+            //...
+            if (continua) {
+                contador++;
+                window.requestAnimationFrame(desenha);
+            }
+            else {
+                var fim = new Texto(0, 0, "DERROTA!", "red", "white", 2);
+                if (cronometro.tempoDecorrido > 60000) {
+                    fim.texto = "VITÓRIA!";
+
+                    var maximo = localStorage.getItem("maximo");
+                    if (maximo == null) {
+                        maximo = 0;
+                    }
+                    if (pontos > maximo) {
+                        console.log("NOVA PONTUAÇÃO MÁXIMA!");
+                        localStorage.setItem("maximo", pontos);
+                    }
+                    else if (pontos == maximo) {
+                        console.log("PONTUAÇÃO MÁXIMA IGUALADA.");
+                    }
+                    else {
+                        console.log("HÁ JOGADORES MELHORES...");
+                    }
+                }
+                fim.tamanho = 128;
+                fim.fonte = "Kode Mono";
+                fim.x = tela.largura * 0.5 - fim.largura * 0.5;
+                fim.y = tela.altura * 0.5 - fim.altura * 0.5;
+                fim.desenha(tela);
+            }
+        }
+
+        function processaClique() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaRatoDescido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaRatoSubido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaRatoMovido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaTeclaDescida() {
+            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
+            if (tela.codigoTecla == "Space") {        // barra de espaços
+                //...
+                var tiro = new Imagem(0, 0, document.getElementById("tiro"));
+                tiro.x = nave.x + nave.largura * 0.5 - tiro.largura * 0.5;
+                tiro.y = nave.y;
+                tiro.deltaY = -3;
+                tiros.push(tiro);
+                disparo.reproduz(true);
+            }
+            if (tela.codigoTecla == "ArrowLeft") {    // esquerda
+                //...
+                nave.deltaX = -3;
+            }
+            if (tela.codigoTecla == "ArrowUp") {      // cima
+                //...
+            }
+            if (tela.codigoTecla == "ArrowRight") {   // direita
+                //...
+                nave.deltaX = +3;
+            }
+            if (tela.codigoTecla == "ArrowDown") {    // baixo
+                //...
+            }
+        }
+
+        function processaTeclaSubida() {
+            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
+            if (tela.codigoTecla == "Space") {
+                //...
+            }
+            if ((tela.codigoTecla == "ArrowLeft") || (tela.codigoTecla == "ArrowRight")) {
+                //...
+                nave.deltaX = 0;
+            }
+            if ((tela.codigoTecla == "ArrowUp") || (tela.codigoTecla == "ArrowDown")) {
+                //...
+            }
+        }
+
+        window.onload = function () {
+            inicia();
+            desenha();
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="tela" width="800" height="600">O seu <em>browser</em> não suporta o elemento
+        <code>canvas</code>!</canvas>
+    <div id="recursos">
+        <!-- ... -->
+        <img id="nave" src="recursos/ship.png">
+        <img id="inimigo" src="recursos/enemyship.png">
+        <img id="tiro" src="recursos/shot.png">
+        <audio id="disparo" src="recursos/blaster.mp3">o seu <em>browser</em> não suporta o elemento
+            <code>audio</code></audio>
+        <audio id="explosao" src="recursos/explosion.mp3">o seu <em>browser</em> não suporta o elemento
+            <code>audio</code>o</audio>
+        <img id="tiroInimigo" src="recursos/enemyshot.png">
+        <img id="rebentamento" src="recursos/explosion.png">
+        <img id="estrela" src="recursos/star.png">
+    </div>
+</body>
+
+</html>

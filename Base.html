@@ -35,6 +35,7 @@
             fundo = new Rectangulo(0, 0, tela.largura, tela.altura, "lightgray");
             //...
 
+            tela.processaClique = processaClique;
             tela.processaRatoDescido = processaRatoDescido;
             tela.processaRatoSubido = processaRatoSubido;
             tela.processaRatoMovido = processaRatoMovido;
@@ -53,6 +54,10 @@
             }
         }
 
+        function processaClique() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
 
         function processaRatoDescido() {
             // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato

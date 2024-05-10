@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Media<span class="signature">(elemento)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature">(abstract) </span></span>Media<span class="signature">(media)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">A classe <code>Media</code> é, na prática, uma classe <em>abstracta</em>, servindo apenas de base para as subclasses de <code>Media</code>. Para além disso, funcionará essencialmente como um envelope (<em>wrapper</em>) para elementos de <code>audio</code> e de <code>video</code> em eventuais subclasses.</div>
         
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="Media"><span class="type-signature"></span>new Media<span class="signature">(elemento)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Media"><span class="type-signature">(abstract) </span>new Media<span class="signature">(media)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Construtor da classe <code>Media</code>. <em>Este construtor não deve ser usado directamente. Se tal acontecer, é gerada uma excepção (<code>TypeError</code>).</em>
+    Construtor da classe <code>Media</code> &mdash; <em>este construtor não deve ser usado directamente; se tal acontecer, é gerada uma excepção (<code>TypeError</code>)</em>
 </div>
 
 
@@ -89,7 +89,7 @@
 
         <tr>
             
-                <td class="name"><code>elemento</code></td>
+                <td class="name"><code>media</code></td>
             
 
             <td class="type">
@@ -105,7 +105,7 @@
 
             
 
-            <td class="description last">O <em>elemento</em> HTML a ser representado</td>
+            <td class="description last">O <em>elemento</em> HTML <em>media</em> a ser representado</td>
         </tr>
 
     
@@ -143,7 +143,7 @@
 
         <tr>
             
-                <td class="name"><code>elemento</code></td>
+                <td class="name"><code>media</code></td>
             
 
             <td class="type">
@@ -159,7 +159,7 @@
 
             
 
-            <td class="description last">O <em>elemento</em> HTML a ser representado</td>
+            <td class="description last">O <em>elemento</em> HTML <em>media</em> a ser representado</td>
         </tr>
 
     
@@ -198,7 +198,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1226">line 1226</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1568">line 1568</a>
     </li></ul></dd>
     
 
@@ -302,7 +302,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1258">line 1258</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1671">line 1671</a>
     </li></ul></dd>
     
 
@@ -326,7 +326,7 @@
 
 
 <div class="description">
-    Fonte (origem) do elemento multimédia <em>[definição]</em>
+    Fonte (origem) do elemento multimédia <em>[atribuição]</em>
 </div>
 
 
@@ -374,7 +374,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1242">line 1242</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1655">line 1655</a>
     </li></ul></dd>
     
 
@@ -446,7 +446,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1250">line 1250</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1663">line 1663</a>
     </li></ul></dd>
     
 
@@ -470,7 +470,7 @@
 
 
 <div class="description">
-    Posição de reprodução do elemento multimédia <em>[definição]</em>
+    Posição de reprodução do elemento multimédia <em>[atribuição]</em>
 </div>
 
 
@@ -518,7 +518,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1282">line 1282</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1695">line 1695</a>
     </li></ul></dd>
     
 
@@ -590,7 +590,439 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1290">line 1290</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1703">line 1703</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="processaReproducaoContinuada"><span class="type-signature"></span>processaReproducaoContinuada<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    Propriedade correspondente ao <em>evento</em> <code>playing</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1625">line 1625</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="processaReproducaoIniciada"><span class="type-signature"></span>processaReproducaoIniciada<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    Propriedade correspondente ao <em>evento</em> <code>play</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1619">line 1619</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="processaReproducaoPausada"><span class="type-signature"></span>processaReproducaoPausada<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    Propriedade correspondente ao <em>evento</em> <code>pause</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1631">line 1631</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="processaReproducaoTerminada"><span class="type-signature"></span>processaReproducaoTerminada<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    Propriedade correspondente ao <em>evento</em> <code>ended</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1637">line 1637</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="processaTempoActualizado"><span class="type-signature"></span>processaTempoActualizado<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    Propriedade correspondente ao <em>evento</em> <code>timeupdate</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1643">line 1643</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="processaVolumeAlterado"><span class="type-signature"></span>processaVolumeAlterado<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    Propriedade correspondente ao <em>evento</em> <code>volumechange</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1649">line 1649</a>
     </li></ul></dd>
     
 
@@ -614,7 +1046,7 @@
 
 
 <div class="description">
-    Posição de reprodução do elemento multimédia <em>[definição]</em> &mdash; variando entre zero (<code>0</code>) e um (<code>1</code>)
+    Posição de reprodução do elemento multimédia <em>[atribuição]</em> &mdash; variando entre zero (<code>0.0</code>) e um (<code>1.0</code>)
 </div>
 
 
@@ -662,7 +1094,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1266">line 1266</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1679">line 1679</a>
     </li></ul></dd>
     
 
@@ -686,7 +1118,7 @@
 
 
 <div class="description">
-    Posição de reprodução do elemento multimédia <em>[obtenção]</em> &mdash; variando entre zero (<code>0</code>) e um (<code>1</code>)
+    Posição de reprodução do elemento multimédia <em>[obtenção]</em> &mdash; variando entre zero (<code>0.0</code>) e um (<code>1.0</code>)
 </div>
 
 
@@ -734,7 +1166,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1274">line 1274</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1687">line 1687</a>
     </li></ul></dd>
     
 
@@ -814,7 +1246,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1315">line 1315</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1728">line 1728</a>
     </li></ul></dd>
     
 
@@ -902,7 +1334,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1308">line 1308</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1721">line 1721</a>
     </li></ul></dd>
     
 
@@ -1047,7 +1479,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1298">line 1298</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1711">line 1711</a>
     </li></ul></dd>
     
 
@@ -1093,13 +1525,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li><li><a href="Utilitarios.html">Utilitarios</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Cronometro.html">Cronometro</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="Padrao.html">Padrao</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Apr 17 2023 22:33:08 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri May 10 2024 15:15:00 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
