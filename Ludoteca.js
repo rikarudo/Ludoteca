@@ -1000,7 +1000,6 @@ class Rectangulo extends Grafico {
       throw new RangeError('O parâmetro "altura" deve ser um número positivo.');
     }
     if (typeof preenchimento !== 'string' && !(preenchimento instanceof CanvasPattern)) {
-      console.log(preenchimento)
       throw new TypeError('O parâmetro "preenchimento" deve ser uma "string" ou um objecto do tipo "CanvasPattern".');
     }
     if (typeof contorno !== 'string' && !(contorno instanceof CanvasPattern)) {
@@ -1212,7 +1211,6 @@ class Poligono extends Grafico {
       }
     }
     if (typeof preenchimento !== 'string' && !(preenchimento instanceof CanvasPattern)) {
-      console.log(preenchimento)
       throw new TypeError('O parâmetro "preenchimento" deve ser uma "string" ou um objecto do tipo "CanvasPattern".');
     }
     if (typeof contorno !== 'string' && !(contorno instanceof CanvasPattern)) {
@@ -1525,7 +1523,6 @@ class Texto extends Grafico {
       throw new TypeError('O parâmetro "texto" deve ser uma "string".');
     }
     if (typeof preenchimento !== 'string' && !(preenchimento instanceof CanvasPattern)) {
-      console.log(preenchimento)
       throw new TypeError('O parâmetro "preenchimento" deve ser uma "string" ou um objecto do tipo "CanvasPattern".');
     }
     if (typeof contorno !== 'string' && !(contorno instanceof CanvasPattern)) {
