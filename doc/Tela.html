@@ -30,7 +30,7 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>Tela<span class="signature">(canvas)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">A classe <code>Tela</code> serve essencialmente como um envelope (<em>wrapper</em>) para elementos de <code>canvas</code>.</div>
+            <div class="class-description">A classe <code>Tela</code> serve essencialmente como um <em>invólucro</em> para elementos do tipo <code>canvas</code>. Permite gerir facilmente o desenho, a ordem e a interacção de <em>gráficos</em> sobre o <em>canvas</em>, bem como o tratamento de eventos de rato e teclado.</div>
         
     
 </header>
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Construtor para criação de novos objectos do tipo <code>Tela</code>
+    Construtor para criação de novos objectos do tipo <code>Tela</code>. Inicializa uma nova instância associada a um elemento HTML do tipo <code>canvas</code>, preparando todos os campos internos necessários ao funcionamento da <em>tela</em> e associando os <em>eventos</em> de rato e teclado relevantes.
 </div>
 
 
@@ -95,7 +95,7 @@
             <td class="type">
             
                 
-<span class="param-type">HTMLElement</span>
+<span class="param-type">HTMLCanvasElement</span>
 
 
             
@@ -105,7 +105,7 @@
 
             
 
-            <td class="description last">O <em>elemento</em> HTML do tipo <code>canvas</code> a ser representado</td>
+            <td class="description last">O <em>elemento</em> do tipo <code>HTMLCanvasElement</code> a ser representado.</td>
         </tr>
 
     
@@ -143,13 +143,13 @@
 
         <tr>
             
-                <td class="name"><code>elemento</code></td>
+                <td class="name"><code>canvas</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">HTMLElement</span>
+<span class="param-type">HTMLCanvasElement</span>
 
 
             
@@ -159,7 +159,171 @@
 
             
 
-            <td class="description last">O <em>elemento</em> HTML do tipo <code>canvas</code> a ser representado</td>
+            <td class="description last">O <em>elemento</em> HTML do tipo <code>canvas</code> a ser representado.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>contexto</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">CanvasRenderingContext2D</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">O contexto <strong>2D</strong> do <em>canvas</em> associado.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>largura</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A largura actual da <em>tela</em> (em <em>pixels</em>).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>altura</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A altura actual da <em>tela</em> (em <em>pixels</em>).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ratoX</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Coordenada <em>x</em> actual do rato na <em>tela</em>.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ratoY</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Coordenada <em>y</em> actual do rato na <em>tela</em>.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tecla</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Código da tecla actualmente pressionada, se existir.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cursor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tipo de cursor actualmente definido para o <em>canvas</em> (e.g.: <code>pointer</code>, <code>crosshair</code>, <code>default</code>, etc.).</td>
         </tr>
 
     
@@ -198,7 +362,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1319">line 1319</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2255">line 2255</a>
     </li></ul></dd>
     
 
@@ -221,6 +385,35 @@
 
 
 
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>canvas</code> for nulo, não estiver definido ou não for um elemento <code>canvas</code> válido.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
 
 
 
@@ -248,13 +441,13 @@
 
         
             
-<h4 class="name" id="altura"><span class="type-signature"></span>altura<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="alturaFinal"><span class="type-signature">(readonly) </span>alturaFinal<span class="type-signature"> :number</span></h4>
 
 
 
 
 <div class="description">
-    Altura da <em>tela</em> (número de linhas)
+    Altura final da <em>tela</em>, considerando quaisquer alterações decorrentes da utilização de <em>CSS</em> para modificar a sua representação. Corresponde ao valor actual da propriedade <code>offsetHeight</code> do elemento <code>canvas</code>.
 </div>
 
 
@@ -302,7 +495,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1491">line 1491</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2503">line 2503</a>
     </li></ul></dd>
     
 
@@ -320,13 +513,157 @@
 
         
             
-<h4 class="name" id="alturaFinal"><span class="type-signature"></span>alturaFinal<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="contexto"><span class="type-signature">(readonly) </span>contexto<span class="type-signature"> :CanvasRenderingContext2D</span></h4>
 
 
 
 
 <div class="description">
-    Altura final da <em>tela</em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
+    Contexto <strong>2D</strong> da <em>tela</em>, para acesso aos métodos nativamente disponibilizados pelo elemento <code>canvas</code>, correspondente ao objecto <code>CanvasRenderingContext2D</code> associado ao <code>canvas</code> actualmente utilizado.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">CanvasRenderingContext2D</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2476">line 2476</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CURSORES"><span class="type-signature">(constant) </span>CURSORES<span class="type-signature"> :Array.&lt;string></span></h4>
+
+
+
+
+<div class="description">
+    Lista dos valores válidos para a propriedade <code>cursor</code> em elementos de <em>canvas</em> ou <em>gráficos</em>, seguindo as especificações CSS e permitindo controlar a aparência do cursor do rato.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;string></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2671">line 2671</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="escalaX"><span class="type-signature">(readonly) </span>escalaX<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Escala resultante do rácio entre a resolução do <code>canvas</code> e a área ocupada pelo mesmo, relativa à largura (<em>x</em>). Corresponde ao valor actual do quociente entre a largura do <em>canvas</em> e a largura final ocupada pelo mesmo. Se a largura final for igual a zero, devolve <code>1</code>.
 </div>
 
 
@@ -374,7 +711,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1507">line 1507</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2512">line 2512</a>
     </li></ul></dd>
     
 
@@ -392,13 +729,13 @@
 
         
             
-<h4 class="name" id="contexto"><span class="type-signature"></span>contexto<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="escalaY"><span class="type-signature">(readonly) </span>escalaY<span class="type-signature"> :number</span></h4>
 
 
 
 
 <div class="description">
-    Contexto <strong>2D</strong> da <em>tela</em>, para acesso aos métodos nativamente disponibilizados pelo <code>canvas</code>
+    Escala resultante do rácio entre a resolução do <code>canvas</code> e a área ocupada pelo mesmo, relativa à altura (<em>y</em>. Corresponde ao valor actual do quociente entre a altura do <em>canvas</em> e a altura final ocupada pelo mesmo. Se a altura final for igual a zero, devolve <code>1</code>.
 </div>
 
 
@@ -446,7 +783,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1459">line 1459</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2525">line 2525</a>
     </li></ul></dd>
     
 
@@ -464,13 +801,157 @@
 
         
             
-<h4 class="name" id="cursor"><span class="type-signature"></span>cursor<span class="type-signature"> :string</span></h4>
+<h4 class="name" id="larguraFinal"><span class="type-signature">(readonly) </span>larguraFinal<span class="type-signature"> :number</span></h4>
 
 
 
 
 <div class="description">
-    Estilo <code>CSS</code> do cursor do rato <em>[atribuição]</em>
+    Largura final da <em>tela</em>, considerando quaisquer alterações decorrentes da utilização de <em>CSS</em> para modificar a sua representação. Corresponde ao valor actual da propriedade <code>offsetWidth</code> do elemento <code>canvas</code>.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2494">line 2494</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="MAX_DELTA_TEMPO"><span class="type-signature">(constant) </span>MAX_DELTA_TEMPO<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Valor máximo permitido para o parâmetro <code>deltaTempo</code> em actualizações e animações de <em>gráficos</em>, sendo usado para limitar o intervalo de tempo entre fotogramas e garantir estabilidade nas animações nos momentos em que estas possam ser interrompidas.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2679">line 2679</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="tecla"><span class="type-signature">(readonly) </span>tecla<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    Código da tecla actualmente pressionada e <em>identificada</em> através das propriedades <code>processaTeclaDescida</code> e <code>processaTeclaSubida</code>. Devolve <code>undefined</code> quando nenhuma tecla se encontra pressionada ou identificada.
 </div>
 
 
@@ -518,7 +999,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1467">line 1467</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2485">line 2485</a>
     </li></ul></dd>
     
 
@@ -535,99 +1016,142 @@
 
 
         
-            
-<h4 class="name" id="cursor"><span class="type-signature"></span>cursor<span class="type-signature"> :string</span></h4>
-
-
-
-
-<div class="description">
-    Estilo <code>CSS</code> do cursor do rato <em>[obtenção]</em>
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">string</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1475">line 1475</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
+        <h3 class="subsection-title">Methods</h3>
 
         
             
-<h4 class="name" id="escalaX"><span class="type-signature"></span>escalaX<span class="type-signature"> :number</span></h4>
 
+    
+
+    
+    <h4 class="name" id="adiciona"><span class="type-signature"></span>adiciona<span class="signature">(grafico, ordem<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+
+    
 
 
 
 <div class="description">
-    Escala resultante do rácio entre a resolução do canvas e a área ocupada pelo mesmo, relativa à largura (<em>x</em>)
+    Adiciona um <em>gráfico</em> (ou um <em>array</em> de <em>gráficos</em>) ao <em>array</em> interno de <em>gráficos</em> da <em>tela</em>, associando uma ordem, para que seja posteriormente desenhado.O argumento pode ser um único <em>gráfico</em> ou um <em>array</em> de <em>gráficos</em> a adicionar. Cada <em>gráfico</em> será adicionado com a ordem especificada.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>grafico</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Grafico.html">Grafico</a></span>
+|
+
+<span class="param-type">Array.&lt;<a href="Grafico.html">Grafico</a>></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Um único <em>gráfico</em> ou um <em>array</em> de <em>gráficos</em> a adicionar.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ordem</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">number</span>
 
 
-        </li>
-    </ul>
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Ordem de desenho do(s) <em>gráfico(s)</em> em relação aos outros.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
 
 
 
@@ -662,7 +1186,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1547">line 1547</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2543">line 2543</a>
     </li></ul></dd>
     
 
@@ -678,73 +1202,93 @@
 
 
 
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+<ul>
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>grafico</code> não for um objecto. Na prática, aceita qualquer objecto, ainda que depois não possa ser desenhado no método <code>desenha()</code>.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>ordem</code> não for um número finito.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
+
+
+<h5>Returns:</h5>
+
         
-            
-<h4 class="name" id="escalaY"><span class="type-signature"></span>escalaY<span class="type-signature"> :number</span></h4>
-
-
-
-
-<div class="description">
-    Escala resultante do rácio entre a resolução do canvas e a área ocupada pelo mesmo, relativa à altura (<em>y</em>)
+<div class="param-desc">
+    O novo tamanho do <em>array</em> interno de <em>gráficos</em> após a adição.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">number</span>
 
 
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1555">line 1555</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
+    </dd>
 </dl>
 
+    
 
 
 
@@ -752,26 +1296,132 @@
 
         
             
-<h4 class="name" id="largura"><span class="type-signature"></span>largura<span class="type-signature"> :number</span></h4>
 
+    
+
+    
+    <h4 class="name" id="alteraOrdem"><span class="type-signature"></span>alteraOrdem<span class="signature">(grafico, ordem<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
 
 
 
 <div class="description">
-    Largura da <em>tela</em> (número de colunas)
+    Altera a ordem de um <em>gráfico</em> já adicionado ao <em>array</em> interno de <em>gráficos</em> da <em>tela</em>. Se o <em>gráfico</em> for encontrado, a sua ordem é actualizada e o <em>array</em> interno de <em>gráficos</em> é reordenado de acordo com o novo valor.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>grafico</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Grafico.html">Grafico</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">O <em>gráfico</em> cuja ordem se pretende alterar.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ordem</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">number</span>
 
 
-        </li>
-    </ul>
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">O valor da ordem do <em>gráfico</em>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
 
 
 
@@ -806,7 +1456,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1483">line 1483</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2582">line 2582</a>
     </li></ul></dd>
     
 
@@ -822,28 +1472,183 @@
 
 
 
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+<ul>
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>grafico</code> não for um objecto. Na prática, aceita qualquer objecto, ainda que depois não possa ser desenhado no método <code>desenha()</code>.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>ordem</code> não for um número finito.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
+
+
+<h5>Returns:</h5>
+
         
-            
-<h4 class="name" id="larguraFinal"><span class="type-signature"></span>larguraFinal<span class="type-signature"> :number</span></h4>
-
-
-
-
-<div class="description">
-    Largura final da <em>tela</em>, considerando quaisquer alterações decorrentes da utilização de CSS para modificar a sua representação
+<div class="param-desc">
+    Se o <em>gráfico</em> foi encontrado e a ordem alterada, <code>true</code>; caso contrário, <code>false</code>.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
             
+
+    
+
+    
+    <h4 class="name" id="desenha"><span class="type-signature"></span>desenha<span class="signature">(tempoActual<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Desenha todos os <em>gráficos</em> (instâncias ou objectos de subclasses da classe <code>Grafico</code>) que tenham sido adicionados a esta <em>tela</em>. Opcionalmente, pode receber como argumento o <em>tempo</em> referente ao momento da chamada, permitindo a uniformização das animações e dos movimentos entre diferentes dispositivos. Se este argumento for usado, as <em>variações</em> das coordenadas dos <em>gráficos</em> devem ser expressas em função de um segundo &mdash; i.e., <em>pixels</em> por segundo; caso contrário, assume-se que a <em>variação</em> é definida em função de cada iteração &mdash; i.e., <em>pixels</em> por chamada ao método <code>desenha()</code> dos <em>gráficos</em>.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tempoActual</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">number</span>
 
 
-        </li>
-    </ul>
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><em>Tempo</em> referente ao momento da chamada (em milissegundos, idealmente obtido via <code>performance.now()</code>).</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
 
 
 
@@ -878,7 +1683,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1499">line 1499</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2628">line 2628</a>
     </li></ul></dd>
     
 
@@ -894,28 +1699,100 @@
 
 
 
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+<ul>
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>tempoActual</code> não for um número finito e não negativo.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>tempoActual</code> for um número negativo.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">RangeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
+
+
+
+
+
+
+
         
             
-<h4 class="name" id="processaClique"><span class="type-signature"></span>processaClique<span class="type-signature"> :function</span></h4>
 
+    
+
+    
+    <h4 class="name" id="limpa"><span class="type-signature"></span>limpa<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
 
 
 
 <div class="description">
-    Propriedade correspondente ao <em>evento</em> <code>click</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas
+    Limpa a tela, sendo especialmente útil na criação de animações, para evitar o efeito de arrastamento. Este método apaga todo o conteúdo actualmente desenhado no <code>canvas</code>, preparando-o para uma nova iteração de desenho.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">function</span>
 
 
-        </li>
-    </ul>
+
+
+
 
 
 
@@ -950,7 +1827,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1399">line 1399</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2618">line 2618</a>
     </li></ul></dd>
     
 
@@ -966,28 +1843,93 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
             
-<h4 class="name" id="processaDuploClique"><span class="type-signature"></span>processaDuploClique<span class="type-signature"> :function</span></h4>
 
+    
+
+    
+    <h4 class="name" id="obtemOrdem"><span class="type-signature"></span>obtemOrdem<span class="signature">(grafico)</span><span class="type-signature"> &rarr; {number|undefined}</span></h4>
+    
+
+    
 
 
 
 <div class="description">
-    Propriedade correspondente ao <em>evento</em> <code>dblclick</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas
+    Obtém a ordem associada a um <em>gráfico</em> armazenado no <em>array</em> interno de <em>gráficos</em> da <em>tela</em>. Devolve o valor da ordem do <em>gráfico</em>, se este for encontrado; caso contrário, devolve <code>undefined</code>.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
-<span class="param-type">function</span>
+                <td class="name"><code>grafico</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Grafico.html">Grafico</a></span>
 
 
-        </li>
-    </ul>
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">O <em>gráfico</em> cuja ordem se pretende obter.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
 
 
 
@@ -1022,7 +1964,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1405">line 1405</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2561">line 2561</a>
     </li></ul></dd>
     
 
@@ -1038,649 +1980,69 @@
 
 
 
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
         
-            
-<h4 class="name" id="processaMenuContexto"><span class="type-signature"></span>processaMenuContexto<span class="type-signature"> :function</span></h4>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>grafico</code> não for um objecto. Na prática, aceita qualquer objecto, ainda que depois não possa ser desenhado no método <code>desenha()</code>.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
 
 
-
-
-<div class="description">
-    Propriedade correspondente ao <em>evento</em> <code>contextmenu</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">function</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1411">line 1411</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
 </dl>
 
 
+    
 
 
-
+<h5>Returns:</h5>
 
         
-            
-<h4 class="name" id="processaRatoDentro"><span class="type-signature"></span>processaRatoDentro<span class="type-signature"> :function</span></h4>
-
-
-
-
-<div class="description">
-    Propriedade correspondente ao <em>evento</em> <code>mousenter</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas
+<div class="param-desc">
+    O valor da ordem do <em>gráfico</em>, se for encontrado; caso contrário, <code>undefined</code>.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">function</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1435">line 1435</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
         
-            
-<h4 class="name" id="processaRatoDescido"><span class="type-signature"></span>processaRatoDescido<span class="type-signature"> :function</span></h4>
-
-
-
-
-<div class="description">
-    Propriedade correspondente ao <em>evento</em> <code>mousedown</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">function</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1417">line 1417</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="processaRatoFora"><span class="type-signature"></span>processaRatoFora<span class="type-signature"> :function</span></h4>
-
-
-
-
-<div class="description">
-    Propriedade correspondente ao <em>evento</em> <code>mouseleaveß</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">function</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1441">line 1441</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="processaRatoMovido"><span class="type-signature"></span>processaRatoMovido<span class="type-signature"> :function</span></h4>
-
-
-
-
-<div class="description">
-    Propriedade correspondente ao <em>evento</em> <code>mousemove</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">function</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1423">line 1423</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="processaRatoSubido"><span class="type-signature"></span>processaRatoSubido<span class="type-signature"> :function</span></h4>
-
-
-
-
-<div class="description">
-    Propriedade correspondente ao <em>evento</em> <code>mouseup</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">function</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1429">line 1429</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="processaTeclaDescida"><span class="type-signature"></span>processaTeclaDescida<span class="type-signature"> :function</span></h4>
-
-
-
-
-<div class="description">
-    Propriedade correspondente ao <em>evento</em> <code>keydown</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, a propriedade <code>codigoTecla</code>, associada à <em>tecla</em> seleccionada, já previamente obtida e pronta a ser usada
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">function</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1447">line 1447</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="processaTeclaSubida"><span class="type-signature"></span>processaTeclaSubida<span class="type-signature"> :function</span></h4>
-
-
-
-
-<div class="description">
-    Propriedade correspondente ao <em>evento</em> <code>keyup</code>, a ser posteriormente definida como uma <em>função</em> contendo as intruções a executar decorrentes desse evento, utilizando, se necessário, a propriedade <code>codigoTecla</code>, associada à <em>tecla</em> seleccionada, já previamente obtida e pronta a ser usada
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">function</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1453">line 1453</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="ratoX"><span class="type-signature"></span>ratoX<span class="type-signature"> :number</span></h4>
-
-
-
-
-<div class="description">
-    Abscissa do rato na <em>tela</em> <em>[atribuição]</em>
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
 <span class="param-type">number</span>
+|
+
+<span class="param-type">undefined</span>
 
 
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1515">line 1515</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
+    </dd>
 </dl>
 
+    
 
 
 
@@ -1688,26 +2050,77 @@
 
         
             
-<h4 class="name" id="ratoX"><span class="type-signature"></span>ratoX<span class="type-signature"> :number</span></h4>
 
+    
+
+    
+    <h4 class="name" id="processaClique"><span class="type-signature"></span>processaClique<span class="signature">(evento)</span><span class="type-signature"></span></h4>
+    
+
+    
 
 
 
 <div class="description">
-    Abscissa do rato na <em>tela</em> <em>[obtenção]</em>
+    Método chamado quando ocorre o <em>evento</em> <code>click</code>, que deverá ser posteriormente definido como uma <em>função</em> contendo as instruções a executar decorrentes desse evento, podendo, se necessário, utilizar as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
-<span class="param-type">number</span>
+                <td class="name"><code>evento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">MouseEvent</span>
 
 
-        </li>
-    </ul>
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objecto correspondente ao evento <code>click</code>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
 
 
 
@@ -1742,7 +2155,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1531">line 1531</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2342">line 2342</a>
     </li></ul></dd>
     
 
@@ -1758,28 +2171,93 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
             
-<h4 class="name" id="ratoY"><span class="type-signature"></span>ratoY<span class="type-signature"> :number</span></h4>
 
+    
+
+    
+    <h4 class="name" id="processaDuploClique"><span class="type-signature"></span>processaDuploClique<span class="signature">(evento)</span><span class="type-signature"></span></h4>
+    
+
+    
 
 
 
 <div class="description">
-    Ordenada do rato na <em>tela</em> <em>[atribuição]</em>
+    Método chamado quando ocorre o <em>evento</em> <code>dblclick</code>, que deverá ser posteriormente definido como uma <em>função</em> contendo as instruções a executar decorrentes desse evento, podendo, se necessário, utilizar as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
-<span class="param-type">number</span>
+                <td class="name"><code>evento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">MouseEvent</span>
 
 
-        </li>
-    </ul>
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objecto correspondente ao evento <code>dblclick</code>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
 
 
 
@@ -1814,7 +2292,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1523">line 1523</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2348">line 2348</a>
     </li></ul></dd>
     
 
@@ -1830,28 +2308,93 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
             
-<h4 class="name" id="ratoY"><span class="type-signature"></span>ratoY<span class="type-signature"> :number</span></h4>
 
+    
+
+    
+    <h4 class="name" id="processaMenuContexto"><span class="type-signature"></span>processaMenuContexto<span class="signature">(evento)</span><span class="type-signature"></span></h4>
+    
+
+    
 
 
 
 <div class="description">
-    Ordenada do rato na <em>tela</em> <em>[obtenção]</em>
+    Método chamado quando ocorre o <em>evento</em> <code>contextmenu</code>, que deverá ser posteriormente definido como uma <em>função</em> contendo as instruções a executar decorrentes desse evento, podendo, se necessário, utilizar as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
-<span class="param-type">number</span>
+                <td class="name"><code>evento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">MouseEvent</span>
 
 
-        </li>
-    </ul>
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objecto correspondente ao evento <code>contextmenu</code>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
 
 
 
@@ -1886,7 +2429,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1539">line 1539</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2354">line 2354</a>
     </li></ul></dd>
     
 
@@ -1902,9 +2445,1171 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
+            
+
     
 
+    
+    <h4 class="name" id="processaRatoDentro"><span class="type-signature"></span>processaRatoDentro<span class="signature">(evento)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Método chamado quando ocorre o <em>evento</em> <code>mouseenter</code>, que deverá ser posteriormente definido como uma <em>função</em> contendo as instruções a executar decorrentes desse evento, podendo, se necessário, utilizar as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>evento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">MouseEvent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objecto correspondente ao evento <code>mouseenter</code>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2378">line 2378</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="processaRatoDescido"><span class="type-signature"></span>processaRatoDescido<span class="signature">(evento)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Método chamado quando ocorre o <em>evento</em> <code>mousedown</code>, a ser posteriormente definido como uma <em>função</em> contendo as instruções a executar decorrentes desse evento, utilizando, se necessário, as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>evento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">MouseEvent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objecto correspondente ao evento <code>mousedown</code>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2360">line 2360</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="processaRatoFora"><span class="type-signature"></span>processaRatoFora<span class="signature">(evento)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Método chamado quando ocorre o <em>evento</em> <code>mouseleave</code>, que deverá ser posteriormente definido como uma <em>função</em> contendo as instruções a executar decorrentes desse evento, podendo, se necessário, utilizar as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>evento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">MouseEvent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objecto correspondente ao evento <code>mouseleave</code>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2384">line 2384</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="processaRatoMovido"><span class="type-signature"></span>processaRatoMovido<span class="signature">(evento)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Método chamado quando ocorre o <em>evento</em> <code>mousemove</code>, que deverá ser posteriormente definido como uma <em>função</em> contendo as instruções a executar decorrentes desse evento, podendo, se necessário, utilizar as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>evento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">MouseEvent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objecto correspondente ao evento <code>mousemove</code>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2366">line 2366</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="processaRatoSubido"><span class="type-signature"></span>processaRatoSubido<span class="signature">(evento)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Método chamado quando ocorre o <em>evento</em> <code>mouseup</code>, que deverá ser posteriormente definido como uma <em>função</em> contendo as instruções a executar decorrentes desse evento, podendo, se necessário, utilizar as propriedades <code>ratoX</code> e <code>ratoY</code>, associadas às coordenadas do <em>rato</em> na <em>tela</em>, já previamente obtidas e prontas a ser usadas.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>evento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">MouseEvent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objecto correspondente ao evento <code>mouseup</code>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2372">line 2372</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="processaTeclaDescida"><span class="type-signature"></span>processaTeclaDescida<span class="signature">(evento)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Método chamado quando ocorre o <em>evento</em> <code>keydown</code>, que deverá ser posteriormente definido como uma <em>função</em> contendo as instruções a executar decorrentes desse evento, podendo, se necessário, utilizar a propriedade <code>codigoTecla</code>, associada à <em>tecla</em> seleccionada, já previamente obtida e pronta a ser usada.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>evento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">KeyboardEvent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objecto correspondente ao evento <code>keydown</code>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2390">line 2390</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="processaTeclaSubida"><span class="type-signature"></span>processaTeclaSubida<span class="signature">(evento)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Método chamado quando ocorre o <em>evento</em> <code>keyup</code>, que deverá ser posteriormente definido como uma <em>função</em> contendo as instruções a executar decorrentes desse evento, podendo, se necessário, utilizar a propriedade <code>codigoTecla</code>, associada à <em>tecla</em> seleccionada, já previamente obtida e pronta a ser usada.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>evento</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">KeyboardEvent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objecto correspondente ao evento <code>keyup</code>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2396">line 2396</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="remove"><span class="type-signature"></span>remove<span class="signature">(grafico)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Remove <em>gráficos</em> (ou <em>arrays</em> de gráficos) do <em>array</em> interno de <em>gráficos</em> a serem desenhados na <em>tela</em>. O argumento pode ser um único <em>gráfico</em> ou um <em>array</em> de <em>gráficos</em> a remover.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>grafico</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Grafico.html">Grafico</a></span>
+|
+
+<span class="param-type">Array.&lt;<a href="Grafico.html">Grafico</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Um único <em>gráfico</em> ou um <em>array</em> de <em>gráficos</em> a remover.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2606">line 2606</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>grafico</code> não for um objecto. Na prática, aceita qualquer objecto, ainda que depois não possa ser desenhado no método <code>desenha()</code>.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Se algum <em>gráfico</em> foi removido, <code>true</code>; caso contrário, <code>false</code>.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -1920,13 +3625,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Cronometro.html">Cronometro</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="Padrao.html">Padrao</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Cronometro.html">Cronometro</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="PadraoImagem.html">PadraoImagem</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri May 10 2024 15:15:00 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Sun May 18 2025 23:56:19 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

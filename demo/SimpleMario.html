@@ -19,37 +19,31 @@
     </style>
     <script src="../Ludoteca.js"></script>
     <script>
-        var tela;
-        var contexto;
-        var continua;
-        var contador;
-        var fundo;
+        let tela;
+        let contexto;
+        let continua;
+        let contador;
+        let fundo;
 
-        var racioX;
-        var racioY;
+        let mario;
+        let cenario;
+        let obstaculos;
 
-        var ratoX;
-        var ratoY;
+        let delta;
 
-        var mario;
-        var cenario;
-        var obstaculos;
+        let margemEsq, margemDir;
+        let limiteEsq, limiteDir;
 
-        var delta;
+        let goombas;
 
-        var margemEsq, margemDir;
-        var limiteEsq, limiteDir;
+        let moedas;
+        let somMoeda;
+        let pontos;
+        let pontuacao;
 
-        var goombas;
-
-        var moedas;
-        var somMoeda;
-        var pontos;
-        var pontuacao;
-
-        var peach;
-        var som_peach;
-        var chao;
+        let peach;
+        let somPeach;
+        let chao;
         //...
 
         function inicia() {
@@ -63,17 +57,12 @@
             fundo = new Rectangulo(0, 0, tela.largura, tela.altura, "lightgray");
 
             mario = new Rectangulo(tela.largura * 0.5, 0, 25, 75, "red");
-            mario.gravidade = 5;
-            mario.deltaGravidade = -2.25;
+            mario.gravidade = 500;
+            mario.deltaGravidade = -250;
 
             peach = new Rectangulo(3000, tela.altura - 175, 50, 75, "magenta");
 
-            chao = new Padrao(document.getElementById("chao"));
-
-            goombas = new Array();
-            goombas.push(new Rectangulo(900, tela.altura - 150, 50, 50, "saddlebrown"));
-            goombas.push(new Rectangulo(1000, tela.altura - 150, 50, 50, "saddlebrown"));
-
+            chao = new PadraoImagem(document.getElementById("chao"));
 
             obstaculos = new Array();
             // chão
@@ -101,14 +90,17 @@
 
             cenario = new Array();
             // adiciona todos os obstáculos ao cenário
-            for (var i = 0; i < obstaculos.length; i++) {
+            for (let i = 0; i < obstaculos.length; i++) {
                 cenario.push(obstaculos[i]);
             }
 
+            goombas = new Array();
+            goombas.push(new Rectangulo(900, tela.altura - 250, 50, 50, "saddlebrown"));
+            goombas.push(new Rectangulo(1000, tela.altura - 250, 50, 50, "saddlebrown"));
             // adicionar os goombas ao cenário
-            for (var i = 0; i < goombas.length; i++) {
-                goombas[i].deltaX = 1;
-                goombas[i].gravidade = 5;
+            for (let i = 0; i < goombas.length; i++) {
+                goombas[i].deltaX = 100;
+                goombas[i].gravidade = 300;
                 cenario.push(goombas[i]);
             }
 
@@ -119,25 +111,30 @@
             moedas.push(new Circulo(2000, tela.altura - 300, 25, "orange"));
 
             // adicionar as moedas ao cenario
-            for (var i = 0; i < moedas.length; i++) {
+            for (let i = 0; i < moedas.length; i++) {
                 cenario.push(moedas[i]);
             }
 
             somMoeda = new Som(document.getElementById("som_moeda"));
             somPeach = new Som(document.getElementById("som_peach"));
 
-            pontuacao = new Texto(25, 25, pontos, "navy", "white", 2);
+            pontuacao = new Texto(25, 25, String(pontos), "navy", "white", 2);
             pontuacao.tamanho = 64;
 
             cenario.push(peach);
 
-            delta = 5;
+            delta = 300;
             // propriedade criada no momento (isto é, não existia na classe Rectangulo)
             mario.salto = false;
 
             // margens do cenário
-            margemEsq = 200;
-            margemDir = tela.largura - 200 - mario.largura;
+            margemEsq = 100;
+            margemDir = tela.largura - margemEsq - mario.largura;
+
+            tela.adiciona(fundo);
+            tela.adiciona(cenario);
+            tela.adiciona(mario);
+            tela.adiciona(pontuacao);
 
             //...
             tela.processaRatoDescido = processaRatoDescido;
@@ -147,9 +144,9 @@
             tela.processaTeclaSubida = processaTeclaSubida;
         }
 
-        function desenha() {
-            contexto.clearRect(0, 0, tela.largura, tela.altura);
-            fundo.desenha(tela);
+        function desenha(tempoActual) {
+            tela.limpa();
+            tela.desenha(tempoActual);
 
             if (mario.colide(peach)) {
                 pontos += 400;
@@ -157,13 +154,11 @@
                 continua = false;
             }
 
-            Grafico.desenhaGraficos(cenario, tela);
-
             if (mario.x < margemEsq) {
                 if (limiteEsq.x + limiteEsq.largura < 0) {
                     mario.x = margemEsq;
-                    for (var i = 0; i < cenario.length; i++) {
-                        cenario[i].x += -mario.deltaX;
+                    for (let i = 0; i < cenario.length; i++) {
+                        cenario[i].x += -mario.totalDeltaX;
                     }
                 }
             }
@@ -171,8 +166,8 @@
             if (mario.x > margemDir) {
                 if (limiteDir.x > tela.largura) {
                     mario.x = margemDir;
-                    for (var i = 0; i < cenario.length; i++) {
-                        cenario[i].x += -mario.deltaX;
+                    for (let i = 0; i < cenario.length; i++) {
+                        cenario[i].x += -mario.totalDeltaX;
                     }
                 }
             }
@@ -181,11 +176,8 @@
                 mario.y = 0;
             }
 
-            mario.salto = false;
-            mario.desenha(tela);
-
-            for (var i = 0; i < obstaculos.length; i++) {
-                var posicaoMario = mario.colide(obstaculos[i], true);
+            for (let i = 0; i < obstaculos.length; i++) {
+                let posicaoMario = mario.colide(obstaculos[i], true);
                 if (posicaoMario == Grafico.CIMA) {
                     mario.salto = true;
                     mario.repoeGravidade();
@@ -204,8 +196,8 @@
                 }
             }
 
-            for (var i = 0; i < goombas.length; i++) {
-                var posicaoMario = mario.colide(goombas[i], true);
+            for (let i = 0; i < goombas.length; i++) {
+                let posicaoMario = mario.colide(goombas[i], true);
                 if (posicaoMario == Grafico.CIMA) {
                     goombas.splice(i, 1);
                     pontos += 100;
@@ -224,9 +216,9 @@
                 }
             }
 
-            for (var i = 0; i < obstaculos.length; i++) {
-                for (var j = 0; j < goombas.length; j++) {
-                    var posicaoGoomba = goombas[j].colide(obstaculos[i], true);
+            for (let i = 0; i < obstaculos.length; i++) {
+                for (let j = 0; j < goombas.length; j++) {
+                    let posicaoGoomba = goombas[j].colide(obstaculos[i], true);
                     if (posicaoGoomba == Grafico.CIMA) {
                         // ...
                     }
@@ -248,7 +240,7 @@
             }
 
             // colisões com as moedas
-            for (var i = 0; i < moedas.length; i++) {
+            for (let i = 0; i < moedas.length; i++) {
                 if (mario.colide(moedas[i])) {
                     moedas[i].visivel = false;
                     moedas[i].activo = false;
@@ -257,69 +249,72 @@
                 }
             }
 
-            pontuacao.texto = pontos;
-            pontuacao.desenha(tela);
+            pontuacao.texto = String(pontos);
 
             //...
-
             if (continua) {
                 contador++;
                 window.requestAnimationFrame(desenha);
             }
         }
 
-        function processaRatoDescido() {
+        function processaClique(evento) {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
         }
 
-        function processaRatoMovido() {
+        function processaRatoDescido(evento) {
+            //...
+        }
+
+        function processaRatoMovido(evento) {
             // ...
         }
 
-        function processaRatoSubido() {
+        function processaRatoSubido(evento) {
             //...
         }
 
-        function processaTeclaDescida() {
-            if (tela.codigoTecla == "Space") {        // barra de espaços
+        function processaTeclaDescida(evento) {
+            if (tela.tecla == "Space") {        // barra de espaços
                 if (mario.salto) {
                     mario.inverteGravidade();
                     mario.salto = false;
                 }
                 //...
             }
-            if (tela.codigoTecla == "ArrowLeft") {    // esquerda
+            if (tela.tecla == "ArrowLeft") {    // esquerda
                 mario.deltaX = -delta;
                 //...
             }
-            if (tela.codigoTecla == "ArrowUp") {      // cima
+            if (tela.tecla == "ArrowUp") {      // cima
                 //...
             }
-            if (tela.codigoTecla == "ArrowRight") {   // direita
+            if (tela.tecla == "ArrowRight") {   // direita
                 mario.deltaX = delta;
                 //...
             }
-            if (tela.codigoTecla == "ArrowDown") {    // baixo
+            if (tela.tecla == "ArrowDown") {    // baixo
                 //...
             }
         }
 
-        function processaTeclaSubida() {
-            if (tela.codigoTecla == "Space") {
+        function processaTeclaSubida(evento) {
+            if (tela.tecla == "Space") {
                 //...
             }
-            if ((tela.codigoTecla == "ArrowLeft") || (tela.codigoTecla == "ArrowRight")) {
+            if ((tela.tecla == "ArrowLeft") || (tela.tecla == "ArrowRight")) {
                 mario.deltaX = 0;
                 //...
             }
-            if ((tela.codigoTecla == "ArrowUp") || (tela.codigoTecla == "ArrowDown")) {
+            if ((tela.tecla == "ArrowUp") || (tela.tecla == "ArrowDown")) {
                 //...
             }
         }
 
         window.onload = function () {
             inicia();
-            desenha();
+            requestAnimationFrame(desenha);
         }
     </script>
 </head>

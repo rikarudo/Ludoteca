@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Base...</title>
+    <title>a puzzling puzzle</title>
     <style>
         #recursos {
             display: none;
@@ -17,7 +17,7 @@
             */
         }
     </style>
-    <script src="Ludoteca.js"></script>
+    <script src="../Ludoteca.js"></script>
     <script>
         let tela;
         let contexto;
@@ -25,18 +25,48 @@
         let contador;
         let fundo;
         //...
+        let sombra;
+        let puzzle;
+        let ordem;
 
         function inicia() {
             tela = new Tela(document.getElementById("tela"));
             contexto = tela.contexto;
             continua = true;
             contador = 0;
-            //...
 
             fundo = new Rectangulo(0, 0, tela.largura, tela.altura, "lightgray");
             tela.adiciona(fundo);
-
             //...
+
+            sombra = new Array(4);
+            for (let i = 0; i < sombra.length; i++) {
+                sombra[i] = new Array(4);
+            }
+
+            for (let i = 0; i < sombra.length; i++) {
+                for (let j = 0; j < sombra[i].length; j++) {
+                    sombra[i][j] = new Imagem(j * 256, i * 192, document.getElementById("i" + i + "j" + j));
+                    sombra[i][j].opacidade = 0.1;
+                }
+            }
+
+
+            puzzle = new Array(4);
+            for (let i = 0; i < puzzle.length; i++) {
+                puzzle[i] = new Array(4);
+            }
+
+            for (let i = 0; i < puzzle.length; i++) {
+                for (let j = 0; j < puzzle[i].length; j++) {
+                    puzzle[i][j] = new Imagem(1000 + Math.random() * 800, Math.random() * 800, document.getElementById("i" + i + "j" + j));
+                    puzzle[i][j].opacidade = 1;
+                }
+            }
+
+            tela.adiciona(sombra);
+            tela.adiciona(puzzle);
+
             tela.processaClique = processaClique;
             tela.processaRatoDescido = processaRatoDescido;
             tela.processaRatoSubido = processaRatoSubido;
@@ -64,11 +94,30 @@
         function processaRatoDescido(evento) {
             // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
+            for (let i = 0; i < puzzle.length; i++) {
+                for (let j = 0; j < puzzle[i].length; j++) {
+                    if (puzzle[i][j].contemPonto(tela.ratoX, tela.ratoY)) {
+                        puzzle[i][j].captura(tela);
+                    }
+                }
+            }
+
         }
 
         function processaRatoSubido(evento) {
             // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
+            for (let i = 0; i < puzzle.length; i++) {
+                for (let j = 0; j < puzzle[i].length; j++) {
+                    if (puzzle[i][j].contemPonto(tela.ratoX, tela.ratoY)) {
+                        puzzle[i][j].liberta();
+                        if (puzzle[i][j].colide(sombra[i][j])) {
+                            puzzle[i][j].x = sombra[i][j].x;
+                            puzzle[i][j].y = sombra[i][j].y;
+                        }
+                    }
+                }
+            }
         }
 
         function processaRatoMovido(evento) {
@@ -116,9 +165,28 @@
 </head>
 
 <body>
-    <canvas id="tela" width="800" height="600">O seu <em>browser</em> não suporta o elemento
+    <canvas id="tela" width="2000" height="1000">O seu <em>browser</em> não suporta o elemento
         <code>canvas</code>!</canvas>
     <div id="recursos">
+        <img id="i0j0" src="recursos/Mountains-0-0.png">
+        <img id="i0j1" src="recursos/Mountains-0-1.png">
+        <img id="i0j2" src="recursos/Mountains-0-2.png">
+        <img id="i0j3" src="recursos/Mountains-0-3.png">
+        <br>
+        <img id="i1j0" src="recursos/Mountains-1-0.png">
+        <img id="i1j1" src="recursos/Mountains-1-1.png">
+        <img id="i1j2" src="recursos/Mountains-1-2.png">
+        <img id="i1j3" src="recursos/Mountains-1-3.png">
+        <br>
+        <img id="i2j0" src="recursos/Mountains-2-0.png">
+        <img id="i2j1" src="recursos/Mountains-2-1.png">
+        <img id="i2j2" src="recursos/Mountains-2-2.png">
+        <img id="i2j3" src="recursos/Mountains-2-3.png">
+        <br>
+        <img id="i3j0" src="recursos/Mountains-3-0.png">
+        <img id="i3j1" src="recursos/Mountains-3-1.png">
+        <img id="i3j2" src="recursos/Mountains-3-2.png">
+        <img id="i3j3" src="recursos/Mountains-3-3.png">
         <!-- ... -->
     </div>
 </body>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Padrao</title>
+    <title>JSDoc: Class: PadraoImagem</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Padrao</h1>
+    <h1 class="page-title">Class: PadraoImagem</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Padrao<span class="signature">(origem, repeticao<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>PadraoImagem<span class="signature">(imagem, repeticao<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">A classe <code>Padrao</code> é utilizada para representar a criação de <em>padrões</em> gráficos, que podem ser posteriormente aplicados como preenchimento ou contorno de <em>gráficos</em> em elementos <code>canvas</code>.</div>
         
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="Padrao"><span class="type-signature"></span>new Padrao<span class="signature">(origem, repeticao<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="PadraoImagem"><span class="type-signature"></span>new PadraoImagem<span class="signature">(imagem, repeticao<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Construtor para criação de novos objectos do tipo <code>Padrao</code>. Inicializa um novo padrão gráfico a partir de uma imagem ou de um padrão já existente, e de um tipo de repetição especificado.
+    Construtor para criação de novos objectos do tipo <code>Padrao</code> com base em imagens e um tipo de repetição especificado.
 </div>
 
 
@@ -93,16 +93,13 @@
 
         <tr>
             
-                <td class="name"><code>origem</code></td>
+                <td class="name"><code>imagem</code></td>
             
 
             <td class="type">
             
                 
 <span class="param-type">HTMLImageElement</span>
-|
-
-<span class="param-type">CanvasPattern</span>
 
 
             
@@ -124,7 +121,7 @@
                 </td>
             
 
-            <td class="description last">Elemento de imagem (<code>HTMLImageElement</code>) ou padrão (<code>CanvasPattern</code>) a usar no <em>padrão</em>.</td>
+            <td class="description last">Elemento de imagem (<code>HTMLImageElement</code>) a usar no <em>padrão</em>.</td>
         </tr>
 
     
@@ -208,9 +205,6 @@
             
                 
 <span class="param-type">HTMLImageElement</span>
-|
-
-<span class="param-type">undefined</span>
 
 
             
@@ -305,7 +299,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1662">line 1662</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2169">line 2169</a>
     </li></ul></dd>
     
 
@@ -335,7 +329,7 @@
 <dl>
     <dt>
         <div class="param-desc">
-        Se a origem for nula, não estiver definida ou não for do tipo correcto.
+        Se a imagem for nula, não estiver definida ou não for do tipo correcto.
         </div>
     </dt>
     <dd></dd>
@@ -411,160 +405,13 @@
 
         
             
-<h4 class="name" id="imagem"><span class="type-signature"></span>imagem<span class="type-signature"> :HTMLImageElement</span></h4>
+<h4 class="name" id="padrao"><span class="type-signature">(readonly) </span>padrao<span class="type-signature"> :CanvasPattern</span></h4>
 
 
 
 
 <div class="description">
-    Define a imagem a utilizar na criação do <em>padrão</em>. A imagem indicada deve ser um objecto do tipo <code>HTMLImageElement</code>; caso contrário, é lançada uma excepção.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">HTMLImageElement</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1700">line 1700</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="imagem"><span class="type-signature"></span>imagem<span class="type-signature"> :HTMLImageElement|undefined</span></h4>
-
-
-
-
-<div class="description">
-    Obtém a imagem utilizada na criação do <em>padrão</em>, caso exista.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">HTMLImageElement</span>
-|
-
-<span class="param-type">undefined</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1714">line 1714</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="padrao"><span class="type-signature"></span>padrao<span class="type-signature"> :CanvasPattern</span></h4>
-
-
-
-
-<div class="description">
-    Define directamente o <em>padrão</em> a utilizar para preenchimento e contorno de <em>gráficos</em>. O valor indicado deve ser um    *
+    O <em>padrão</em> propriamente dito, a ser utilizado para preenchimento e contorno de <em>gráficos</em>.
 </div>
 
 
@@ -612,7 +459,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1723">line 1723</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2228">line 2228</a>
     </li></ul></dd>
     
 
@@ -630,13 +477,13 @@
 
         
             
-<h4 class="name" id="padrao"><span class="type-signature"></span>padrao<span class="type-signature"> :CanvasPattern</span></h4>
+<h4 class="name" id="REPETICOES"><span class="type-signature">(constant) </span>REPETICOES<span class="type-signature"> :Array.&lt;string></span></h4>
 
 
 
 
 <div class="description">
-    Obtém o <em>padrão</em> propriamente dito, a ser utilizado para preenchimento e contorno de <em>gráficos</em>.
+    Lista dos modos de repetição válidos para padrões de preenchimento ou contorno de <em>gráficos</em> no <em>canvas</em>.
 </div>
 
 
@@ -645,7 +492,7 @@
     <ul>
         <li>
             
-<span class="param-type">CanvasPattern</span>
+<span class="param-type">Array.&lt;string></span>
 
 
         </li>
@@ -684,151 +531,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1734">line 1734</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="repeticao"><span class="type-signature"></span>repeticao<span class="type-signature"> :string</span></h4>
-
-
-
-
-<div class="description">
-    Obtém o tipo de repetição actualmente utilizado na criação do <em>padrão</em>.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">string</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1742">line 1742</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="repeticao"><span class="type-signature"></span>repeticao<span class="type-signature"> :string</span></h4>
-
-
-
-
-<div class="description">
-    Define o tipo de repetição a utilizar na criação do <em>padrão</em>. Apenas valores constantes definidos em <code>Padrao.REPETICOES</code> são permitidos; caso contrário, é lançada uma excepção.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">string</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1751">line 1751</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line2238">line 2238</a>
     </li></ul></dd>
     
 
@@ -862,13 +565,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Cronometro.html">Cronometro</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="Padrao.html">Padrao</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Cronometro.html">Cronometro</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="PadraoImagem.html">PadraoImagem</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon May 12 2025 00:34:51 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Sun May 18 2025 23:56:19 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

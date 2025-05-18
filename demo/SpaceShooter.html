@@ -21,28 +21,30 @@
     </style>
     <script src="../Ludoteca.js"></script>
     <script>
-        var tela;
-        var contexto;
-        var continua;
-        var contador;
-        var fundo;
+        let tela;
+        let contexto;
+        let continua;
+        let contador;
+        let fundo;
         //...
-        var estrelas, inimigos, tiros, tirosInimigos, rebentamentos;
-        var disparo, explosao;
-        var estrela;
-        var nave;
+        let estrelas, inimigos, tiros, tirosInimigos, rebentamentos;
+        let disparo, explosao;
+        let estrela;
+        let nave;
 
-        var tempo;
-        var cronometro;
+        let tempo;
+        let cronometro;
 
-        var pontos;
-        var pontuacao;
+        let pontos;
+        let pontuacao;
 
         function inicia() {
             tela = new Tela(document.getElementById("tela"));
             contexto = tela.contexto;
             continua = true;
             contador = 0;
+
+            tempoAnterior = performance.now();
 
             fundo = new Rectangulo(0, 0, tela.largura, tela.altura, "black");
             //...
@@ -59,20 +61,20 @@
             explosao = new Som(document.getElementById("explosao"));
 
             estrelas = new Array(25);
-            for (var i = 0; i < estrelas.length; i++) {
-                var estrela = new Imagem(0, 0, document.getElementById("estrela"));
-                estrela.x = Math.floor(Math.random() * (tela.largura - estrela.largura));
-                estrela.y = Math.floor(Math.random() * (tela.altura - estrela.altura));
-                estrela.deltaY = 0.5;
+            for (let i = 0; i < estrelas.length; i++) {
+                let estrela = new Imagem(0, 0, document.getElementById("estrela"));
+                estrela.x = Math.random() * (tela.largura - estrela.largura);
+                estrela.y = Math.random() * (tela.altura - estrela.altura);
+                estrela.deltaY = 50;
                 estrelas[i] = estrela;
             }
 
             inimigos = new Array(15);
-            for (var i = 0; i < inimigos.length; i++) {
-                var inimigo = new Imagem(0, 0, document.getElementById("inimigo"));
-                inimigo.x = Math.floor(Math.random() * (tela.largura - inimigo.largura));
-                inimigo.y = -Math.floor(Math.random() * (2 * tela.altura - inimigo.altura));
-                inimigo.deltaY = 1;
+            for (let i = 0; i < inimigos.length; i++) {
+                let inimigo = new Imagem(0, 0, document.getElementById("inimigo"));
+                inimigo.x = Math.random() * (tela.largura - inimigo.largura);
+                inimigo.y = -Math.random() * (2 * tela.altura - inimigo.altura);
+                inimigo.deltaY = 100 + (Math.random() * 20 - 10);
                 inimigos[i] = inimigo;
             }
 
@@ -82,7 +84,18 @@
 
             nave = new Imagem(0, 0, document.getElementById("nave"));
             nave.x = tela.largura * 0.5 - nave.largura * 0.5;
-            nave.y = tela.altura - nave.altura * 1.1;
+            nave.y = tela.altura - nave.altura * 1.5;
+
+            tela.adiciona(fundo);
+            tela.adiciona(estrelas);
+            tela.adiciona(inimigos);
+            tela.adiciona(rebentamentos);
+            tela.adiciona(tiros);
+            tela.adiciona(tirosInimigos);
+            tela.adiciona(tempo);
+            tela.adiciona(pontuacao);
+            tela.adiciona(nave);
+
             //...
             tela.processaClique = processaClique;
             tela.processaRatoDescido = processaRatoDescido;
@@ -92,34 +105,38 @@
             tela.processaTeclaSubida = processaTeclaSubida;
         }
 
-        function desenha() {
-            contexto.clearRect(0, 0, tela.largura, tela.altura);
-            fundo.desenha(tela);
-            //...
-            for (var i = 0; i < estrelas.length; i++) {
-                estrelas[i].desenha(tela);
+        function desenha(tempoActual) {
+            tela.limpa();
+            tela.desenha(tempoActual);
+
+            tempo.texto = "T: " + (60 - Math.ceil(cronometro.tempoDecorrido / 10) / 100).toFixed(2);
+            tempo.fonte = "Kode Mono";
+
+            pontuacao.texto = "P: " + pontos;
+            pontuacao.fonte = "Kode Mono";
+
+            for (let i = 0; i < estrelas.length; i++) {
                 if (estrelas[i].y > tela.altura) {
-                    estrelas[i].x = Math.floor(Math.random() * (tela.largura - estrelas[i].largura));
-                    estrelas[i].y = -Math.floor(Math.random() * 2 * tela.altura) - estrelas[i].altura;
+                    estrelas[i].x = Math.random() * (tela.largura - estrelas[i].largura);
+                    estrelas[i].y = -Math.random() * 2 * tela.altura - estrelas[i].altura;
                 }
             }
 
-            for (var i = 0; i < inimigos.length; i++) {
-                inimigos[i].desenha(tela);
+            for (let i = 0; i < inimigos.length; i++) {
                 if (inimigos[i].y > tela.altura) {
-                    inimigos[i].x = Math.floor(Math.random() * (tela.largura - inimigos[i].largura));
-                    inimigos[i].y = -Math.floor(Math.random() * 2 * tela.altura) - inimigos[i].altura;
+                    inimigos[i].x = Math.random() * (tela.largura - inimigos[i].largura);
+                    inimigos[i].y = -Math.random() * 2 * tela.altura - inimigos[i].altura;
                     inimigos[i].visivel = true;
                     inimigos[i].activo = true;
                 }
 
-                for (var j = 0; j < tiros.length; j++) {
+                for (let j = 0; j < tiros.length; j++) {
                     if (inimigos[i].colide(tiros[j], false, 0, 4)) {
                         inimigos[i].visivel = false;
                         inimigos[i].activo = false;
                         tiros[j].visivel = false;
                         tiros[j].activo = false;
-                        var rebentamento = new Imagem(0, 0, document.getElementById("rebentamento"));
+                        let rebentamento = new Imagem(0, 0, document.getElementById("rebentamento"));
                         rebentamento.x = inimigos[i].x + inimigos[i].largura * 0.5 - rebentamento.largura * 0.5;
                         rebentamento.y = inimigos[i].y + inimigos[i].altura * 0.5 - rebentamento.altura * 0.5;
                         rebentamento.contador = 60; // atributo acrescentado ad hoc ao objecto (sem existir na classe)
@@ -132,32 +149,29 @@
 
                 if (inimigos[i].y > 0 && inimigos[i].visivel && inimigos[i].activo) {
                     if (Math.random() < 0.00125) {
-                        var tiroInimigo = new Imagem(0, 0, document.getElementById("tiroInimigo"));
+                        let tiroInimigo = new Imagem(0, 0, document.getElementById("tiroInimigo"));
                         tiroInimigo.x = inimigos[i].x + inimigos[i].largura * 0.5 - tiroInimigo.largura * 0.5;
                         tiroInimigo.y = inimigos[i].y + inimigos[i].altura;
-                        tiroInimigo.deltaY = 2;
+                        tiroInimigo.deltaY = 150;
                         tirosInimigos.push(tiroInimigo);
                     }
                 }
             }
 
-            for (var i = 0; i < rebentamentos.length; i++) {
-                rebentamentos[i].desenha(tela);
+            for (let i = 0; i < rebentamentos.length; i++) {
                 rebentamentos[i].contador--;
                 if (rebentamentos[i].contador <= 0) {
                     rebentamentos.splice(i, 1);
                 }
             }
 
-            for (var i = 0; i < tiros.length; i++) {
-                tiros[i].desenha(tela);
+            for (let i = 0; i < tiros.length; i++) {
                 if (tiros[i].y + tiros[i].altura < 0) {
                     tiros.splice(i, 1);
                 }
             }
 
-            for (var i = 0; i < tirosInimigos.length; i++) {
-                tirosInimigos[i].desenha(tela);
+            for (let i = 0; i < tirosInimigos.length; i++) {
                 if (tirosInimigos[i].colide(nave, false, 0, 4)) {
                     explosao.reproduz(true);
                     continua = false;
@@ -166,14 +180,6 @@
                     tirosInimigos.splice(i, 1);
                 }
             }
-
-            tempo.texto = "T: " + (60 - Math.floor(cronometro.tempoDecorrido / 10) / 100).toFixed(2);
-            tempo.fonte = "Kode Mono";
-            tempo.desenha(tela);
-
-            pontuacao.texto = "P: " + pontos;
-            pontuacao.fonte = "Kode Mono";
-            pontuacao.desenha(tela);
 
             if (cronometro.tempoDecorrido > 60000) { // 1 minuto
                 continua = false;
@@ -185,18 +191,18 @@
             if (nave.x + nave.largura > tela.largura) {
                 nave.x = tela.largura - nave.largura;
             }
-            nave.desenha(tela);
+
             //...
             if (continua) {
                 contador++;
                 window.requestAnimationFrame(desenha);
             }
             else {
-                var fim = new Texto(0, 0, "DERROTA!", "red", "white", 2);
+                let fim = new Texto(0, 0, "DERROTA!", "red", "white", 2);
                 if (cronometro.tempoDecorrido > 60000) {
                     fim.texto = "VITÓRIA!";
 
-                    var maximo = localStorage.getItem("maximo");
+                    let maximo = localStorage.getItem("maximo");
                     if (maximo == null) {
                         maximo = 0;
                     }
@@ -219,70 +225,70 @@
             }
         }
 
-        function processaClique() {
+        function processaClique(evento) {
             // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
         }
 
-        function processaRatoDescido() {
+        function processaRatoDescido(evento) {
             // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
         }
 
-        function processaRatoSubido() {
+        function processaRatoSubido(evento) {
             // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
         }
 
-        function processaRatoMovido() {
+        function processaRatoMovido(evento) {
             // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
         }
 
-        function processaTeclaDescida() {
-            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
-            if (tela.codigoTecla == "Space") {        // barra de espaços
+        function processaTeclaDescida(evento) {
+            // usar a propriedade tela.tecla, referente à tecla usada pelo utilizador
+            if (tela.tecla == "Space") {        // barra de espaços
                 //...
-                var tiro = new Imagem(0, 0, document.getElementById("tiro"));
+                let tiro = new Imagem(0, 0, document.getElementById("tiro"));
                 tiro.x = nave.x + nave.largura * 0.5 - tiro.largura * 0.5;
                 tiro.y = nave.y;
-                tiro.deltaY = -3;
+                tiro.deltaY = -200;
                 tiros.push(tiro);
                 disparo.reproduz(true);
             }
-            if (tela.codigoTecla == "ArrowLeft") {    // esquerda
+            if (tela.tecla == "ArrowLeft") {    // esquerda
                 //...
-                nave.deltaX = -3;
+                nave.deltaX = -200;
             }
-            if (tela.codigoTecla == "ArrowUp") {      // cima
+            if (tela.tecla == "ArrowUp") {      // cima
                 //...
             }
-            if (tela.codigoTecla == "ArrowRight") {   // direita
+            if (tela.tecla == "ArrowRight") {   // direita
                 //...
-                nave.deltaX = +3;
+                nave.deltaX = +200;
             }
-            if (tela.codigoTecla == "ArrowDown") {    // baixo
+            if (tela.tecla == "ArrowDown") {    // baixo
                 //...
             }
         }
 
-        function processaTeclaSubida() {
-            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
-            if (tela.codigoTecla == "Space") {
+        function processaTeclaSubida(evento) {
+            // usar a propriedade tela.tecla, referente à tecla usada pelo utilizador
+            if (tela.tecla == "Space") {
                 //...
             }
-            if ((tela.codigoTecla == "ArrowLeft") || (tela.codigoTecla == "ArrowRight")) {
+            if ((tela.tecla == "ArrowLeft") || (tela.tecla == "ArrowRight")) {
                 //...
                 nave.deltaX = 0;
             }
-            if ((tela.codigoTecla == "ArrowUp") || (tela.codigoTecla == "ArrowDown")) {
+            if ((tela.tecla == "ArrowUp") || (tela.tecla == "ArrowDown")) {
                 //...
             }
         }
 
         window.onload = function () {
             inicia();
-            desenha();
+            window.requestAnimationFrame(desenha);
         }
     </script>
 </head>

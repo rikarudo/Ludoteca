@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>A Flappy Bird Deranged Clone</title>
+    <style>
+        /* Google Fonts: 'Press Start 2P' */
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        #recursos {
+            display: none;
+        }
+
+        #tela {
+            display: block;
+            /*
+            width: 100vw;
+            height: 100vh;
+            */
+            height: 75vh;
+        }
+    </style>
+
+    <script src="../Ludoteca.js"></script>
+    <script>
+        let tela;
+        let contexto;
+        let continua;
+        let contador;
+        //...
+        let fundo;
+        let passaro;
+        let chaos;
+        let chamines;
+
+        let ponto, asa, morte, colisao, deslizamento;
+        let pontos, pontuacao;
+        let caixaColisao;
+
+        function inicia() {
+            tela = new Tela(document.getElementById("tela"));
+            contexto = tela.contexto;
+            continua = true;
+            contador = 0;
+
+            fundo = new Imagem(0, 0, document.getElementById("fundo"));
+            tela.adiciona(fundo);
+
+            chamines = new Array();
+
+            let chamineBaixo = new Imagem(Math.random() * tela.largura + 2 * tela.largura, Math.random() * tela.altura * 0.5 + tela.altura * 0.25, document.getElementById("chamineBaixo"));
+            chamineBaixo.deltaX = -75;
+            chamines.push(chamineBaixo);
+
+            let chamineCima = new Imagem(chamineBaixo.x, chamineBaixo.y - chamineBaixo.altura * 1.35, document.getElementById("chamineCima"));
+            chamineCima.deltaX = chamineBaixo.deltaX;
+            chamines.push(chamineCima);
+
+            tela.adiciona(chamines);
+
+            chaos = new Array();
+            let chaoEsq = new Imagem(0, 0, document.getElementById("chao"));
+            chaoEsq.y = tela.altura - chaoEsq.altura;
+            chaoEsq.deltaX = -75;
+            chaos.push(chaoEsq);
+            let chaoDir = new Imagem(chaoEsq.largura, 0, document.getElementById("chao"));
+            chaoDir.y = tela.altura - chaoDir.altura;
+            chaoDir.deltaX = chaoEsq.deltaX;
+            chaos.push(chaoDir);
+            tela.adiciona(chaos);
+
+            passaro = new ImagemAnimada(0, 0, document.getElementById("passaro"), 3, 10);
+            passaro.x = tela.largura * 0.5 - passaro.largura;
+            passaro.y = tela.altura * 0.25;
+            passaro.gravidade = 50;
+            passaro.deltaGravidade = -250;
+            tela.adiciona(passaro);
+
+            caixaColisao = new Circulo(0, 0, 5, "red");
+            //tela.adiciona(caixaColisao); // não é verdadeiramente necessário desenhar a hitbox, já que apenas interessa para as colisões
+
+            pontos = 0;
+            pontuacao = new Texto(0, 10, String(pontos));
+            pontuacao.fonte = "'Press Start 2P'";
+            pontuacao.tamanho = 16;
+            pontuacao.preenchimento = "white";
+            pontuacao.contorno = "black";
+            pontuacao.espessura = 2;
+            tela.adiciona(pontuacao);
+
+            //
+
+            ponto = new Som(document.getElementById("ponto"));
+            morte = new Som(document.getElementById("morte"));
+            deslizamento = new Som(document.getElementById("deslizamento"));
+            asa = new Som(document.getElementById("asa"));
+            asa.processaReproducaoTerminada = function () {
+                deslizamento.reproduz(true);
+            }
+            colisao = new Som(document.getElementById("colisao"));
+            colisao.processaReproducaoTerminada = function () {
+                morte.reproduz(true);
+            }
+
+            //...
+            tela.processaClique = processaClique;
+            tela.processaRatoDescido = processaRatoDescido;
+            tela.processaRatoSubido = processaRatoSubido;
+            tela.processaRatoMovido = processaRatoMovido;
+            tela.processaTeclaDescida = processaTeclaDescida;
+            tela.processaTeclaSubida = processaTeclaSubida;
+        }
+
+        function desenha(tempoActual) {
+            caixaColisao.x = passaro.x + passaro.largura * 0.5 - caixaColisao.largura * 0.5;
+            caixaColisao.y = passaro.y + passaro.altura * 0.5 - caixaColisao.altura * 0.5;
+
+            for (let chao of chaos) {
+                if (chao.x <= 0 - chao.largura) {
+                    chao.x = tela.largura;
+                }
+                if (caixaColisao.colide(chao)) {
+                    continua = false;
+                    let fim = new Imagem(0, 0, document.getElementById("fim"));
+                    fim.x = tela.largura * 0.5 - fim.largura * 0.5;
+                    fim.y = tela.altura * 0.5 - fim.altura * 0.5;
+                    tela.adiciona(fim);
+                    colisao.reproduz(true);
+                }
+            }
+
+            for (let chamine of chamines) {
+                if (caixaColisao.colide(chamine)) {
+                    continua = false;
+                    let fim = new Imagem(0, 0, document.getElementById("fim"));
+                    fim.x = tela.largura * 0.5 - fim.largura * 0.5;
+                    fim.y = tela.altura * 0.5 - fim.altura * 0.5;
+                    tela.adiciona(fim);
+                    colisao.reproduz(true);
+                }
+                if (chamine.activo && chamine.x < passaro.x) {
+                    chamine.activo = false;
+                    pontos += 0.5;
+                    ponto.reproduz(true);
+                }
+            }
+
+            for (let i = 0; i < chamines.length; i++) {
+                if (chamines[i].x < 0 - chamines[i].largura) {
+                    chamines.splice(i, 1);
+                }
+            }
+
+            if (Math.cos(passaro.anguloGravidade * Math.PI / 180) < -0.25) {
+                passaro.anguloRotacao = -45;
+            }
+            else if (Math.cos(passaro.anguloGravidade * Math.PI / 180) < 0.25) {
+                passaro.anguloRotacao = 0;
+            }
+            else if (Math.cos(passaro.anguloGravidade * Math.PI / 180) < 0.95) {
+                passaro.anguloRotacao = 45;
+            }
+            else {
+                passaro.anguloRotacao = 90;
+            }
+
+            if (chamines.length > 0) {
+                if (chamines[chamines.length - 1].x < passaro.x) {
+                    let chamineBaixo = new Imagem(Math.random() * tela.largura + tela.largura, Math.random() * tela.altura * 0.5 + tela.altura * 0.25, document.getElementById("chamineBaixo"));
+                    chamineBaixo.deltaX = -75;
+                    chamines.push(chamineBaixo);
+
+                    let chamineCima = new Imagem(chamineBaixo.x, chamineBaixo.y - chamineBaixo.altura * 1.35, document.getElementById("chamineCima"));
+                    chamineCima.deltaX = chamineBaixo.deltaX;
+                    chamines.push(chamineCima);
+                }
+            }
+            else {
+                let chamineBaixo = new Imagem(Math.random() * tela.largura + tela.largura, Math.random() * tela.altura * 0.5 + tela.altura * 0.25, document.getElementById("chamineBaixo"));
+                chamineBaixo.deltaX = -1;
+                chamines.push(chamineBaixo);
+
+                let chamineCima = new Imagem(chamineBaixo.x, chamineBaixo.y - chamineBaixo.altura * 1.35, document.getElementById("chamineCima"));
+                chamineCima.deltaX = chamineBaixo.deltaX;
+                chamines.push(chamineCima);
+            }
+
+            pontuacao.texto = String(pontos);
+            pontuacao.x = tela.largura * 0.5 - pontuacao.largura * 0.5;
+
+            //...
+            tela.desenha(tempoActual);
+            if (continua) {
+                contador++;
+                window.requestAnimationFrame(desenha);
+            }
+        }
+
+        function processaClique(evento) {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaRatoDescido(evento) {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaRatoSubido(evento) {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaRatoMovido(evento) {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaTeclaDescida(evento) {
+            // usar a propriedade tela.tecla, referente à tecla usada pelo utilizador
+            if (tela.tecla == "Space") {        // barra de espaços
+                passaro.inverteGravidade();
+                asa.reproduz(true);
+                //...
+            }
+            if (tela.tecla == "ArrowLeft") {    // esquerda
+                //...
+            }
+            if (tela.tecla == "ArrowUp") {      // cima
+                //...
+            }
+            if (tela.tecla == "ArrowRight") {   // direita
+                //...
+            }
+            if (tela.tecla == "ArrowDown") {    // baixo
+                //...
+            }
+            if (tela.tecla == "KeyR") {         // r: reiniciar
+                window.location.reload();
+                //...
+            }
+        }
+
+        function processaTeclaSubida(evento) {
+            // usar a propriedade tela.tecla, referente à tecla usada pelo utilizador
+            if (tela.tecla == "Space") {
+                //...
+            }
+            if ((tela.tecla == "ArrowLeft") || (tela.tecla == "ArrowRight")) {
+                //...
+            }
+            if ((tela.tecla == "ArrowUp") || (tela.tecla == "ArrowDown")) {
+                //...
+            }
+        }
+
+        window.onload = function () {
+            inicia();
+            window.requestAnimationFrame(desenha);
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="tela" width="144" height="256">O seu <em>browser</em> não suporta o elemento
+        <code>canvas</code>!</canvas>
+    <div id="recursos">
+        <!-- imagens -->
+        <img id="fundo" src="recursos/background.png">
+        <img id="passaro" src="recursos/bird.png">
+        <img id="chao" src="recursos/floor.png">
+        <img id="chamineBaixo" src="recursos/chimneydown.png">
+        <img id="chamineCima" src="recursos/chimneyup.png">
+        <img id="fim" src="recursos/gameover.png">
+        <!-- sons -->
+        <audio id="morte" src="recursos/sfx_die.wav">O seu <em>browser</em> não suporta o elemento
+            <code>audio</code>!</audio>
+        <audio id="ponto" src="recursos/sfx_point.wav">O seu <em>browser</em> não suporta o elemento
+            <code>audio</code>!</audio>
+        <audio id="colisao" src="recursos/sfx_hit.wav">O seu <em>browser</em> não suporta o elemento
+            <code>audio</code>!</audio>
+        <audio id="asa" src="recursos/sfx_wing.wav">O seu <em>browser</em> não suporta o elemento
+            <code>audio</code>!</audio>
+        <audio id="deslizamento" src="recursos/sfx_swooshing.wav">O seu <em>browser</em> não suporta o elemento
+            <code>audio</code>!</audio>
+    </div>
+</body>
+
+</html>

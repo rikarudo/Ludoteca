@@ -19,23 +19,23 @@
     </style>
     <script src="../Ludoteca.js"></script>
     <script>
-        var tela;
-        var contexto;
-        var continua;
-        var contador;
-        var fundo;
+        let tela;
+        let contexto;
+        let continua;
+        let contador;
+        let fundo;
 
-        var racioX;
-        var racioY;
+        let racioX;
+        let racioY;
 
-        var ratoX;
-        var ratoY;
+        let ratoX;
+        let ratoY;
 
-        var lemmings;
-        var plataforma;
-        var velocidade;
-        var casa;
-        var porta;
+        let lemmings;
+        let plataforma;
+        let velocidade;
+        let casa;
+        let porta;
         //...
 
         function inicia() {
@@ -52,13 +52,13 @@
             lemmings.push(new Rectangulo(50, tela.altura * 0.5, 10, 20, "navy"));
             lemmings.push(new Rectangulo(25, tela.altura * 0.5, 10, 20, "navy"));
 
-            for (var i = 0; i < lemmings.length; i++) {
+            for (let i = 0; i < lemmings.length; i++) {
                 lemmings[i].direccao = 1;
-                lemmings[i].gravidade = 2;
+                lemmings[i].gravidade = 150;
                 lemmings[i].barreira = false;
             }
 
-            velocidade = 1;
+            velocidade = 100;
 
             plataforma = new Array();
             plataforma.push(new Rectangulo(0, tela.altura * 0.75, tela.largura * 0.5, 20, "brown"));
@@ -66,6 +66,12 @@
 
             casa = new Rectangulo(tela.largura * 0.25, tela.altura * 0.95 - 50, 50, 50, "green");
             porta = new Rectangulo(tela.largura * 0.25 + 15, tela.altura * 0.95 - 50 + 20, 20, 30, "darkgreen");
+
+            tela.adiciona(fundo);
+            tela.adiciona(plataforma);
+            tela.adiciona(casa);
+            tela.adiciona(porta);
+            tela.adiciona(lemmings);
 
             //...
             tela.processaRatoDescido = processaRatoDescido;
@@ -75,19 +81,12 @@
             tela.processaTeclaSubida = processaTeclaSubida;
         }
 
-        function desenha() {
-            contexto.clearRect(0, 0, tela.largura, tela.altura);
-            fundo.desenha(tela);
+        function desenha(tempoActual) {
+            tela.limpa();
+            tela.desenha(tempoActual);
 
-            for (var i = 0; i < plataforma.length; i++) {
-                plataforma[i].desenha(tela);
-            }
-
-            casa.desenha(tela);
-            porta.desenha(tela);
-
-            for (var i = 0; i < lemmings.length; i++) {
-                for (var j = 0; j < lemmings.length; j++) {
+            for (let i = 0; i < lemmings.length; i++) {
+                for (let j = 0; j < lemmings.length; j++) {
                     if (i != j) {
                         if (lemmings[i].colide(lemmings[j]) && lemmings[j].barreira) {
                             lemmings[i].direccao *= -1;
@@ -96,9 +95,9 @@
                 }
             }
 
-            for (var i = 0; i < lemmings.length; i++) {
-                var movimento = false;
-                for (var j = 0; j < plataforma.length; j++) {
+            for (let i = 0; i < lemmings.length; i++) {
+                let movimento = false;
+                for (let j = 0; j < plataforma.length; j++) {
                     if (lemmings[i].colide(plataforma[j], true)) {
                         lemmings[i].deltaX = lemmings[i].direccao * velocidade;
                         movimento = true;
@@ -107,24 +106,28 @@
                 if (!movimento || lemmings[i].barreira) {
                     lemmings[i].deltaX = 0;
                 }
-                lemmings[i].desenha(tela);
                 if (lemmings[i].colide(porta)) {
                     lemmings[i].activo = false;
                     lemmings[i].visivel = false;
                 }
             }
-            //...
 
+            //...
             if (continua) {
                 contador++;
                 window.requestAnimationFrame(desenha);
             }
         }
 
-        function processaRatoDescido() {
+        function processaClique(evento) {
             // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
-            for (var i = 0; i < lemmings.length; i++) {
+        }
+
+        function processaRatoDescido(evento) {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+            for (let i = 0; i < lemmings.length; i++) {
                 if (lemmings[i].contemPonto(tela.ratoX, tela.ratoY)) {
                     lemmings[i].preenchimento = "red";
                     lemmings[i].barreira = true;
@@ -132,51 +135,51 @@
             }
         }
 
-        function processaRatoSubido() {
+        function processaRatoSubido(evento) {
             // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
         }
 
-        function processaRatoMovido() {
+        function processaRatoMovido(evento) {
             // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
             //...
         }
 
-        function processaTeclaDescida() {
-            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
-            if (tela.codigoTecla == "Space") {        // barra de espaços
+        function processaTeclaDescida(evento) {
+            // usar a propriedade tela.tecla, referente à tecla usada pelo utilizador
+            if (tela.tecla == "Space") {        // barra de espaços
                 //...
             }
-            if (tela.codigoTecla == "ArrowLeft") {    // esquerda
+            if (tela.tecla == "ArrowLeft") {    // esquerda
                 //...
             }
-            if (tela.codigoTecla == "ArrowUp") {      // cima
+            if (tela.tecla == "ArrowUp") {      // cima
                 //...
             }
-            if (tela.codigoTecla == "ArrowRight") {   // direita
+            if (tela.tecla == "ArrowRight") {   // direita
                 //...
             }
-            if (tela.codigoTecla == "ArrowDown") {    // baixo
+            if (tela.tecla == "ArrowDown") {    // baixo
                 //...
             }
         }
 
-        function processaTeclaSubida() {
-            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
-            if (tela.codigoTecla == "Space") {
+        function processaTeclaSubida(evento) {
+            // usar a propriedade tela.tecla, referente à tecla usada pelo utilizador
+            if (tela.tecla == "Space") {
                 //...
             }
-            if ((tela.codigoTecla == "ArrowLeft") || (tela.codigoTecla == "ArrowRight")) {
+            if ((tela.tecla == "ArrowLeft") || (tela.tecla == "ArrowRight")) {
                 //...
             }
-            if ((tela.codigoTecla == "ArrowUp") || (tela.codigoTecla == "ArrowDown")) {
+            if ((tela.tecla == "ArrowUp") || (tela.tecla == "ArrowDown")) {
                 //...
             }
         }
 
         window.onload = function () {
             inicia();
-            desenha();
+            window.requestAnimationFrame(desenha);
         }
     </script>
 </head>

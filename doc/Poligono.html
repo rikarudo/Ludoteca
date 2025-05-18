@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Poligono<span class="signature">(x, y, vertices, preenchimento<span class="signature-attributes">opt</span>, contorno, espessura<span class="signature-attributes">opt</span>, justo<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Poligono<span class="signature">(x, y, vertices, preenchimento<span class="signature-attributes">opt</span>, contorno<span class="signature-attributes">opt</span>, espessura<span class="signature-attributes">opt</span>, justo<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">A classe <code>Poligono</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>polígonos</em>. Num nível básico, um <em>polígono</em> é definido por um <em>ponto</em>, correspondente, regra geral, ao canto superior esquerdo de um <em>rectângulo imaginário</em> que contenha o <em>polígono</em>. Assim, este será o <em>ponto</em> relativamente ao qual todos os pontos do <em>polígono</em> serão posicionados. Aconselha-se que todos os pontos do polígono se encontrem à direita e abaixo desta origem e tão próximos dela quanto possível; caso contrário, aspectos como a rotação do polígono poderão ter resultados diferentes do esperado. Deste modo, há a possibilidade, activada por omissão através do atributo <code>ajuste</code>, de <em>encostar</em> o polígono à origem &mdash; contudo, tal implica a alteração (o referido <em>ajuste</em>) de todos os pontos.</div>
+            <div class="class-description">A classe <code>Poligono</code> é uma subclasse de <code>Grafico</code>, servindo para representar <em>polígonos</em>. Num nível básico, um <em>polígono</em> é definido por um <em>ponto</em>, correspondente, regra geral, ao canto superior esquerdo de um <em>rectângulo imaginário</em> que contenha o <em>polígono</em>. Assim, este será o <em>ponto</em> relativamente ao qual todos os pontos do <em>polígono</em> serão posicionados. Aconselha-se que todos os pontos do polígono se encontrem à direita e abaixo desta origem e tão próximos dela quanto possível; caso contrário, aspectos como a rotação do polígono poderão ter resultados diferentes do esperado. Deste modo, há a possibilidade, activada por omissão, através do atributo <code>justo</code>, de <em>encostar</em> o polígono à origem &mdash; contudo, tal implica a alteração (o <em>ajuste</em>) de todos os pontos.</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="Poligono"><span class="type-signature"></span>new Poligono<span class="signature">(x, y, vertices, preenchimento<span class="signature-attributes">opt</span>, contorno, espessura<span class="signature-attributes">opt</span>, justo<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Poligono"><span class="type-signature"></span>new Poligono<span class="signature">(x, y, vertices, preenchimento<span class="signature-attributes">opt</span>, contorno<span class="signature-attributes">opt</span>, espessura<span class="signature-attributes">opt</span>, justo<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Construtor para criação de novos objectos do tipo <code>Poligono</code>
+    Construtor para criação de novos objectos do tipo <code>Poligono</code>.
 </div>
 
 
@@ -121,7 +121,7 @@
                 </td>
             
 
-            <td class="description last">Abscissa para posicionar o <em>polígono</em> no <code>canvas</code></td>
+            <td class="description last">Abscissa para posicionar o <em>polígono</em> no <code>canvas</code>.</td>
         </tr>
 
     
@@ -156,7 +156,7 @@
                 </td>
             
 
-            <td class="description last">Ordenada para posicionar o <em>polígono</em> no <code>canvas</code></td>
+            <td class="description last">Ordenada para posicionar o <em>polígono</em> no <code>canvas</code>.</td>
         </tr>
 
     
@@ -169,7 +169,7 @@
             <td class="type">
             
                 
-<span class="param-type">array</span>
+<span class="param-type">Array.&lt;{x: number, y: number}></span>
 
 
             
@@ -191,7 +191,7 @@
                 </td>
             
 
-            <td class="description last">Conjunto de pontos com os vários vértices do <em>polígono</em></td>
+            <td class="description last">Conjunto de pontos com os vários vértices do <em>polígono</em>.</td>
         </tr>
 
     
@@ -205,6 +205,9 @@
             
                 
 <span class="param-type">string</span>
+|
+
+<span class="param-type">CanvasPattern</span>
 
 
             
@@ -230,7 +233,7 @@
                 </td>
             
 
-            <td class="description last">Cor ou padrão do preenchimento do <em>polígono</em></td>
+            <td class="description last">Cor ou padrão do preenchimento do <em>polígono</em>.</td>
         </tr>
 
     
@@ -244,6 +247,9 @@
             
                 
 <span class="param-type">string</span>
+|
+
+<span class="param-type">CanvasPattern</span>
 
 
             
@@ -251,6 +257,8 @@
 
             
                 <td class="attributes">
+                
+                    &lt;optional><br>
                 
 
                 
@@ -262,12 +270,12 @@
             
                 <td class="default">
                 
-                    'black]'
+                    'black'
                 
                 </td>
             
 
-            <td class="description last">Cor ou padrão do contorno do <em>polígono</em></td>
+            <td class="description last">Cor ou padrão do contorno do <em>polígono</em>.</td>
         </tr>
 
     
@@ -306,7 +314,7 @@
                 </td>
             
 
-            <td class="description last">Espessura do contorno do <em>polígono</em></td>
+            <td class="description last">Espessura do contorno do <em>polígono</em>.</td>
         </tr>
 
     
@@ -345,7 +353,7 @@
                 </td>
             
 
-            <td class="description last">Indicação de que o <em>polígono</em> deve ser reposicionado de forma a ficar <em>encostado</em> ao ponto usado para definir o seu posicionamento no <code>canvas</code></td>
+            <td class="description last">Indicação de que o <em>polígono</em> deve ser reposicionado de forma a ficar <em>encostado</em> ao ponto usado para definir o seu posicionamento no <code>canvas</code>.</td>
         </tr>
 
     
@@ -405,7 +413,7 @@
                 </td>
             
 
-            <td class="description last">Abscissa para posicionar o <em>polígono</em> no <code>canvas</code></td>
+            <td class="description last">Abscissa para posicionar o <em>polígono</em> no <code>canvas</code>.</td>
         </tr>
 
     
@@ -432,7 +440,7 @@
                 </td>
             
 
-            <td class="description last">Ordenada para posicionar o <em>polígono</em> no <code>canvas</code></td>
+            <td class="description last">Ordenada para posicionar o <em>polígono</em> no <code>canvas</code>.</td>
         </tr>
 
     
@@ -486,7 +494,7 @@
                 </td>
             
 
-            <td class="description last">Cor ou padrão do preenchimento <em>polígono</em> &mdash; se for <code>null</code>, o <em>polígono</em> não é preenchido</td>
+            <td class="description last">Cor ou padrão do preenchimento <em>polígono</em>.</td>
         </tr>
 
     
@@ -513,7 +521,7 @@
                 </td>
             
 
-            <td class="description last">Cor ou padrão do contorno do <em>polígono</em> &mdash; se for <code>null</code>, o contorno não é desenhado</td>
+            <td class="description last">Cor ou padrão do contorno do <em>polígono</em>.</td>
         </tr>
 
     
@@ -540,7 +548,7 @@
                 </td>
             
 
-            <td class="description last">Espessura do contorno do <em>polígono</em> &mdash; se a <em>espessura</em> tiver um valor igual ou inferior a zero (<code>0</code>), o contorno não é desenhado</td>
+            <td class="description last">Espessura do contorno do <em>polígono</em> &mdash. Se a <em>espessura</em> tiver um valor igual a zero (<code>0</code>), o contorno não é desenhado.</td>
         </tr>
 
     
@@ -569,7 +577,7 @@
                 </td>
             
 
-            <td class="description last">Variação horizontal da posição do <em>polígono</em></td>
+            <td class="description last">Variação horizontal da posição do <em>polígono</em>, após cada iteração de desenho.</td>
         </tr>
 
     
@@ -598,7 +606,7 @@
                 </td>
             
 
-            <td class="description last">Variação vertical da posição do <em>polígono</em></td>
+            <td class="description last">Variação vertical da posição do <em>polígono</em>, após cada iteração de desenho.</td>
         </tr>
 
     
@@ -627,7 +635,7 @@
                 </td>
             
 
-            <td class="description last">Distância horizontal do <em>polígono</em> até um dado ponto</td>
+            <td class="description last">Distância horizontal do <em>polígono</em> até um dado ponto.</td>
         </tr>
 
     
@@ -656,65 +664,7 @@
                 </td>
             
 
-            <td class="description last">Distância vertical do <em>polígono</em> até um dado ponto</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>deslocX</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    0
-                
-                </td>
-            
-
-            <td class="description last">Deslocamento horizontal do ponto mais à esquerda do polígono até ponto usado para posicionar o <em>polígono</em>, quando se fez o ajuste posicional do polígono &mdash; se o seu valor for zero (<code>0</code>), não foi feito qualquer ajuste</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>deslocY</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    0
-                
-                </td>
-            
-
-            <td class="description last">Deslocamento vertical do ponto mais à esquerda do polígono até ponto usado para posicionar o <em>polígono</em>, quando se fez o ajuste posicional do polígono &mdash; se o seu valor for zero (<code>0</code>), não foi feito qualquer ajuste</td>
+            <td class="description last">Distância vertical do <em>polígono</em> até um dado ponto.</td>
         </tr>
 
     
@@ -743,7 +693,7 @@
                 </td>
             
 
-            <td class="description last">Força que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação vertical do <em>polígono</em>, actuando como a <em>gravidade</em></td>
+            <td class="description last">Força que, quando usada em conjunto com um <em>ângulo</em>, pode ser utilizada para definir a variação vertical do <em>polígono</em>, actuando como a <em>gravidade</em>.</td>
         </tr>
 
     
@@ -772,7 +722,36 @@
                 </td>
             
 
-            <td class="description last">Velocidade que, quando usada em conjunto com o <em>ângulo</em>, pode ser utilizada para definir a variação horizontal e vertical do <em>polígono</em></td>
+            <td class="description last">Velocidade que, quando usada em conjunto com um <em>ângulo (de rotação)</em>, pode ser utilizada para definir a variação horizontal e vertical do <em>polígono</em>.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>atrito</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    0.0
+                
+                </td>
+            
+
+            <td class="description last">Força que reduz o movimento (sejam os <em>deltas</em> ou a <em>velocidade</em>) do <em>polígono</em>. O valor deve estar compreendido entre <code>0</code> (sem atrito) e <code>1</code> (movimento totalmente travado). Se o valor indicado estiver fora deste intervalo, será corrigido para <code>0.0</code>, se inferior, ou para <code>1.0</code>, se superior.</td>
         </tr>
 
     
@@ -801,7 +780,7 @@
                 </td>
             
 
-            <td class="description last">Ângulo de rotação do <em>polígono</em> quando desenhado no <code>canvas</code>, compreendido entre <code>0</code> e <code>360</code> &mdash; a rotação é feita tendo como referência o centro do <em>polígono</em></td>
+            <td class="description last">Ângulo de rotação do <em>polígono</em> quando desenhado no <code>canvas</code>, usado também em conjunto com a <em>velocidade</em>, compreendido entre <code>0</code> e <code>360</code> &mdash; independentemente do valor atribuído, é sempre usado o <em>resto</em> da sua divisão por <code>360</code>. A rotação é feita tendo como referência o centro do <em>polígono</em>.</td>
         </tr>
 
     
@@ -830,7 +809,7 @@
                 </td>
             
 
-            <td class="description last">Variação do ângulo de rotação do <em>polígono</em></td>
+            <td class="description last">Variação do ângulo de rotação do <em>polígono</em>, após cada iteração de desenho.</td>
         </tr>
 
     
@@ -859,7 +838,7 @@
                 </td>
             
 
-            <td class="description last">Ângulo cujo co-seno afecta a aplicação do sentido da <em>gravidade</em> ao <em>polígono</em>, compreendido entre <code>0</code> e <code>180</code></td>
+            <td class="description last">Ângulo cujo co-seno afecta a aplicação do sentido da <em>gravidade</em> ao <em>polígono</em>, compreendido entre <code>0</code> e <code>180</code>. Se o valor indicado estiver fora deste intervalo, será corrigido para <code>0</code>, se inferior, ou para <code>360</code>, se superior.</td>
         </tr>
 
     
@@ -888,7 +867,7 @@
                 </td>
             
 
-            <td class="description last">Variação do ângulo aplicado à <em>gravidade</em></td>
+            <td class="description last">Variação do ângulo aplicado à <em>gravidade</em>, após cada iteração de desenho.</td>
         </tr>
 
     
@@ -917,7 +896,7 @@
                 </td>
             
 
-            <td class="description last">Valor da opacidade do <em>polígono</em> &mdash; pode variar entre <code>0.0</code> (completamente transparente) e <code>1.0</code> (completamente opaco), com os valores fora desse intervalo a serem ignorados (mantendo-se o valor anteriormente definido)</td>
+            <td class="description last">Valor da opacidade do <em>polígono</em> &mdash; pode variar entre <code>0.0</code> (completamente transparente) e <code>1.0</code> (completamente opaco). Se o valor atribuído estiver fora deste intervalo, será corrigido para <code>0.0</code>, se inferior, ou para <code>1.0</code>, se superior.</td>
         </tr>
 
     
@@ -946,7 +925,7 @@
                 </td>
             
 
-            <td class="description last">Indicação de que o <em>polígono</em> deve testar colisões, quando chamado o método <code>colide()</code></td>
+            <td class="description last">Indicação de que o <em>polígono</em> deve testar colisões, quando chamado o método <code>colide()</code>. Será útil quando os <em>polígono</em> são processados em bloco, por exemplo, num <em>array</em>, e nem todos devem ser testados para colisões, ou mesmo para quando há momentos em que o <em>polígono</em> deve reagir a colisões e noutros não.</td>
         </tr>
 
     
@@ -975,14 +954,14 @@
                 </td>
             
 
-            <td class="description last">Indicação de que o <em>polígono</em> deve ser desenhado no <code>canvas</code>, quando chamado o método <code>desenha()</code></td>
+            <td class="description last">Indicação de que o <em>polígono</em> deve ser desenhado no <code>canvas</code>, quando chamado o método <code>desenha()</code>.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>capturado</code></td>
+                <td class="name"><code>actualiza</code></td>
             
 
             <td class="type">
@@ -999,12 +978,12 @@
             
                 <td class="default">
                 
-                    false
+                    true
                 
                 </td>
             
 
-            <td class="description last">Indicação de que o <em>polígono</em> deve ficar <em>preso</em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas, quando chamado o método <code>desenha()</code></td>
+            <td class="description last">Indicação de que o <em>polígono</em> deve ter o seu posicionamento actualizado após o seu <em>desenho</em> na <em>tela</em>.</td>
         </tr>
 
     
@@ -1043,7 +1022,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line693">line 693</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1173">line 1173</a>
     </li></ul></dd>
     
 
@@ -1066,6 +1045,197 @@
 
 
 
+<h5>Throws:</h5>
+<ul>
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se <code>x</code> ou <code>y</code> não forem números finitos.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se <code>vertices</code> não for um "array" com pelo menos 3 pontos válidos.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se cada vértice não for um objecto com propriedades numéricas <code>x</code> e <code>y</code>.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se <code>preenchimento</code> ou <code>contorno</code> não forem <em>strings</em> ou objectos do tipo <code>CanvasPattern</code>.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se <code>espessura</code> não for um número finito.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se <code>espessura</code> for um número negativo.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">RangeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se <code>justo</code> não for um valor booleano.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
 
 
 
@@ -1104,13 +1274,13 @@
 
         
             
-<h4 class="name" id="altura"><span class="type-signature"></span>altura<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="altura"><span class="type-signature">(readonly) </span>altura<span class="type-signature"> :number</span></h4>
 
 
 
 
 <div class="description">
-    Altura do menor <em>rectângulo imaginário</em> que envolva este <em>polígono</em> &mdash; sendo definida pela distância entre o <em>y</em> do ponto mais acima e o <em>y</em> do ponto mais abaixo do <em>polígono</em>
+    Altura do menor <em>rectângulo imaginário</em> que envolva este <em>polígono</em>. É definida pela distância entre o <em>y</em> do ponto mais acima e o <em>y</em> do ponto mais abaixo do <em>polígono</em>.
 </div>
 
 
@@ -1163,7 +1333,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line794">line 794</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1377">line 1377</a>
     </li></ul></dd>
     
 
@@ -1181,13 +1351,13 @@
 
         
             
-<h4 class="name" id="alturaEnvelope"><span class="type-signature"></span>alturaEnvelope<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="alturainvolucro"><span class="type-signature">(readonly) </span>alturainvolucro<span class="type-signature"> :number</span></h4>
 
 
 
 
 <div class="description">
-    Altura do menor <em>rectângulo imaginário</em> que envolva o <em>envelope</em> deste <em>gráfico</em> &mdash; sendo definida pela distância entre o <em>y</em> do ponto mais acima e o <em>y</em> do ponto mais abaixo do <em>envelope</em>
+    Altura do menor <em>rectângulo imaginário</em> que envolva o <em>invólucro</em> deste <em>gráfico</em>, sendo definida pela distância entre o <em>x</em> do ponto mais acima e o <em>x</em> do ponto mais abaixo do <em>invólucro</em>.
 </div>
 
 
@@ -1217,7 +1387,7 @@
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Grafico.html#alturaEnvelope">Grafico#alturaEnvelope</a>
+        <a href="Grafico.html#alturainvolucro">Grafico#alturainvolucro</a>
     </li></ul></dd>
     
 
@@ -1240,161 +1410,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line296">line 296</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="anguloGravidade"><span class="type-signature"></span>anguloGravidade<span class="type-signature"> :number</span></h4>
-
-
-
-
-<div class="description">
-    Ângulo cujo co-seno afecta a aplicação do sentido da <em>gravidade</em> ao <em>gráfico</em>, compreendido entre <code>0</code> e <code>180</code> <em>[obtenção]</em>
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Grafico.html#anguloGravidade">Grafico#anguloGravidade</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line190">line 190</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="anguloRotacao"><span class="type-signature"></span>anguloRotacao<span class="type-signature"> :number</span></h4>
-
-
-
-
-<div class="description">
-    Ângulo de rotação do <em>gráfico</em>, compreendido entre <code>0</code> e <code>360</code> <em>[obtenção]</em>
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Grafico.html#anguloRotacao">Grafico#anguloRotacao</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line212">line 212</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line372">line 372</a>
     </li></ul></dd>
     
 
@@ -1418,7 +1434,7 @@
 
 
 <div class="description">
-    Constante que representa um <em>reposicionamento</em> em <em>baixo</em> &mdash; usada no método <code>colide()</code>, com <code>reposicionamento=true</code>, da classe <code>Grafico</code> e respectivas subcasses
+    Constante que representa um <em>reposicionamento</em> em <em>baixo</em> &mdash; usada no método <code>colide()</code>, com <code>reposiciona=true</code>, da classe <code>Grafico</code> e respectivas subclasses.
 </div>
 
 
@@ -1467,11 +1483,16 @@
     
 
     
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>2</li>
+        </ul></dd>
+    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line337">line 337</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line640">line 640</a>
     </li></ul></dd>
     
 
@@ -1489,13 +1510,13 @@
 
         
             
-<h4 class="name" id="centroide"><span class="type-signature"></span>centroide<span class="type-signature"> :<a href="global.html#PontoCartesiano">PontoCartesiano</a></span></h4>
+<h4 class="name" id="capturado"><span class="type-signature">(readonly) </span>capturado<span class="type-signature"> :boolean</span></h4>
 
 
 
 
 <div class="description">
-    Centróide do <em>polígono</em> considerando os pontos dos seus vértices
+    Indicação de que o <em>gráfico</em> se encontra (ou não) <em>preso</em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas, quando chamado o método <code>desenha()</code>.
 </div>
 
 
@@ -1504,7 +1525,84 @@
     <ul>
         <li>
             
-<span class="param-type"><a href="global.html#PontoCartesiano">PontoCartesiano</a></span>
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#capturado">Grafico#capturado</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line392">line 392</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="centroide"><span class="type-signature">(readonly) </span>centroide<span class="type-signature"> :Object</span></h4>
+
+
+
+
+<div class="description">
+    Centróide do <em>polígono</em>, calculado a partir dos seus vértices usando a fórmula da área de Gauss.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
 
 
         </li>
@@ -1548,7 +1646,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line808">line 808</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1397">line 1397</a>
     </li></ul></dd>
     
 
@@ -1572,7 +1670,7 @@
 
 
 <div class="description">
-    Constante que representa um <em>reposicionamento</em> em <em>cima</em> &mdash; usada no método <code>colide()</code>, com <code>reposicionamento=true</code>, da classe <code>Grafico</code> e respectivas subcasses
+    Constante que representa um <em>reposicionamento</em> em <em>cima</em> &mdash; usada no método <code>colide()</code>, com <code>reposiciona=true</code>, da classe <code>Grafico</code> e respectivas subclasses.
 </div>
 
 
@@ -1621,11 +1719,16 @@
     
 
     
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>1</li>
+        </ul></dd>
+    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line329">line 329</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line632">line 632</a>
     </li></ul></dd>
     
 
@@ -1649,7 +1752,7 @@
 
 
 <div class="description">
-    Constante que representa um <em>reposicionamento</em> à <em>direita</em> &mdash; usada no método <code>colide()</code>, com <code>reposicionamento=true</code>, da classe <code>Grafico</code> e respectivas subcasses
+    Constante que representa um <em>reposicionamento</em> à <em>direita</em> &mdash; usada no método <code>colide()</code>, com <code>reposiciona=true</code>, da classe <code>Grafico</code> e respectivas subclasses.
 </div>
 
 
@@ -1698,88 +1801,16 @@
     
 
     
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line353">line 353</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="envelope"><span class="type-signature"></span>envelope<span class="type-signature"> :array</span></h4>
-
-
-
-
-<div class="description">
-    Conjunto de pontos que delimitam o <em>polígono</em>, definindo um <em>envelope</em>
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">array</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Grafico.html#envelope">Grafico#envelope</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>4</li>
+        </ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line724">line 724</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line656">line 656</a>
     </li></ul></dd>
     
 
@@ -1803,7 +1834,7 @@
 
 
 <div class="description">
-    Constante que representa um <em>reposicionamento</em> à <em>esquerda</em> &mdash; usada no método <code>colide()</code>, com <code>reposicionamento=true</code>, da classe <code>Grafico</code> e respectivas subcasses
+    Constante que representa um <em>reposicionamento</em> à <em>esquerda</em> &mdash; usada no método <code>colide()</code>, com <code>reposiciona=true</code>, da classe <code>Grafico</code> e respectivas subclasses.
 </div>
 
 
@@ -1852,11 +1883,16 @@
     
 
     
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>3</li>
+        </ul></dd>
+    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line345">line 345</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line648">line 648</a>
     </li></ul></dd>
     
 
@@ -1874,13 +1910,13 @@
 
         
             
-<h4 class="name" id="FALSO"><span class="type-signature">(constant) </span>FALSO<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="INDETERMINADA"><span class="type-signature">(constant) </span>INDETERMINADA<span class="type-signature"> :number</span></h4>
 
 
 
 
 <div class="description">
-    Constante que representa a ausência de <em>reposicionamento</em> &mdash; usada no método <code>colide()</code>, com <code>reposicionamento=true</code>, da classe <code>Grafico</code> e respectivas subcasses
+    Constante que representa o caso em que há uma <em>colisão</em>, mas, por algum caso extremo, não foi possível determinar a posição anterior do gráfico antes da colisão e realizar o devido <em>reposicionamento</em>; usada no método <code>colide()</code>, com <code>reposiciona=true</code>, da classe <code>Grafico</code> e respectivas subclasses.
 </div>
 
 
@@ -1910,7 +1946,89 @@
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Grafico.html#FALSO">Grafico#FALSO</a>
+        <a href="Grafico.html#INDETERMINADA">Grafico#INDETERMINADA</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>5</li>
+        </ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line664">line 664</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="involucro"><span class="type-signature">(readonly) </span>involucro<span class="type-signature"> :Array.&lt;{x: number, y: number}></span></h4>
+
+
+
+
+<div class="description">
+    Conjunto de pontos que delimitam o <em>polígono</em>, definindo o seu <em>invólucro</em> actual (já com rotação e translação aplicadas).
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;{x: number, y: number}></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#involucro">Grafico#involucro</a>
     </li></ul></dd>
     
 
@@ -1933,7 +2051,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line321">line 321</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1313">line 1313</a>
     </li></ul></dd>
     
 
@@ -1951,13 +2069,13 @@
 
         
             
-<h4 class="name" id="largura"><span class="type-signature"></span>largura<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="largura"><span class="type-signature">(readonly) </span>largura<span class="type-signature"> :number</span></h4>
 
 
 
 
 <div class="description">
-    Largura do menor <em>rectângulo imaginário</em> que envolva este <em>polígono</em> &mdash; sendo definida pela distância entre o <em>x</em> do ponto mais à esquerda e o <em>x</em> do ponto mais à direita do <em>polígono</em>
+    Largura do menor <em>rectângulo imaginário</em> que envolve este <em>polígono</em>. É definida pela distância entre o <em>x</em> do ponto mais à esquerda e o <em>x</em> do ponto mais à direita do <em>polígono</em>.
 </div>
 
 
@@ -2010,7 +2128,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line780">line 780</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1357">line 1357</a>
     </li></ul></dd>
     
 
@@ -2028,13 +2146,13 @@
 
         
             
-<h4 class="name" id="larguraEnvelope"><span class="type-signature"></span>larguraEnvelope<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="largurainvolucro"><span class="type-signature">(readonly) </span>largurainvolucro<span class="type-signature"> :number</span></h4>
 
 
 
 
 <div class="description">
-    Largura do menor <em>rectângulo imaginário</em> que envolva o <em>envelope</em> deste <em>gráfico</em> &mdash; sendo definida pela distância entre o <em>x</em>  do ponto mais à esquerda e o <em>x</em> do ponto mais à direita do <em>envelope</em>
+    Largura do menor <em>rectângulo imaginário</em> que envolva o <em>invólucro</em> deste <em>gráfico</em>, sendo definida pela distância entre o <em>x</em> do ponto mais à esquerda e o <em>x</em> do ponto mais à direita do <em>invólucro</em>.
 </div>
 
 
@@ -2064,7 +2182,7 @@
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="Grafico.html#larguraEnvelope">Grafico#larguraEnvelope</a>
+        <a href="Grafico.html#largurainvolucro">Grafico#largurainvolucro</a>
     </li></ul></dd>
     
 
@@ -2087,7 +2205,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line282">line 282</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line352">line 352</a>
     </li></ul></dd>
     
 
@@ -2105,13 +2223,13 @@
 
         
             
-<h4 class="name" id="vertices"><span class="type-signature"></span>vertices<span class="type-signature"> :array</span></h4>
+<h4 class="name" id="totalDeltaX"><span class="type-signature">(readonly) </span>totalDeltaX<span class="type-signature"> :number</span></h4>
 
 
 
 
 <div class="description">
-    Conjunto de pontos com os vários vértices do <em>polígono</em> <em>[atribuição]</em>
+    Deslocamento total no eixo dos <em>xx</em>, considerando o <code>deltaX</code>, a <code>velocidade</code>, o <code>anguloRotacao</code> e o <code>deltaTempo</code>.
 </div>
 
 
@@ -2120,7 +2238,7 @@
     <ul>
         <li>
             
-<span class="param-type">array</span>
+<span class="param-type">number</span>
 
 
         </li>
@@ -2139,6 +2257,11 @@
     
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#totalDeltaX">Grafico#totalDeltaX</a>
+    </li></ul></dd>
+    
 
     
 
@@ -2159,7 +2282,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line758">line 758</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line401">line 401</a>
     </li></ul></dd>
     
 
@@ -2177,13 +2300,13 @@
 
         
             
-<h4 class="name" id="vertices"><span class="type-signature"></span>vertices<span class="type-signature"> :array</span></h4>
+<h4 class="name" id="totalDeltaY"><span class="type-signature">(readonly) </span>totalDeltaY<span class="type-signature"> :number</span></h4>
 
 
 
 
 <div class="description">
-    Conjunto de pontos com os vários vértices do <em>polígono</em> <em>[obtenção]</em>
+    Deslocamento total no eixo dos <em>yy</em>, considerando o <code>deltaY</code>, a <code>velocidade</code>, o <code>anguloRotacao</code>, a <code>gravidade</code>, o <code>anguloGravidade</code> e o <code>deltaTempo</code>.
 </div>
 
 
@@ -2192,7 +2315,7 @@
     <ul>
         <li>
             
-<span class="param-type">array</span>
+<span class="param-type">number</span>
 
 
         </li>
@@ -2211,6 +2334,11 @@
     
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Grafico.html#totalDeltaY">Grafico#totalDeltaY</a>
+    </li></ul></dd>
+    
 
     
 
@@ -2231,7 +2359,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line772">line 772</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line410">line 410</a>
     </li></ul></dd>
     
 
@@ -2259,7 +2387,7 @@
     
 
     
-    <h4 class="name" id="captura"><span class="type-signature"></span>captura<span class="signature">(ratoX, ratoY)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="captura"><span class="type-signature"></span>captura<span class="signature">(tela)</span><span class="type-signature"></span></h4>
     
 
     
@@ -2267,7 +2395,7 @@
 
 
 <div class="description">
-    Este método faz com que o <em>gráfico</em> fique <em>preso</em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas.
+    Faz com que o <em>gráfico</em> fique <em>preso</em> às coordenadas do rato, seguindo o seu movimento e adoptando as suas coordenadas. O <em>gráfico</em> passa a acompanhar o rato, ajustando a sua posição com base na diferença inicial entre as suas coordenadas e as do rato.
 </div>
 
 
@@ -2303,13 +2431,13 @@
 
         <tr>
             
-                <td class="name"><code>ratoX</code></td>
+                <td class="name"><code>tela</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type"><a href="Tela.html">Tela</a></span>
 
 
             
@@ -2319,30 +2447,7 @@
 
             
 
-            <td class="description last">Abscissa das coordenados do rato, que o <em>gráfico</em> irá seguir e adoptar (fazendo as necessários compensações posicionais)</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>ratoY</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Ordenada das coordenados do rato, que o <em>gráfico</em> irá seguir e adoptar (fazendo as necessários compensações posicionais)</td>
+            <td class="description last">Objecto que representa o elemento <code>canvas</code>, do qual se vai obter as coordenados do rato, que o <em>gráfico</em> irá seguir e adoptar (fazendo as necessárias compensações posicionais).</td>
         </tr>
 
     
@@ -2388,7 +2493,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line157">line 157</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line539">line 539</a>
     </li></ul></dd>
     
 
@@ -2411,6 +2516,35 @@
 
 
 
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>tela</code> não for uma instância de <code>Tela</code>.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
 
 
 
@@ -2424,7 +2558,7 @@
     
 
     
-    <h4 class="name" id="colide"><span class="type-signature"></span>colide<span class="signature">(outro, reposicionamento<span class="signature-attributes">opt</span>, afastamento<span class="signature-attributes">opt</span>, saltos<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="colide"><span class="type-signature"></span>colide<span class="signature">(outro, reposiciona<span class="signature-attributes">opt</span>, afastamento<span class="signature-attributes">opt</span>, omissoes<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
     
 
     
@@ -2432,7 +2566,7 @@
 
 
 <div class="description">
-    Este método verifica se existe uma colisão entre <em>este gráfico</em> e <em>outro</em>. Tal acontece quando um dos pontos de um <em>gráfico</em> se encontra contido na área de <em>outro</em>. Para o efeito, são usados os pontos que definem o <em>envelope</em> de cada <em>gráfico</em>. Este método também permite, caso se verifique a colisão, reposicionar <em>este gráfico</em>, deixando-o encostado (ou próximo disso, consoante o valor do <em>afastamento</em>) ao <em>outro</em>, evitando a sobreposição de ambos. O <em>reposicionamento</em> depende da posição imediatamente anterior <em>deste gráfico</em> em relação ao <em>outro</em>. <em>[Neste momento, o reposicionamento ainda só funciona devidamente com movimentos definidos pelo <code>deltaX</code>, pelo <code>deltaY</code> e pela <code>gravidade</code>.]</em>
+    Verifica se existe uma colisão entre <em>este gráfico</em> e <em>outro</em>. Tal ocorre quando um dos pontos de um <em>gráfico</em> se encontra contido na área de <em>outro</em>. Para o efeito, são usados os pontos que definem o <em>invólucro</em> de cada <em>gráfico</em>. Também permite, caso se verifique a colisão, reposicionar <em>este gráfico</em>, deixando-o encostado (ou próximo disso, consoante o valor do <em>afastamento</em>) ao <em>outro</em>, evitando a sobreposição de ambos. O <em>reposicionamento</em> depende da posição imediatamente anterior <em>deste gráfico</em> em relação ao <em>outro</em>.
 </div>
 
 
@@ -2500,14 +2634,14 @@
                 </td>
             
 
-            <td class="description last">Outro <em>gráfico</em> para verificar se existe alguma colisão entre <em>esse</em> e <em>este</em></td>
+            <td class="description last">Outro <em>gráfico</em> para verificar se existe alguma colisão entre <em>esse</em> e <em>este</em>.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>reposicionamento</code></td>
+                <td class="name"><code>reposiciona</code></td>
             
 
             <td class="type">
@@ -2539,7 +2673,7 @@
                 </td>
             
 
-            <td class="description last">Indicação de que este <em>gráfico</em> deve ser reposicionado (ou não) quando colide com o outro</td>
+            <td class="description last">Indicação de que este <em>gráfico</em> deve ser reposicionado (ou não) quando colide com o <em>outro</em>.</td>
         </tr>
 
     
@@ -2578,14 +2712,14 @@
                 </td>
             
 
-            <td class="description last">Afastamento a aplicar entre os dois <em>gráficos</em> no reposicionamento; idealmente, este deve ser compreendido entre zero (<code>0</code>) e um valor inferior aos valores de quaisquer deslocamentos horizontais e verticais</td>
+            <td class="description last">Afastamento a aplicar entre os dois <em>gráficos</em> no reposicionamento; idealmente, este deve ser compreendido entre zero (<code>0</code>) e um valor inferior aos valores de quaisquer deslocamentos horizontais e verticais.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>saltos</code></td>
+                <td class="name"><code>omissoes</code></td>
             
 
             <td class="type">
@@ -2617,7 +2751,7 @@
                 </td>
             
 
-            <td class="description last">Número de <em>saltos</em> (omissões de iterações ou <em>frames</em>) em chamadas consecutivas a este método &mdash; pode ser útil definir um número de <em>saltos</em> superior a zero (<code>0</code>) em situações com verificações de colisões entre muitos <em>gráficos</em> em simultâneo, de forma a diminuir a exigência computacional; se <code>reposicionamento=true</code>, este parâmetro é ignorado, não havendo <em>saltos</em>, de modo a que o <em>reposicionamento</em> seja correctamente efectuado</td>
+            <td class="description last">Número de <em>omissoes</em> em chamadas consecutivas &mdash; pode ser útil definir um número de <em>omissoes</em> superior a zero (<code>0</code>) em situações com verificações de colisões entre muitos <em>gráficos</em> em simultâneo, de forma a diminuir a exigência computacional.</td>
         </tr>
 
     
@@ -2663,7 +2797,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line73">line 73</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line428">line 428</a>
     </li></ul></dd>
     
 
@@ -2686,13 +2820,177 @@
 
 
 
+<h5>Throws:</h5>
+<ul>
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>outro</code> não for uma instância de uma subclasse de <code>Grafico</code>.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>reposiciona</code> não for do tipo booleano.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>afastamento</code> não for um número finito e não negativo.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>afastamento</code> não for um número não negativo.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">RangeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>omissoes</code> não for um número inteiro.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>omissoes</code> não for um número não negativo.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">RangeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
 
 
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
-    Se houver colisão, <code>true</code>, ou, no caso de se aplicar resposicionamento, <code>1</code>, <code>2</code>, <code>3</code> ou <code>4</code>, correspondentes às posições <em>cima</em>, <em>baixo</em>, <em>esquerda</em> e <em>direita</em>, respectivamente, e <code>0</code>, se não tiver sido aplicado &mdash; valores também representados, respectivamente pelas constantes <code>Grafico.CIMA</code>, <code>Grafico.BAIXO</code>, <code>Grafico.ESQUERDA</code>, <code>Grafico.DIREITA</code> e <code>Grafico.FALSO</code>; senão, <code>false</code>
+    Se houver colisão, <code>true</code>, ou, no caso de se aplicar reposicionamento, <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code> ou <code>5</code>, correspondentes às posições <em>cima</em>, <em>baixo</em>, <em>esquerda</em>, <em>direita</em> ou <em>indeterminada</em>, respectivamente &mdash; valores também representados, respectivamente, pelas constantes <code>Grafico.CIMA</code>, <code>Grafico.BAIXO</code>, <code>Grafico.ESQUERDA</code>, <code>Grafico.DIREITA</code> e <code>Grafico.INDETERMINADO</code>; senão, <code>false</code>.
 </div>
 
 
@@ -2729,7 +3027,7 @@
 
 
 <div class="description">
-    Este método verifica se um dado <em>ponto</em> está contido na área do <em>envelope</em> <em>gráfico</em>, assumindo-se que o <em>gráfico</em> é um <em>polígono</em>. Assim, tal acontece quando um segmento de recta com início no ponto especificado intersecta um número ímpar de arestas do <em>polígono</em>.
+    Verifica se um dado <em>ponto</em> está contido área do <em>invólucro</em> rectangular que envolve este <em>gráfico</em>. Tal acontece quando esse <em>ponto</em> está compreendido entre <em>x</em> e <em>x mais a largura</em> e entre <em>y</em> e <em>y mais altura</em> desse <em>invólucro</em>. O teste é realizado utilizando o algoritmo do número de intersecções, verificando a sua paridade &mdash:  conhecido como <em>ray casting</em>.
 </div>
 
 
@@ -2781,7 +3079,7 @@
 
             
 
-            <td class="description last">Abscissa do ponto a testar se está contido neste <em>gráfico</em></td>
+            <td class="description last">Abscissa do ponto a testar se está contido neste <em>gráfico</em>.</td>
         </tr>
 
     
@@ -2804,7 +3102,7 @@
 
             
 
-            <td class="description last">Ordenada do ponto a testar se está contido neste <em>gráfico</em></td>
+            <td class="description last">Ordenada do ponto a testar se está contido neste <em>gráfico</em>.</td>
         </tr>
 
     
@@ -2850,7 +3148,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line137">line 137</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line513">line 513</a>
     </li></ul></dd>
     
 
@@ -2873,13 +3171,42 @@
 
 
 
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se <code>x</code> ou <code>y</code> não forem números finitos.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
 
 
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
-    Se o ponto estiver contido neste <em>gráfico</em>, <code>true</code>; senão, <code>false</code>
+    Se o ponto estiver contido neste <em>gráfico</em>, <code>true</code>; senão, <code>false</code>.
 </div>
 
 
@@ -2916,7 +3243,7 @@
 
 
 <div class="description">
-    Este método mais não faz que chamar o método <code>contemPonto(x, y)</code> para cada um dos pontos de um <em>array</em>, verificando se algum deles se encontra dentro da área do <em>gráfico</em>.
+    Verifica se algum dos pontos de um <em>array</em> está contido na área deste <em>gráfico</em>, chamando o método <code>contemPonto()</code> para cada elemento do <em>array</em>.
 </div>
 
 
@@ -2958,7 +3285,7 @@
             <td class="type">
             
                 
-<span class="param-type">array</span>
+<span class="param-type">Array.&lt;{x: number, y: number}></span>
 
 
             
@@ -2968,7 +3295,7 @@
 
             
 
-            <td class="description last">Conjunto de pontos a verificar se estão contidos no <em>gráfico</em></td>
+            <td class="description last">Conjunto de pontos a verificar (coordenadas <code>x</code> e <code>y</code> numéricas).</td>
         </tr>
 
     
@@ -3014,7 +3341,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line122">line 122</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line491">line 491</a>
     </li></ul></dd>
     
 
@@ -3037,13 +3364,69 @@
 
 
 
+<h5>Throws:</h5>
+<ul>
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>pontos</code> não for um <em>array</em>.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se algum elemento do <em>array</em> não for um objecto com propriedades numéricas <code>x</code> e <code>y</code>.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
 
 
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
-    Se algum um dos pontos constantes no <em>array</em> estiver contido neste <em>grafico</em>, <code>true</code>; senão, <code>false</code>
+    Se algum um dos pontos constantes no <em>array</em> estiver contido neste <em>gráfico</em>, <code>true</code>; caso contrário, <code>false</code>.
 </div>
 
 
@@ -3072,7 +3455,7 @@
     
 
     
-    <h4 class="name" id="desenha"><span class="type-signature"></span>desenha<span class="signature">(tela)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="desenha"><span class="type-signature"></span>desenha<span class="signature">(tela, deltaTempo<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -3080,7 +3463,7 @@
 
 
 <div class="description">
-    Este método desenha um <em>polígono</em> no <code>canvas</code>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo de um <em>rectângulo imaginário</em> que contenha o <em>polígono</em>.
+    Desenha um <em>polígono</em> no <code>canvas</code>, usando como referência de posicionamento o <em>ponto</em> correspondente ao canto superior esquerdo de um <em>rectângulo imaginário</em> que contenha o <em>polígono</em>. Opcionalmente, também recebe como argumento um <em>delta tempo</em>, de modo a garantir uma uniformização das animações e dos movimentos entre diferentes dispositivos. Se este argumento for usado, as <em>variações</em> das coordenadas devem ser expressas em função de um segundo &mdash; i.e., <em>pixels</em> por segundo; caso contrário, assume-se que a <em>variação</em> é definida em função de cada iteração &mdash; i.e., <em>pixels</em> por chamada ao método <code>desenha()</code>.
 </div>
 
 
@@ -3104,7 +3487,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -3129,10 +3516,61 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">Objecto que representa o elemento <code>canvas</code> onde será desenhado o <em>polígono</em></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>deltaTempo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">Variação temporal entre chamadas (para sincronização de animações); se não for fornecido, assume-se o valor <code>1</code>.</td>
         </tr>
 
     
@@ -3178,7 +3616,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line824">line 824</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line1426">line 1426</a>
     </li></ul></dd>
     
 
@@ -3201,6 +3639,89 @@
 
 
 
+<h5>Throws:</h5>
+<ul>
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se <code>tela</code> não for uma instância de <code>Tela</code>.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se <code>deltaTempo</code> não for um número finito e positivo.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Se o parâmetro <code>deltaTempo</code> for um número negativo.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">RangeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
 
 
 
@@ -3222,7 +3743,7 @@
 
 
 <div class="description">
-    Este método inverte o sentido da força da gravidade aplicada sobre o <em>gráfico</em>, contanto esta seja diferente de zero, pondo o valor interno de <code>anguloGravidade</code>, cujo co-seno é usado, em <code>180</code>. Se <code>deltaGravidade</code> estiver definido (e for negativo), a inversão será temporária, voltando-se ao sentido inicialmente definido.
+    Inverte o sentido da força da gravidade aplicada sobre o <em>gráfico</em>, desde que esta seja diferente de zero, colocando o valor interno de <code>anguloGravidade</code> em <code>180</code> graus (cujo co-seno é usado). Se <code>deltaGravidade</code> estiver definido e for um número negativo, a inversão será temporária, voltando-se posteriormente ao sentido inicialmente definido.
 </div>
 
 
@@ -3271,7 +3792,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line175">line 175</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line564">line 564</a>
     </li></ul></dd>
     
 
@@ -3315,7 +3836,7 @@
 
 
 <div class="description">
-    Este método faz com que o <em>gráfico</em> deixe de ficar <em>preso</em> às coordenadas do rato.
+    Faz com que o <em>gráfico</em> deixe de ficar <em>preso</em> às coordenadas do rato. Após a chamada deste método, o <em>gráfico</em> deixa de acompanhar o movimento do rato.
 </div>
 
 
@@ -3364,7 +3885,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line166">line 166</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line553">line 553</a>
     </li></ul></dd>
     
 
@@ -3408,7 +3929,7 @@
 
 
 <div class="description">
-    Este método repõe o sentido inicial da força da gravidade aplicada sobre o <em>gráfico</em>, contanto esta seja diferente de zero, pondo o valor interno de <code>anguloGravidade</code>, cujo co-seno é usado, de volta a <code>0</code>.
+    Repõe o sentido inicial da força da gravidade aplicada sobre o <em>gráfico</em>, contanto esta seja diferente de zero, colocando o valor interno de <code>anguloGravidade</code> de volta a <code>0</code> graus (cujo co-seno é usado).
 </div>
 
 
@@ -3457,7 +3978,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line182">line 182</a>
+        <a href="Ludoteca.js.html">Ludoteca.js</a>, <a href="Ludoteca.js.html#line571">line 571</a>
     </li></ul></dd>
     
 
@@ -3503,13 +4024,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Cronometro.html">Cronometro</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="Padrao.html">Padrao</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Circulo.html">Circulo</a></li><li><a href="Cronometro.html">Cronometro</a></li><li><a href="Filme.html">Filme</a></li><li><a href="Grafico.html">Grafico</a></li><li><a href="Imagem.html">Imagem</a></li><li><a href="ImagemAnimada.html">ImagemAnimada</a></li><li><a href="ImagemFilme.html">ImagemFilme</a></li><li><a href="Media.html">Media</a></li><li><a href="PadraoImagem.html">PadraoImagem</a></li><li><a href="Poligono.html">Poligono</a></li><li><a href="Rectangulo.html">Rectangulo</a></li><li><a href="Som.html">Som</a></li><li><a href="Tela.html">Tela</a></li><li><a href="Texto.html">Texto</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri May 10 2024 15:15:00 GMT+0100 (Western European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Sun May 18 2025 23:56:19 GMT+0100 (Western European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
